@@ -147,45 +147,63 @@
         <p>&copy; 2025 SOMUN. All rights reserved.</p>
     </footer>
 
-    <script>
-        const form = document.getElementById('registration-form');
+<script>
+    const form = document.getElementById('registration-form');
 
-        form.addEventListener('submit', async function (event) {
-            event.preventDefault();
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const country = document.getElementById('country').value;
+        // Gather form data
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const country = document.getElementById('country').value.trim();
 
-            const data = {
-                name: name,
-                email: email,
-                phone: phone,
-                country: country
-            };
+        // Validate the form data (you can extend this as needed)
+        if (!name || !email || !phone || !country) {
+            alert('Please fill in all fields');
+            return;
+        }
 
-            try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbx7xi6mW70AYOQlFrqjR1j4kkDBFK6oEHtVmFOWI54Wrautrw9wIt48j4B2N0Emqo0w/exec', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                });
+        const data = {
+            name: name,
+            email: email,
+            phone: phone,
+            country: country
+        };
 
+        try {
+            // Send the data to the Google Apps Script endpoint
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwBzKofUw6D_cMTeSjUYCMghBjl1tLfxy-w1N9Fc6EYTMqETitQjIjvFMYLbvHKgwgf/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+                mode: 'cors'  // Ensure cross-origin requests are allowed
+            });
+
+            // Check if the response is successful
+            if (response.ok) {
                 const result = await response.json();
                 if (result.result === 'success') {
                     alert('Registration Successful!');
-                    form.reset();
+                    form.reset();  // Reset form fields after successful submission
                 } else {
+                    console.error('Google Apps Script response error:', result);
                     alert('There was an error with the registration.');
                 }
-            } catch (error) {
-                alert('Error: ' + error.message);
+            } else {
+                throw new Error('Failed to submit form: ' + response.statusText);
             }
-        });
-    </script>
+        } catch (error) {
+            // Catch any other errors and alert the user
+            console.error('Submission error:', error);
+            alert('Error: ' + error.message);
+        }
+    });
+</script>
+
 </body>
 
 </html>
