@@ -73,40 +73,44 @@
         .copyright { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
 
         
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px);}
-            to { opacity: 1; transform: translateY(0px);}
-        }
-
-       @keyframes fadeInLeft {
-            from { opacity: 0; transform: translateX(-50px);}
-            to { opacity: 1; transform: translateX(0px);}
-        }
-        
-        @keyframes fadeInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .hero h1 {
-          animation: fadeInUp 1.2s ease-out forwards;
-        }
-
-        .section h2 {
+        .section h2, 
+        .section p, 
+        .highlights li {
           opacity: 0;
-          animation: fadeInLeft 1s ease forwards;
-          animation-delay: 0.3s;
+          transform: translateY(40px);
+          transition: all 0.8s ease-out;
         }
 
-        .section p, .highlights li {
-          opacity: 0;
-          animation: fadeInRight 1s ease forwards;
-          animation-delay: 0.6s;
+
+        .section.show h2,
+        .section.show p,
+        .section.show .highlights li {
+          opacity: 1;
+          transform: translateY(0);
         }
 
     </style>
 </head>
 <body>
+    <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll(".section");
+
+    function revealOnScroll() {
+      for (let section of sections) {
+        let windowHeight = window.innerHeight;
+        let elementTop = section.getBoundingClientRect().top;
+
+        if (elementTop < windowHeight - 100) {
+          section.classList.add("show");
+        }
+      }
+    }
+
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll(); // run once on load
+  });
+</script>
     <div id="loader">
         <div id="globe-container"></div>
         <div class="loader-text">SOMUN 2025</div>
