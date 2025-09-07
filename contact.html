@@ -3,38 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | SOMUN 2025</title>
+    <title>Contact | SOMUN 2025</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
-        :root {
-            --primary: #cc171e;
-            --text: #FFFFFF;
-            --bg: #000000;
-        }
-
+        :root { --primary: #cc171e; --text: #FFFFFF; --bg: #000000; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Source Sans Pro', sans-serif;
-            overflow-x: hidden;
-        }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Source Sans Pro', sans-serif; overflow-x: hidden; }
 
-        #loader {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: var(--bg);
-            z-index: 1000;
-            display: flex; justify-content: center; align-items: center;
-            flex-direction: column;
-            transform-origin: center;
-            will-change: transform, opacity;
-        }
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 1000; display: flex; justify-content: center; align-items: center; flex-direction: column; transform-origin: center; will-change: transform, opacity; }
         #loader.zoomOut { animation: zoomOut 1s ease forwards, fadeOut 1s ease forwards 1s; }
         @keyframes zoomOut { from { transform: scale(1);} to { transform: scale(1.2);} }
         @keyframes fadeOut { to { opacity: 0; visibility: hidden;} }
@@ -42,26 +22,28 @@
         #globe-container { width: 300px; height: 300px; }
         .loader-text { margin-top: 20px; font-size: 24px; color: var(--primary); text-transform: uppercase; letter-spacing: 3px; font-weight: 700; font-family: 'Lato', sans-serif; }
 
-        nav {
-            padding: 1rem 2rem; background-color: rgba(0,0,0,0.9);
-            position: fixed; width: 100%; top: 0; z-index: 100;
-        }
+        nav { padding: 1rem 2rem; background-color: rgba(0,0,0,0.9); position: fixed; width: 100%; top: 0; z-index: 100; }
         .nav-links { display: flex; justify-content: space-around; max-width: 1200px; margin: 0 auto; }
         .nav-links a { color: var(--text); text-decoration: none; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s; border-bottom: 2px solid transparent; font-family: 'Source Sans Pro', sans-serif; }
         .nav-links a:hover { color: var(--primary); border-bottom: 2px solid var(--primary); }
 
-        .hero {
-            height: 60vh; display: flex; justify-content: center; align-items: center; text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/api/placeholder/1920/600');
-            background-size: cover; background-position: center; position: relative;
-        }
+        .hero { height: 60vh; display: flex; justify-content: center; align-items: center; text-align: center; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/api/placeholder/1920/600'); background-size: cover; background-position: center; position: relative; }
         .hero h1 { font-size: 4rem; color: var(--text); font-family: 'Lato', sans-serif; font-weight: 900; }
 
         .section { padding: 5rem 2rem; max-width: 1000px; margin: 0 auto; }
-        .section h2 { color: var(--primary); font-family: 'Lato', sans-serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center; }
-        .section p { font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem; text-align: center; }
-        .highlights { list-style: none; padding: 0; max-width: 800px; margin: 0 auto; }
-        .highlights li { background: rgba(204,23,30,0.1); border: 1px solid rgba(204,23,30,0.2); padding: 1rem; margin: 0.5rem 0; border-radius: 8px; font-size: 1.1rem; }
+        .section h2 { color: var(--primary); font-family: 'Lato', sans-serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem; text-align: center; }
+
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .contact-info { background: rgba(204,23,30,0.1); padding: 2rem; border-radius: 10px; border: 1px solid rgba(204,23,30,0.2); }
+        .contact-info h3 { font-family: 'Lato', sans-serif; font-size: 1.5rem; margin-bottom: 1rem; color: var(--primary); }
+        .contact-info p { margin-bottom: 1rem; font-size: 1.1rem; line-height: 1.6; }
+
+        form { background: rgba(204,23,30,0.05); padding: 2rem; border-radius: 10px; border: 1px solid rgba(204,23,30,0.1); }
+        form label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+        form input, form textarea { width: 100%; padding: 0.8rem; margin-bottom: 1.2rem; border: none; border-radius: 5px; font-size: 1rem; font-family: 'Source Sans Pro', sans-serif; }
+        form input:focus, form textarea:focus { outline: 2px solid var(--primary); }
+        form button { background: var(--primary); color: var(--text); padding: 1rem 2rem; border: none; border-radius: 5px; font-size: 1.1rem; font-family: 'Lato', sans-serif; cursor: pointer; transition: all 0.3s; }
+        form button:hover { background: #e61922; transform: scale(1.05); }
 
         footer { background-color: var(--bg); color: var(--text); text-align: center; padding: 3rem 2rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); font-family: 'Source Sans Pro', sans-serif; }
         .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
@@ -91,32 +73,32 @@
     </nav>
 
     <section class="hero">
-        <h1>About SOMUN</h1>
+        <h1>Contact Us</h1>
     </section>
 
     <section class="section">
-        <h2>Our Mission</h2>
-        <p>At SOMUN, our mission is to provide a platform where young leaders can engage in meaningful debate, foster diplomatic dialogue, and cultivate the skills necessary to address global challenges with confidence and integrity.</p>
-    </section>
+        <h2>Get in Touch</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p><strong>Email:</strong> info@somun.org</p>
+                <p><strong>Phone:</strong> +91 XXXXXXXXXX</p>
+                <p><strong>Address:</strong> New Delhi, India</p>
+            </div>
 
-    <section class="section">
-        <h2>Our Vision</h2>
-        <p>We envision SOMUN as a forum that shapes tomorrow’s leaders today—where students not only learn about international relations and policy-making but also develop the empathy, collaboration, and leadership needed to create a better world.</p>
-    </section>
+            <form>
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required>
 
-    <section class="section">
-        <h2>Conference Legacy</h2>
-        <p>Since its inception, SOMUN has grown into one of India’s most respected Model United Nations conferences. With diverse committees, distinguished chairs, and participants from across the nation, SOMUN has established itself as a hub for excellence in debate and diplomacy.</p>
-    </section>
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" required>
 
-    <section class="section">
-        <h2>Why SOMUN?</h2>
-        <ul class="highlights">
-            <li>Engage in dynamic debates modeled after real-world UN committees.</li>
-            <li>Gain exposure to global issues and practical problem-solving.</li>
-            <li>Network with like-minded peers and experienced mentors.</li>
-            <li>Enhance leadership, public speaking, and negotiation skills.</li>
-        </ul>
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
     </section>
 
     <footer>
@@ -169,7 +151,6 @@
 
             camera.position.z = 2;
             animate();
-
             setTimeout(() => { document.getElementById('loader').classList.add('zoomOut'); }, 3000);
         }
         function animate() { requestAnimationFrame(animate); globe.rotation.y += 0.005; globe.rotation.x += 0.002; renderer.render(scene, camera); }
