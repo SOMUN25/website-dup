@@ -67,43 +67,21 @@
         .footer-section ul li a { color: var(--text); text-decoration: none; transition: color 0.3s; }
         .footer-section ul li a:hover { color: var(--primary); }
         .copyright { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
-        @keyframes fadeDown {
-          0% {
-            opacity: 0;
-            transform: translateY(-30px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes fadeUp {
-          0% {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .hero h1 {
-          animation: fadeDown 1s ease-out forwards;
-          opacity: 0;
-        }
+        .hero h1,
         .committee-card {
           opacity: 0;
           transform: translateY(30px);
-          animation: fadeUp 0.8s ease-out forwards;
         }
-        .committee-card:nth-child(1) { animation-delay: 0.2s; }
-        .committee-card:nth-child(2) { animation-delay: 0.4s; }
-        .committee-card:nth-child(3) { animation-delay: 0.6s; }
-        .committee-card:nth-child(4) { animation-delay: 0.8s; }
-        .committee-card:nth-child(5) { animation-delay: 1s; }
-        .committee-card:nth-child(6) { animation-delay: 1.2s; }
-        .committee-card:nth-child(7) { animation-delay: 1.4s; }
-        .committee-card:nth-child(8) { animation-delay: 1.6s; }
+        @keyframes fadeDown {
+          0% { opacity: 0; transform: translateY(-30px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+
+        
+        body.loaded .committee-card {
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
     </style>
 </head>
 <body>
@@ -215,11 +193,41 @@
 
             camera.position.z = 2;
             animate();
-            setTimeout(() => { document.getElementById('loader').classList.add('zoomOut'); }, 3000);
-        }
-        function animate() { requestAnimationFrame(animate); globe.rotation.y += 0.005; globe.rotation.x += 0.002; renderer.render(scene, camera); }
-        window.addEventListener('load', init);
 
+
+            setTimeout(() => { 
+                document.getElementById('loader').classList.add('zoomOut'); 
+                document.body.classList.add('loaded'); 
+
+    
+                startScrollAnimations();
+            }, 3000);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            globe.rotation.y += 0.005;
+            globe.rotation.x += 0.002;
+            renderer.render(scene, camera);
+        }
+
+        function startScrollAnimations() {
+            const cards = document.querySelectorAll('.committee-card');
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = "1";
+                        entry.target.style.transform = "translateY(0)";
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            cards.forEach(card => observer.observe(card));
+        }
+
+        window.addEventListener('load', init);
     </script>
 </body>
 </html>
