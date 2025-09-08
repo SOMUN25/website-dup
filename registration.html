@@ -3,120 +3,101 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration - SOMUN 2025</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
-
+    <title>SOMUN 2025 Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        :root {
-            --primary: #cc171e;
-            --text: #FFFFFF;
-            --bg: #000000;
-        }
-
-        * {
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Raleway', sans-serif;
-            overflow-x: hidden;
-        }
-
-        nav {
-            padding: 1rem 2rem;
-            background-color: rgba(0, 0, 0, 0.9);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-links {
-            display: flex;
-            justify-content: space-around;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: bold;
-            padding: 0.5rem 1rem;
-            transition: all 0.3s;
-            border-bottom: 2px solid transparent;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-            border-bottom: 2px solid var(--primary);
-        }
-
-        .section {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .section h2 {
-            color: var(--primary);
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
-        }
-
-        .form-container {
-            background: rgba(204, 23, 30, 0.1);
-            padding: 2rem;
-            border-radius: 10px;
-            border: 1px solid rgba(204, 23, 30, 0.2);
-            width: 100%;
+        .registration-container {
             max-width: 600px;
-            margin: 0 auto;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #ddd;
+            padding: 32px;
         }
 
-        .form-container input,
-        .form-container select,
-        .form-container button {
+        h2 {
+            text-align: center;
+            color: #10375c;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .steps li {
+            flex: 1;
+            text-align: center;
+            font-weight: 600;
+            color: #385b7b;
+        }
+
+        .steps .active {
+            color: #1976d2;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
             width: 100%;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            border-radius: 5px;
+            padding: 8px;
             border: 1px solid #ccc;
-            font-size: 1rem;
+            border-radius: 4px;
+            font-size: 1em;
         }
 
-        .form-container button {
-            background-color: var(--primary);
-            color: var(--text);
+        input[type="file"] {
+            margin-top: 8px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 24px;
+        }
+
+        button {
+            background: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 24px;
+            font-size: 1em;
             cursor: pointer;
         }
 
-        .form-container button:hover {
-            background-color: #e61922;
-        }
-
-        footer {
-            background-color: var(--bg);
-            color: var(--text);
-            text-align: center;
-            padding: 3rem 2rem;
-            margin-top: 4rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Added styles for loading state */
         button:disabled {
-            opacity: 0.7;
+            background: #b0b0b0;
             cursor: not-allowed;
         }
         
@@ -129,129 +110,256 @@
         .footer-section ul li a:hover { color: var(--primary); }
         .copyright { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
         
-        .section h2, 
-        .section p, 
-        .highlights li {
-          opacity: 0;
-          transform: translateY(40px);
-          transition: all 0.8s ease-out;
-        }
-
-
-        .section.show h2,
-        .section.show p,
-        .section.show .highlights li {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        
     </style>
+    <script>
+        // Multi-step form logic
+        document.addEventListener("DOMContentLoaded", function () {
+            let currentStep = 0;
+            const steps = Array.from(document.querySelectorAll('.form-step'));
+            const nextBtn = document.getElementById('next-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            const paymentScreenshot = document.getElementById('payment-screenshot');
+            const registrationForm = document.getElementById('registration-form');
+            function showStep(n) {
+                steps.forEach((step, i) => step.classList.toggle('active', i === n));
+                document.querySelectorAll('.steps li').forEach((li, i) => li.classList.toggle('active', i === n));
+                prevBtn.style.display = n === 0 ? 'none' : 'inline-block';
+                nextBtn.style.display = n < steps.length - 1 ? 'inline-block' : 'none';
+                submitBtn.style.display = n === steps.length - 1 ? 'inline-block' : 'none';
+            }
+            function validateStep(n) {
+                // Add step-specific validations as needed
+                switch (n) {
+                    case 0:
+                        // Personal Details
+                        const name = document.getElementById('name').value.trim();
+                        const email = document.getElementById('email').value.trim();
+                        const phone = document.getElementById('phone').value.trim();
+                        const school = document.getElementById('school').value.trim();
+                        return name && email && phone && school;
+                    case 1:
+                        // Committee selection
+                        const comm1 = document.getElementById('committee1').value;
+                        const country1 = document.getElementById('country1').value.trim();
+                        const comm2 = document.getElementById('committee2').value;
+                        const country2 = document.getElementById('country2').value.trim();
+                        return comm1 && country1 && comm2 && country2 && comm1 !== comm2;
+                    case 2:
+                        // MUN Experience
+                        return document.querySelector('input[name="mun_exp"]:checked');
+                    case 3:
+                        // Dietary Restrictions
+                        return true;
+                    case 4:
+                        // Review
+                        return true;
+                    case 5:
+                        // Payment Upload
+                        return paymentScreenshot.files.length > 0;
+                }
+                return true;
+            }
+            function showError(msg) {
+                document.getElementById('error-msg').textContent = msg;
+            }
+            nextBtn.addEventListener('click', function () {
+                if (!validateStep(currentStep)) {
+                    showError('Please fill all required fields correctly.');
+                } else {
+                    showError('');
+                    if (currentStep < steps.length - 1) {
+                        currentStep++;
+                        showStep(currentStep);
+                    }
+                }
+            });
+            prevBtn.addEventListener('click', function () {
+                showError('');
+                if (currentStep > 0) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            });
+            registrationForm.addEventListener('submit', function (e) {
+                if (!validateStep(currentStep)) {
+                    e.preventDefault();
+                    showError('Please upload payment screenshot to proceed.');
+                }
+            });
+            showStep(currentStep);
+        });
+    </script>
 </head>
 
 <body>
-    <nav>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="committees.html">Committees</a>
-            <a href="schedule.html">Schedule</a>
-            <a href="registration.html">Registration</a>
-            <a href="contact.html">Contact</a>
+    <div class="registration-container">
+        <h2>SOMUN 2025 Registration Form</h2>
+        <div class="info-box">
+            For support or queries, email <b>hvkatta@gmail.com</b> or contact <b>+91 9398497723</b>
         </div>
-    </nav>
-
-    <section class="section">
-        <h2>Registration Form</h2>
-
-        <div class="form-container">
-            <form id="registration-form">
-                <input type="text" id="name" name="name" placeholder="Full Name" required>
-                <input type="email" id="email" name="email" placeholder="Email Address" required>
-                <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
-                <input type="text" id="country" name="country" placeholder="Country" required>
-                <button type="submit" id="submit-button">Submit</button>
-            </form>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="committees.html">Committees</a></li>
-                    <li><a href="registration.html">Registration</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
+        <ul class="steps">
+            <li class="active">Personal Details</li>
+            <li>Committee Selection</li>
+            <li>MUN Experience</li>
+            <li>Dietary Restrictions</li>
+            <li>Review</li>
+            <li>Payment</li>
+        </ul>
+        <form id="registration-form" method="post" enctype="multipart/form-data" action="submit_registration.php">
+            <div id="error-msg" class="error-msg"></div>
+            <!-- Step 1: Personal Details -->
+            <div class="form-step active">
+                <div class="form-group">
+                    <label for="name">Name <span style="color:#c00">*</span></label>
+                    <input type="text" id="name" name="name" required placeholder="Your Full Name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email <span style="color:#c00">*</span></label>
+                    <input type="email" id="email" name="email" required placeholder="email@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number <span style="color:#c00">*</span></label>
+                    <input type="text" id="phone" name="phone" required placeholder="+91 XXXXX-XXXXX">
+                </div>
+                <div class="form-group">
+                    <label for="school">School/Organization <span style="color:#c00">*</span></label>
+                    <input type="text" id="school" name="school" required placeholder="School or Organization Name">
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Contact Info</h3>
-                <ul>
-                    <li>Email: communication.somun@hyd.silveroaks.co.in</li>
-                    <li>Phone: Seiona Jacob | +91 73372 13122</li>
-                    <li>Phone: Keshav Agarwal | +91 81436 02940</li>
-                    <li>Address: Silver Oaks International School, Mighty Oaks, Hyderabad, India</li>
-                </ul>
+            <!-- Step 2: Committee Selection -->
+            <div class="form-step">
+                <div class="info-box">
+                    Please <b>do not repeat committees</b> in different preferences.
+                </div>
+                <div class="form-group">
+                    <label for="committee1">Preference 1: Committee</label>
+                    <select id="committee1" name="committee1" required>
+                        <option value="">Select Committee</option>
+                        <option value="UNSC">United Nations Security Council</option>
+                        <option value="UNHRC">United Nations Human Rights Council</option>
+                        <option value="DISEC">Disarmament and International Security Committee</option>
+                        <option value="ECOSOC">Economic and Social Council</option>
+                        <option value="LOK SABHA">Lok Sabha</option>
+                        <option value="UNEA">United Nations Extra-terrestrial Affairs</option>
+                        <option value="WHO">World Health Organization</option>
+                        <option value="HCC">Hawkins Crisis Council</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="country1">Preferred Country for Committee 1</label>
+                    <input type="text" id="country1" name="country1" required placeholder="Enter Preferred Country">
+                </div>
+                <div class="form-group">
+                    <label for="committee2">Preference 2: Committee</label>
+                    <select id="committee2" name="committee2" required>
+                        <option value="">Select Committee</option>
+                        <option value="UNSC">United Nations Security Council</option>
+                        <option value="UNHRC">United Nations Human Rights Council</option>
+                        <option value="DISEC">Disarmament and International Security Committee</option>
+                        <option value="ECOSOC">Economic and Social Council</option>
+                        <option value="LOK SABHA">Lok Sabha</option>
+                        <option value="UNEA">United Nations Extra-terrestrial Affairs</option>
+                        <option value="WHO">World Health Organization</option>
+                        <option value="HCC">Hawkins Crisis Council</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="country2">Preferred Country for Committee 2</label>
+                    <input type="text" id="country2" name="country2" required placeholder="Enter Preferred Country">
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Follow Us</h3>
-                <ul>
-                    <li><a href="https://www.instagram.com/somunhyd/" target="_blank">Instagram</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2025 SOMUN. All rights reserved.</p>
-            <p><a href="terms.html" target="_blank">Terms & Conditions</a></p>
-        </div>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('registration-form');
-            const submitButton = document.getElementById('submit-button');
-
-            form.addEventListener('submit', async function (event) {
-                event.preventDefault();
-
-                // Disable button and show loading state
-                submitButton.disabled = true;
-                submitButton.textContent = 'Submitting...';
-
-                try {
-                    const formData = {
-                        name: document.getElementById('name').value.trim(),
-                        email: document.getElementById('email').value.trim(),
-                        phone: document.getElementById('phone').value.trim(),
-                        country: document.getElementById('country').value.trim()
-                    };
-
-                    const response = await fetch('https://script.google.com/macros/s/AKfycby21Pvn0Q2CxWnv-T2OYjfP3YloTmUy-n9KFOQUYWVs_w3wzGCkmuVQFlCXeDoiJBGB/exec', {
-                        method: 'POST',
-                        body: JSON.stringify(formData)
+            <!-- Step 3: MUN Experience -->
+            <div class="form-step">
+                <div class="form-group">
+                    <label>Have you participated in any MUNs before?</label>
+                    <input type="radio" id="first-mun" name="mun_exp" value="first" required>
+                    <label for="first-mun" style="display:inline;font-weight:normal;">This is my first MUN</label>
+                    <br>
+                    <input type="radio" id="prev-mun" name="mun_exp" value="previous" required>
+                    <label for="prev-mun" style="display:inline;font-weight:normal;">I have participated in MUNs
+                        before</label>
+                </div>
+                <div class="form-group" style="display:none;" id="mun-details-group">
+                    <label for="mun_details">Previous Experience <span style="font-weight:normal;">(Format:
+                            Conference(Year) - Committee - Allocation - Award)</span></label>
+                    <textarea id="mun_details" name="mun_details" rows="3"
+                        placeholder="Eg: SOMUN(2023) - UNSC - USA - Best Delegate"></textarea>
+                </div>
+                <script>
+                    // Show/hide experience details textarea
+                    document.addEventListener('click', function (e) {
+                        if (e.target.name === 'mun_exp') {
+                            document.getElementById('mun-details-group').style.display = e.target.value === 'previous' ? 'block' : 'none';
+                        }
                     });
-
-                    if (!response.ok) {
-                        throw new Error(`Submission failed. Status: ${response.status}`);
-                    }
-
-                    const result = await response.text();
-                    console.log('Success:', result);
-                    alert('Registration successful!');
-                    form.reset();
-
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert('There was an error submitting the form. Please try again.');
-                } finally {
-                    // Reset button state
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'Submit';
-                }
-            });
-        });
-    </script>
+                </script>
+            </div>
+            <!-- Step 4: Dietary Restrictions -->
+            <div class="form-step">
+                <div class="form-group">
+                    <label for="diet">Dietary Restrictions/Allergies</label>
+                    <textarea id="diet" name="diet" rows="2" required
+                        placeholder="List any allergies or write 'None'."></textarea>
+                </div>
+            </div>
+            <!-- Step 5: Review Information -->
+            <div class="form-step">
+                <div class="review-section">
+                    <h3>Review Your Information</h3>
+                    <p>Please review all the details you have entered before proceeding to payment.<br>
+                        By proceeding, you agree to <a href="terms.html" target="_blank" class="terms-link">terms and
+                            conditions</a>.</p>
+                    <ul>
+                        <li><b>Personal Details</b>: <span id="review-personal"></span></li>
+                        <li><b>Committee Choices</b>: <span id="review-committee"></span></li>
+                        <li><b>MUN Experience</b>: <span id="review-mun"></span></li>
+                        <li><b>Dietary Restrictions</b>: <span id="review-diet"></span></li>
+                    </ul>
+                </div>
+                <script>
+                    // Sync review info
+                    document.getElementById('next-btn').addEventListener('click', function () {
+                        if (currentStep === 4) {
+                            // Fill review info
+                            document.getElementById('review-personal').textContent =
+                                document.getElementById('name').value + ', ' +
+                                document.getElementById('email').value + ', ' +
+                                document.getElementById('phone').value + ', ' +
+                                document.getElementById('school').value;
+                            document.getElementById('review-committee').textContent =
+                                document.getElementById('committee1').value + ' (' +
+                                document.getElementById('country1').value + '), ' +
+                                document.getElementById('committee2').value + ' (' +
+                                document.getElementById('country2').value + ')';
+                            let exp = document.querySelector('input[name="mun_exp"]:checked');
+                            let expVal = exp && exp.value === "previous" ? document.getElementById('mun_details').value : "First MUN";
+                            document.getElementById('review-mun').textContent = expVal;
+                            document.getElementById('review-diet').textContent =
+                                document.getElementById('diet').value;
+                        }
+                    });
+                </script>
+            </div>
+            <!-- Step 6: Payment -->
+            <div class="form-step">
+                <div class="form-group">
+                    <label>Payment Details</label>
+                    <div class="info-box">
+                        <b>UPI ID:</b> hvkatta@okicici<br>
+                        <b>Amount:</b> ₹2<br>
+                        Please upload a payment screenshot below.
+                    </div>
+                    <input type="file" id="payment-screenshot" name="payment_screenshot" accept="image/*" required>
+                </div>
+            </div>
+            <div class="button-row">
+                <button type="button" id="prev-btn">Previous</button>
+                <button type="button" id="next-btn">Next</button>
+                <button type="submit" id="submit-btn" style="display:none;">Submit</button>
+            </div>
+        </form>
+    </div>
 </body>
 
 </html>
