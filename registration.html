@@ -129,6 +129,22 @@
         .footer-section ul li a:hover { color: var(--primary); }
         .copyright { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
         
+        .section h2, 
+        .section p, 
+        .highlights li {
+          opacity: 0;
+          transform: translateY(40px);
+          transition: all 0.8s ease-out;
+        }
+
+
+        .section.show h2,
+        .section.show p,
+        .section.show .highlights li {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
     </style>
 </head>
 
