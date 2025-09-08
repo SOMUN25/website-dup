@@ -48,21 +48,21 @@
           gap: 2rem;
           margin-top: 2rem;
         }
+       .committee-card:nth-last-child(2),
+        .committee-card:last-child {
+          grid-column: 1 / -1;
+          justify-self: center;
+        }
+        
         .committee-card:nth-last-child(2),
         .committee-card:last-child {
-          grid-column: span 1;
+          display: inline-block;
         }
-        .committee-card:nth-last-child(2) {
-          justify-self: end;
-        }
-        .committee-card:last-child {
-          justify-self: start;
-        }
-        .last-row {
-          grid-column: 1 / -1; 
-          display: flex;
-          justify-content: center;
-          gap: 2rem; 
+        
+        .committee-card:nth-last-child(2)::after {
+          content: "";
+          display: inline-block;
+          width: 2rem;
         }
 
 
