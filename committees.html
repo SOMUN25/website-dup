@@ -60,11 +60,43 @@
             grid-column: 3;
           }
         }
-
-
-
-        .committee-card { background: rgba(204,23,30,0.1); padding: 2rem; border-radius: 10px; text-align: center; transition: transform 0.3s; border: 1px solid rgba(204,23,30,0.2); }
-        .committee-card:hover { transform: translateY(-5px); background: rgba(204,23,30,0.15); }
+        .committee-card {
+            background: rgba(204,23,30,0.05);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.3s ease;
+            border: 1px solid rgba(204,23,30,0.2);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+    
+        .committee-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(204,23,30,0.15);
+            box-shadow: 0 10px 20px rgba(204,23,30,0.3);
+        }
+    
+        .committee-img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+    
+        .committee-card:hover .committee-img {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(204,23,30,0.4);
+        }
+    
+        body.loaded .committee-card {
+            animation: fadeUp 0.6s ease-out forwards;
+        }
+    
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
         .committee-card h3 { color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem; font-family: 'Lato', sans-serif; font-weight: 700; }
         .committee-card p { font-size: 1rem; line-height: 1.6; font-family: 'Source Sans Pro', sans-serif; }
         .agenda { margin-top: 1rem; font-style: italic; color: #bbb; font-size: 0.95rem; }
@@ -122,36 +154,44 @@
         <h2>Featured Committees</h2>
         <div class="committees-grid">
             <div class="committee-card">
+                <img src="images/disec.jpg" alt="DISEC" class="committee-img">
                 <h3>DISEC</h3>
-                <p>The Disarmament and International Security Committee focuses on issues related to global security, arms control, and threats to peace.</p>
+                <p>The Disarmament and International Security Committee focuses on global security, arms control, and threats to peace.</p>
             </div>
             <div class="committee-card">
+                <img src="images/who.jpg" alt="WHO" class="committee-img">
                 <h3>WHO</h3>
                 <p>The World Health Organisation addresses international public health challenges and coordinates efforts to combat global health crises.</p>
             </div>
             <div class="committee-card">
+                <img src="images/unhrc.jpg" alt="UNHRC" class="committee-img">
                 <h3>UNHRC</h3>
-                <p>The United Nations Human Rights Council works to promote and protect human rights around the world, ensuring accountability and justice for all.</p>
+                <p>The United Nations Human Rights Council promotes and protects human rights around the world.</p>
             </div>
             <div class="committee-card">
+                <img src="images/lok-sabha.jpg" alt="Lok Sabha" class="committee-img">
                 <h3>Lok Sabha</h3>
-                <p>The Lok Sabha committee simulates the Indian Parliament, offering delegates a chance to debate domestic and international policies from a national perspective.</p>
+                <p>Simulates the Indian Parliament, offering delegates a chance to debate domestic and international policies.</p>
             </div>
             <div class="committee-card">
+                <img src="images/ip.jpg" alt="International Press" class="committee-img">
                 <h3>International Press (IP)</h3>
-                <p>The International Press plays the role of journalists and media houses, reporting, analyzing, and questioning delegates during committee sessions.</p>
+                <p>Acts as journalists and media houses, reporting, analyzing, and questioning delegates during sessions.</p>
             </div>
             <div class="committee-card">
+                <img src="images/unoosa.jpg" alt="UNOOSA" class="committee-img">
                 <h3>UNOOSA</h3>
-                <p>The United Nations Office for Outer Space Affairs focuses on the peaceful exploration and use of outer space, and developing international cooperation in space law and exploration.</p>
+                <p>Focuses on peaceful exploration and use of outer space, and developing international cooperation in space law.</p>
             </div>
             <div class="committee-card">
+                <img src="images/hcc.jpg" alt="HCC" class="committee-img">
                 <h3>HCC</h3>
-                <p>The Hawkins Crisis Committee is a fast-paced crisis simulation inspired by supernatural events in Hawkins, drawing from the Stranger Things universe.</p>
+                <p>Fast-paced crisis simulation inspired by supernatural events in Hawkins, from Stranger Things.</p>
             </div>
             <div class="committee-card">
+                <img src="images/unodc.jpg" alt="UNODC" class="committee-img">
                 <h3>UNODC</h3>
-                <p>The United Nations Office on Drugs and Crime addresses global issues related to organized crime, illicit drugs, corruption, and terrorism.</p>
+                <p>Addresses global issues related to organized crime, illicit drugs, corruption, and terrorism.</p>
             </div>
         </div>
     </section>
@@ -239,6 +279,23 @@
 
             cards.forEach(card => observer.observe(card));
         }
+        function startScrollAnimations() {
+            const cards = document.querySelectorAll('.committee-card');
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = "1";
+                            entry.target.style.transform = "translateY(0)";
+                        }, index * 150); // staggered delay
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+        
+            cards.forEach(card => observer.observe(card));
+        }
+        
 
         window.addEventListener('load', init);
     </script>
