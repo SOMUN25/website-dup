@@ -43,15 +43,15 @@
         .section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
         .section h2 { color: var(--primary); font-family: 'Lato', sans-serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem; text-align: center; }
         .committees-grid {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center; 
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
           gap: 2rem;
           margin-top: 2rem;
         }
-        .committee-card {
-          flex: 1 1 280px; 
-          max-width: 320px;
+        .committee-card:nth-last-child(2),
+        .committee-card:last-child {
+          grid-column: span 1;
+          justify-self: center;
         }
         .committee-card { background: rgba(204,23,30,0.1); padding: 2rem; border-radius: 10px; text-align: center; transition: transform 0.3s; border: 1px solid rgba(204,23,30,0.2); }
         .committee-card:hover { transform: translateY(-5px); background: rgba(204,23,30,0.15); }
