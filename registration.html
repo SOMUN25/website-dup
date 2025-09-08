@@ -546,7 +546,11 @@
                     <div class="form-step" data-step="5">
                         <div class="form-group">
                             <label>Payment Details</label>
-                            <div class="info-box">UPI: hvkatta@okic</div>
+                            <div class="info-box" style="text-align:center;">
+                            <p style="margin-bottom:8px;">Scan to Pay</p>
+                            <img src="qr_code.png" alt="UPI QR Code" style="max-width:220px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.4);">
+                        </div>
+                            <div class="info-box"><strong>Price: 2700</strong></div>
                             <input type="file" required>Upload UPI Transaction Screenshot</input>
                         </div>
                     </div>
@@ -769,6 +773,51 @@
                 }, 0);
             });
         })();
+document.getElementById('registration-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+  const screenshotFile = form.querySelector('input[type="file"]').files[0];
+
+  let screenshotBase64 = "";
+  if (screenshotFile) {
+    const reader = new FileReader();
+    await new Promise(resolve => {
+      reader.onload = () => { screenshotBase64 = reader.result; resolve(); };
+      reader.readAsDataURL(screenshotFile);
+    });
+  }
+
+  const data = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    school: document.getElementById('school').value,
+    committee1: document.getElementById('committee1').value,
+    country1: document.getElementById('country1').value,
+    committee2: document.getElementById('committee2').value,
+    country2: document.getElementById('country2').value,
+    committee3: document.getElementById('committee3').value,
+    country3: document.getElementById('country3').value,
+    mun_exp: document.querySelector('input[name="mun_exp"]:checked')?.value || "",
+    mun_details: document.getElementById('mun_details').value,
+    diet: document.getElementById('diet').value,
+    screenshot: screenshotBase64
+  };
+
+  try {
+    const response = await fetch('YOUR_WEB_APP_URL', {
+      method: 'POST',
+      body: new URLSearchParams(data)
+    });
+    const result = await response.json();
+    if(result.status === "success") alert("Registration submitted!");
+    else alert("Error: " + result.message);
+  } catch(err) {
+    alert("Submission failed: " + err);
+  }
+});
   </script>
 </body>
 </html>
+
