@@ -774,61 +774,50 @@
             });
         })();
         document.getElementById('registration-form').addEventListener('submit', async (e) => {
-// Google Apps Script Integration: Replace the URL below with your deployed Web App URL
-// Example: https://script.google.com/macros/s/AKfycb.../exec
-const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzg8ys7B-k0HR6TXmihA4tOw6ovo4OvB9Qmc5JaKXJmCHcv93fLjVlyR0iOh1iOYiw/exec';
-
-document.getElementById('registration-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    // Find the file input for screenshot
-    const screenshotFile = form.querySelector('input[type="file"]').files[0];
-    let screenshotBase64 = "";
-    if (screenshotFile) {
-        const reader = new FileReader();
-        await new Promise(resolve => {
-            reader.onload = () => {
-                screenshotBase64 = reader.result;
-                resolve();
-            };
-            reader.readAsDataURL(screenshotFile);
+          e.preventDefault();
+        
+          const form = e.target;
+          const screenshotFile = form.querySelector('input[type="file"]').files[0];
+        
+          let screenshotBase64 = "";
+          if (screenshotFile) {
+            const reader = new FileReader();
+            await new Promise(resolve => {
+              reader.onload = () => { screenshotBase64 = reader.result; resolve(); };
+              reader.readAsDataURL(screenshotFile);
+            });
+          }
+        
+          const data = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            school: document.getElementById('school').value,
+            committee1: document.getElementById('committee1').value,
+            country1: document.getElementById('country1').value,
+            committee2: document.getElementById('committee2').value,
+            country2: document.getElementById('country2').value,
+            committee3: document.getElementById('committee3').value,
+            country3: document.getElementById('country3').value,
+            mun_exp: document.querySelector('input[name="mun_exp"]:checked')?.value || "",
+            mun_details: document.getElementById('mun_details').value,
+            diet: document.getElementById('diet').value,
+            screenshot: screenshotBase64
+          };
+        
+          try {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwm1rbBFYOyyhQUineYeVZaq-jdzKoWRPgY_cTgtJYBO-ctWSMxDaCojW0puBpKDkIO/exec', {
+                  method: 'POST',
+                  body: new URLSearchParams(data)
+                });
+        
+            const result = await response.json();
+            if(result.status === "success") alert("Registration submitted!");
+            else alert("Error: " + result.message);
+          } catch(err) {
+            alert("Submission failed: " + err);
+          }
         });
-    }
-    const data = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        school: document.getElementById('school').value,
-        committee1: document.getElementById('committee1').value,
-        country1: document.getElementById('country1').value,
-        committee2: document.getElementById('committee2').value,
-        country2: document.getElementById('country2').value,
-        committee3: document.getElementById('committee3').value,
-        country3: document.getElementById('country3').value,
-        mun_exp: document.querySelector('input[name="mun_exp"]:checked')?.value || "",
-        mun_details: document.getElementById('mun_details').value,
-        diet: document.getElementById('diet').value,
-        screenshot: screenshotBase64
-    };
-    try {
-        const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        const result = await response.json();
-        if(result.status === "success") {
-            alert("Registration submitted!");
-            form.reset();
-        } else {
-            alert("Error: " + result.message);
-        }
-    } catch(err) {
-        alert("Submission failed: " + err);
-    }
-});
   </script>
 </body>
 </html>
