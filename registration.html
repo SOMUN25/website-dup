@@ -25,7 +25,6 @@
             --card-bg: rgba(255, 255, 255, 0.03);
             --card-border: rgba(255, 255, 255, 0.06);
             --accent-glow: 0 6px 18px rgba(204, 23, 30, 0.14);
-            --transition: 260ms cubic-bezier(.2, .9, .2, 1);
         }
 
         * {
@@ -169,7 +168,7 @@
             border-radius: 8px;
             cursor: pointer;
             color: var(--muted);
-            transition: all var(--transition);
+            transition: all .2s;
         }
 
         .steps-list li.active {
@@ -347,10 +346,11 @@
                 <div class="form-steps">
                     <!-- Step 0 -->
                     <div class="form-step active" data-step="0">
-                        <div class="form-group"><label>Name</label><input type="text" required></div>
-                        <div class="form-group"><label>Email</label><input type="email" required></div>
-                        <div class="form-group"><label>Phone</label><input type="text" required></div>
-                        <div class="form-group"><label>School/Organization</label><input type="text" required></div>
+                        <div class="form-group"><label>Name</label><input type="text" id="name" required></div>
+                        <div class="form-group"><label>Email</label><input type="email" id="email" required></div>
+                        <div class="form-group"><label>Phone</label><input type="text" id="phone" required></div>
+                        <div class="form-group"><label>School/Organization</label><input type="text" id="school"
+                                required></div>
                     </div>
 
                     <!-- Step 1 -->
@@ -359,7 +359,7 @@
                         <div class="form-group">
                             <label>Preference 1</label>
                             <div class="pref-row">
-                                <select required>
+                                <select id="committee1" required>
                                     <option value="">Committee</option>
                                     <option>DISEC</option>
                                     <option>WHO</option>
@@ -370,13 +370,13 @@
                                     <option>HCC</option>
                                     <option>UNODC</option>
                                 </select>
-                                <input type="text" placeholder="Enter Country" required>
+                                <input type="text" id="country1" placeholder="Enter Country" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Preference 2</label>
                             <div class="pref-row">
-                                <select required>
+                                <select id="committee2" required>
                                     <option value="">Committee</option>
                                     <option>DISEC</option>
                                     <option>WHO</option>
@@ -387,13 +387,13 @@
                                     <option>HCC</option>
                                     <option>UNODC</option>
                                 </select>
-                                <input type="text" placeholder="Enter Country" required>
+                                <input type="text" id="country2" placeholder="Enter Country" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Preference 3</label>
                             <div class="pref-row">
-                                <select required>
+                                <select id="committee3" required>
                                     <option value="">Committee</option>
                                     <option>DISEC</option>
                                     <option>WHO</option>
@@ -404,7 +404,7 @@
                                     <option>HCC</option>
                                     <option>UNODC</option>
                                 </select>
-                                <input type="text" placeholder="Enter Country" required>
+                                <input type="text" id="country3" placeholder="Enter Country" required>
                             </div>
                         </div>
                     </div>
@@ -420,7 +420,8 @@
                         </div>
                         <div class="form-group" id="mun-details-group" style="display:none;">
                             <label>Previous Experience</label>
-                            <textarea placeholder="Eg: SOMUN(2023) - UNSC - USA - Best Delegate"></textarea>
+                            <textarea id="mun_details"
+                                placeholder="Eg: SOMUN(2023) - UNSC - USA - Best Delegate"></textarea>
                         </div>
                     </div>
 
@@ -428,13 +429,19 @@
                     <div class="form-step" data-step="3">
                         <div class="form-group">
                             <label>Dietary Restrictions</label>
-                            <textarea placeholder="List any allergies or write 'None'"></textarea>
+                            <textarea id="diet" placeholder="List any allergies or write 'None'"></textarea>
                         </div>
                     </div>
 
-                    <!-- Step 4 -->
+                    <!-- Step 4 (Review) -->
                     <div class="form-step" data-step="4">
-                        <div class="info-box">Review your details before submitting.</div>
+                        <div class="info-box">
+                            <h3>Review Your Information</h3>
+                            <p><b>Personal:</b> <span id="review-personal">—</span></p>
+                            <p><b>Committees:</b> <span id="review-committee">—</span></p>
+                            <p><b>MUN Experience:</b> <span id="review-mun">—</span></p>
+                            <p><b>Dietary:</b> <span id="review-diet">—</span></p>
+                        </div>
                     </div>
 
                     <!-- Step 5 -->
@@ -510,30 +517,60 @@
         }
         window.addEventListener('load', initLoader);
 
-        // Form navigation
-        (function () {
-            const steps = document.querySelectorAll('.form-step');
-            let current = 0;
-            const nextBtn = document.getElementById('next-btn');
-            const prevBtn = document.getElementById('prev-btn');
-            const submitBtn = document.getElementById('submit-btn');
-            const sidebar = document.querySelectorAll('#left-steps li');
+        // Form navigation + Review
+    (function () {
+      const steps = document.querySelectorAll('.form-step');
+      let current = 0;
+      const nextBtn = document.getElementById('next-btn');
+      const prevBtn = document.getElementById('prev-btn');
+      const submitBtn = document.getElementById('submit-btn');
+      const sidebar = document.querySelectorAll('#left-steps li');
 
-            function showStep(n) {
-                steps.forEach((s, i) => s.style.display = i === n ? 'block' : 'none');
-                sidebar.forEach((li, i) => li.classList.toggle('active', i === n));
-                prevBtn.style.display = n === 0 ? 'none' : 'inline-block';
-                nextBtn.style.display = n < steps.length - 1 ? 'inline-block' : 'none';
-                submitBtn.style.display = n === steps.length - 1 ? 'inline-block' : 'none';
-            }
+      function showStep(n) {
+        steps.forEach((s, i) => s.style.display = i === n ? 'block' : 'none');
+        sidebar.forEach((li, i) => li.classList.toggle('active', i === n));
+        prevBtn.style.display = n === 0 ? 'none' : 'inline-block';
+        nextBtn.style.display = n < steps.length - 1 ? 'inline-block' : 'none';
+        submitBtn.style.display = n === steps.length - 1 ? 'inline-block' : 'none';
 
-            nextBtn.onclick = () => { current++; showStep(current); }
-            prevBtn.onclick = () => { current--; showStep(current); }
-            sidebar.forEach((li, i) => li.onclick = () => { current = i; showStep(i); });
+        if (n === 4) populateReview(); // populate review step
+      }
 
-            showStep(current);
-        })();
-    </script>
+      function populateReview() {
+        document.getElementById('review-personal').textContent =
+          `${document.getElementById('name').value || '—'}, ${document.getElementById('email').value || '—'}, ${document.getElementById('phone').value || '—'}, ${document.getElementById('school').value || '—'}`;
+
+        document.getElementById('review-committee').textContent =
+          `${document.getElementById('committee1').value || '—'} (${document.getElementById('country1').value || '—'}), ` +
+          `${document.getElementById('committee2').value || '—'} (${document.getElementById('country2').value || '—'}), ` +
+          `${document.getElementById('committee3').value || '—'} (${document.getElementById('country3').value || '—'})`;
+
+        const exp = document.querySelector('input[name="mun_exp"]:checked');
+        if (exp && exp.value === "first") {
+          document.getElementById('review-mun').textContent = "First MUN";
+        } else if (exp && exp.value === "prev") {
+          document.getElementById('review-mun').textContent = document.getElementById('mun_details').value || "—";
+        } else {
+          document.getElementById('review-mun').textContent = "—";
+        }
+
+        document.getElementById('review-diet').textContent = document.getElementById('diet').value || '—';
+      }
+
+      nextBtn.onclick = () => { current++; showStep(current); }
+      prevBtn.onclick = () => { current--; showStep(current); }
+      sidebar.forEach((li, i) => li.onclick = () => { current = i; showStep(i); });
+
+      // Toggle MUN details textarea
+      document.querySelectorAll('input[name="mun_exp"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+          document.getElementById('mun-details-group').style.display =
+            radio.value === "prev" ? "block" : "none";
+        });
+      });
+
+      showStep(current);
+    })();
+  </script>
 </body>
-
 </html>
