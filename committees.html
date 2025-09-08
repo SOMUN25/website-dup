@@ -51,7 +51,12 @@
         .committee-card:nth-last-child(2),
         .committee-card:last-child {
           grid-column: span 1;
-          justify-self: center;
+        }
+        .committee-card:nth-last-child(2) {
+          justify-self: end;
+        }
+        .committee-card:last-child {
+          justify-self: start;
         }
         .committee-card { background: rgba(204,23,30,0.1); padding: 2rem; border-radius: 10px; text-align: center; transition: transform 0.3s; border: 1px solid rgba(204,23,30,0.2); }
         .committee-card:hover { transform: translateY(-5px); background: rgba(204,23,30,0.15); }
