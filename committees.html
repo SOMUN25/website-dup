@@ -190,7 +190,9 @@
         function animate() { requestAnimationFrame(animate); globe.rotation.y += 0.005; globe.rotation.x += 0.002; renderer.render(scene, camera); }
         window.addEventListener('load', init);
 
-
+    </script>
+    
+    <script>
         let scene, camera, renderer, globe;
         function init() {
             scene = new THREE.Scene();
@@ -211,7 +213,8 @@
         }
         function animate() { requestAnimationFrame(animate); globe.rotation.y += 0.005; globe.rotation.x += 0.002; renderer.render(scene, camera); }
         window.addEventListener('load', init);
-
     </script>
+
+
 </body>
 </html>
