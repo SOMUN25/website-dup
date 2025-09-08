@@ -48,22 +48,19 @@
           gap: 2rem;
           margin-top: 2rem;
         }
-       .committee-card:nth-last-child(2),
-        .committee-card:last-child {
-          grid-column: 1 / -1;
-          justify-self: center;
+       
+        @media (min-width: 900px) and (max-width: 1199px) {
+          .committees-grid {
+            grid-template-columns: repeat(3, minmax(280px, 1fr));
+          }
+          .committee-card:nth-last-child(2) {
+            grid-column: 2;
+          }
+          .committee-card:last-child {
+            grid-column: 3;
+          }
         }
-        
-        .committee-card:nth-last-child(2),
-        .committee-card:last-child {
-          display: inline-block;
-        }
-        
-        .committee-card:nth-last-child(2)::after {
-          content: "";
-          display: inline-block;
-          width: 2rem;
-        }
+
 
 
         .committee-card { background: rgba(204,23,30,0.1); padding: 2rem; border-radius: 10px; text-align: center; transition: transform 0.3s; border: 1px solid rgba(204,23,30,0.2); }
@@ -98,13 +95,6 @@
         body.loaded .committee-card {
           transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-        .last-row {
-          grid-column: 1 / -1;
-          display: flex;
-          justify-content: center;
-          gap: 2rem;
-        }
-
     </style>
 </head>
 <body>
@@ -155,8 +145,6 @@
                 <h3>UNOOSA</h3>
                 <p>The United Nations Office for Outer Space Affairs focuses on the peaceful exploration and use of outer space, and developing international cooperation in space law and exploration.</p>
             </div>
-        </div>
-        <div class="last-row">
             <div class="committee-card">
                 <h3>HCC</h3>
                 <p>The Hawkins Crisis Committee is a fast-paced crisis simulation inspired by supernatural events in Hawkins, drawing from the Stranger Things universe.</p>
