@@ -24,7 +24,13 @@
             overflow-x: hidden;
         }
 
-        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 1000; display: flex; justify-content: center; align-items: center; flex-direction: column; transform-origin: center; will-change: transform, opacity; }
+        #loader {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--bg); z-index: 1000;
+            display: flex; justify-content: center; align-items: center; flex-direction: column;
+            transform-origin: center; will-change: transform, opacity;
+        }
         #loader.zoomOut { animation: zoomOut 1s ease forwards, fadeOut 1s ease forwards 1s; }
         @keyframes zoomOut { from { transform: scale(1);} to { transform: scale(1.2);} }
         @keyframes fadeOut { to { opacity: 0; visibility: hidden;} }
@@ -37,34 +43,55 @@
         .nav-links a { color: var(--text); text-decoration: none; font-weight: 600; padding: 0.5rem 1rem; transition: all 0.3s; border-bottom: 2px solid transparent; font-family: 'Source Sans Pro', sans-serif; }
         .nav-links a:hover { color: var(--primary); border-bottom: 2px solid var(--primary); }
 
-        .hero { height: 60vh; display: flex; justify-content: center; align-items: center; text-align: center; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/api/placeholder/1920/600'); background-size: cover; background-position: center; position: relative; }
-        .hero h1 { font-size: 4rem; color: var(--text); font-family: 'Lato', sans-serif; font-weight: 900; }
+        .hero {
+            height: 60vh; display: flex; justify-content: center; align-items: center; text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/api/placeholder/1920/600');
+            background-size: cover; background-position: center; position: relative; overflow: hidden;
+        }
+        
+        .hero-title {
+            font-size: 4rem; color: var(--primary); font-family: 'Lato', sans-serif;
+            font-weight: 900; text-transform: uppercase; letter-spacing: 5px;
+            opacity: 0; transform: translateY(-50px);
+            text-shadow: 0 0 5px #cc171e, 0 0 15px #cc171e, 0 0 30px #cc171e;
+        }
+        @keyframes fadeDown { 0% { opacity: 0; transform: translateY(-50px);} 100% { opacity: 1; transform: translateY(0);} }
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { text-shadow: 0 0 5px #cc171e, 0 0 15px #cc171e, 0 0 30px #cc171e; }
+            20%, 24%, 55% { text-shadow: 0 0 2px #cc171e, 0 0 5px #cc171e, 0 0 10px #cc171e; }
+        }
 
         .section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
         .section h2 { color: var(--primary); font-family: 'Lato', sans-serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem; text-align: center; }
-        .committees-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 2rem;
-          margin-top: 2rem;
-        }
+        .committees-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem; }
        
         @media (min-width: 900px) and (max-width: 1199px) {
-          .committees-grid {
-            grid-template-columns: repeat(3, minmax(280px, 1fr));
-          }
-          .committee-card:nth-last-child(2) {
-            grid-column: 2;
-          }
-          .committee-card:last-child {
-            grid-column: 3;
-          }
+          .committees-grid { grid-template-columns: repeat(3, minmax(280px, 1fr)); }
+          .committee-card:nth-last-child(2) { grid-column: 2; }
+          .committee-card:last-child { grid-column: 3; }
         }
 
+        .committee-card {
+            background: rgba(204,23,30,0.05); padding: 2rem; border-radius: 10px; text-align: center;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.3s ease;
+            border: 1px solid rgba(204,23,30,0.2);
+            opacity: 0; transform: translateY(30px);
+        }
+        .committee-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(204,23,30,0.15);
+            box-shadow: 0 10px 20px rgba(204,23,30,0.3);
+        }
+        .committee-img {
+            width: 100%; border-radius: 10px; margin-bottom: 1rem;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .committee-card:hover .committee-img {
+            transform: scale(1.05); box-shadow: 0 10px 20px rgba(204,23,30,0.4);
+        }
+        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(30px);} 100% { opacity: 1; transform: translateY(0);} }
+        body.loaded .committee-card { animation: fadeUp 0.6s ease-out forwards; }
 
-
-        .committee-card { background: rgba(204,23,30,0.1); padding: 2rem; border-radius: 10px; text-align: center; transition: transform 0.3s; border: 1px solid rgba(204,23,30,0.2); }
-        .committee-card:hover { transform: translateY(-5px); background: rgba(204,23,30,0.15); }
         .committee-card h3 { color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem; font-family: 'Lato', sans-serif; font-weight: 700; }
         .committee-card p { font-size: 1rem; line-height: 1.6; font-family: 'Source Sans Pro', sans-serif; }
         .agenda { margin-top: 1rem; font-style: italic; color: #bbb; font-size: 0.95rem; }
@@ -77,24 +104,6 @@
         .footer-section ul li a { color: var(--text); text-decoration: none; transition: color 0.3s; }
         .footer-section ul li a:hover { color: var(--primary); }
         .copyright { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
-        .hero h1,
-        .committee-card {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        body.loaded .hero h1 {
-          animation: fadeDown 1s ease-out forwards;
-        }
-
-        @keyframes fadeDown {
-          0% { opacity: 0; transform: translateY(-30px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-
-        
-        body.loaded .committee-card {
-          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
     </style>
 </head>
 <body>
@@ -115,79 +124,66 @@
     </nav>
 
     <section class="hero">
-        <h1>Committees</h1>
+        <h1 class="hero-title">Committees</h1>
     </section>
-
+    
     <section class="section">
         <h2>Featured Committees</h2>
         <div class="committees-grid">
-            <div class="committee-card">
-                <h3>DISEC</h3>
-                <p>The Disarmament and International Security Committee focuses on issues related to global security, arms control, and threats to peace.</p>
-            </div>
-            <div class="committee-card">
-                <h3>WHO</h3>
-                <p>The World Health Organisation addresses international public health challenges and coordinates efforts to combat global health crises.</p>
-            </div>
-            <div class="committee-card">
-                <h3>UNHRC</h3>
-                <p>The United Nations Human Rights Council works to promote and protect human rights around the world, ensuring accountability and justice for all.</p>
-            </div>
-            <div class="committee-card">
-                <h3>Lok Sabha</h3>
-                <p>The Lok Sabha committee simulates the Indian Parliament, offering delegates a chance to debate domestic and international policies from a national perspective.</p>
-            </div>
-            <div class="committee-card">
-                <h3>International Press (IP)</h3>
-                <p>The International Press plays the role of journalists and media houses, reporting, analyzing, and questioning delegates during committee sessions.</p>
-            </div>
-            <div class="committee-card">
-                <h3>UNOOSA</h3>
-                <p>The United Nations Office for Outer Space Affairs focuses on the peaceful exploration and use of outer space, and developing international cooperation in space law and exploration.</p>
-            </div>
-            <div class="committee-card">
-                <h3>HCC</h3>
-                <p>The Hawkins Crisis Committee is a fast-paced crisis simulation inspired by supernatural events in Hawkins, drawing from the Stranger Things universe.</p>
-            </div>
-            <div class="committee-card">
-                <h3>UNODC</h3>
-                <p>The United Nations Office on Drugs and Crime addresses global issues related to organized crime, illicit drugs, corruption, and terrorism.</p>
-            </div>
+            <div class="committee-card"><img src="images/disec.jpg" class="committee-img"><h3>DISEC</h3><p>The Disarmament and International Security Committee focuses on global security, arms control, and threats to peace.</p></div>
+            <div class="committee-card"><img src="images/who.jpg" class="committee-img"><h3>WHO</h3><p>The World Health Organisation addresses international public health challenges and coordinates efforts to combat global health crises.</p></div>
+            <div class="committee-card"><img src="images/unhrc.jpg" class="committee-img"><h3>UNHRC</h3><p>Promotes and protects human rights around the world.</p></div>
+            <div class="committee-card"><img src="images/lok-sabha.jpg" class="committee-img"><h3>Lok Sabha</h3><p>Simulates the Indian Parliament, offering delegates a chance to debate domestic and international policies.</p></div>
+            <div class="committee-card"><img src="images/ip.jpg" class="committee-img"><h3>International Press (IP)</h3><p>Acts as journalists and media houses, reporting, analyzing, and questioning delegates during sessions.</p></div>
+            <div class="committee-card"><img src="images/unoosa.jpg" class="committee-img"><h3>UNOOSA</h3><p>Focuses on peaceful exploration and use of outer space, and developing international cooperation in space law.</p></div>
+            <div class="committee-card"><img src="images/hcc.jpg" class="committee-img"><h3>HCC</h3><p>Fast-paced crisis simulation inspired by supernatural events in Hawkins, from Stranger Things.</p></div>
+            <div class="committee-card"><img src="images/unodc.jpg" class="committee-img"><h3>UNODC</h3><p>Addresses global issues related to organized crime, illicit drugs, corruption, and terrorism.</p></div>
         </div>
     </section>
 
     <footer>
         <div class="footer-content">
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="committees.html">Committees</a></li>
-                    <li><a href="registration.html">Registration</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contact Info</h3>
-                <ul>
-                    <li><a href="mailto:communication.somun@hyd.silveroaks.co.in">Email: communication.somun@hyd.silveroaks.co.in</a></li>
-                    <li>Phone: Seiona Jacob | +91 73372 13122</li>
-                    <li>Phone: Keshav Agarwal | +91 81436 02940</li>
-                    <li><a href="https://maps.app.goo.gl/rP3vczHG2kZaSXjH9" target="_blank">Address: Silver Oaks International School, Mighty Oaks, Hyderabad, India</li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Follow Us</h3>
-                    <li><a href="https://www.instagram.com/somunhyd/" target="_blank">Instagram</a></li>
-            </div>
+            <div class="footer-section"><h3>Quick Links</h3><ul><li><a href="about.html">About Us</a></li><li><a href="committees.html">Committees</a></li><li><a href="registration.html">Registration</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+            <div class="footer-section"><h3>Contact Info</h3><ul><li>Email: communication.somun@hyd.silveroaks.co.in</li><li>Phone: Seiona Jacob | +91 73372 13122</li><li>Phone: Keshav Agarwal | +91 81436 02940</li><li>Address: Silver Oaks International School, Mighty Oaks, Hyderabad, India</li></ul></div>
+            <div class="footer-section"><h3>Follow Us</h3><ul><li><a href="#">Instagram</a></li><li><a href="#">Twitter</a></li><li><a href="#">Facebook</a></li><li><a href="#">LinkedIn</a></li></ul></div>
         </div>
-        <div class="copyright">
-            <p>&copy; 2025 SOMUN. All rights reserved.</p>
-            <p><a href="terms.html" target="_blank">Terms & Conditions</a></p>
-        </div>
+        <div class="copyright"><p>&copy; 2025 SOMUN. All rights reserved.</p></div>
     </footer>
+
     <script>
         let scene, camera, renderer, globe;
+
+        function startScrollAnimations() {
+            const cards = document.querySelectorAll('.committee-card');
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = "1";
+                            entry.target.style.transform = "translateY(0)";
+                        }, index * 150);
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            cards.forEach(card => observer.observe(card));
+        }
+
+        function typeHeroText() {
+            const hero = document.querySelector('.hero-title');
+            const text = hero.textContent;
+            hero.textContent = '';
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    hero.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, 100);
+                }
+            }
+            type();
+        }
+
         function init() {
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
@@ -201,39 +197,22 @@
             scene.add(globe);
 
             camera.position.z = 2;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                globe.rotation.y += 0.005;
+                globe.rotation.x += 0.002;
+                renderer.render(scene, camera);
+            }
             animate();
 
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('zoomOut');
+                document.body.classList.add('loaded');
 
-            setTimeout(() => { 
-                document.getElementById('loader').classList.add('zoomOut'); 
-                document.body.classList.add('loaded'); 
-
-    
                 startScrollAnimations();
+                typeHeroText();
             }, 3000);
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            globe.rotation.y += 0.005;
-            globe.rotation.x += 0.002;
-            renderer.render(scene, camera);
-        }
-
-        function startScrollAnimations() {
-            const cards = document.querySelectorAll('.committee-card');
-
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = "1";
-                        entry.target.style.transform = "translateY(0)";
-                        obs.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.2 });
-
-            cards.forEach(card => observer.observe(card));
         }
 
         window.addEventListener('load', init);
