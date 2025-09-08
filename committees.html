@@ -42,8 +42,17 @@
 
         .section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
         .section h2 { color: var(--primary); font-family: 'Lato', sans-serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem; text-align: center; }
-        .committees-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem; }
-
+        .committees-grid {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center; 
+          gap: 2rem;
+          margin-top: 2rem;
+        }
+        .committee-card {
+          flex: 1 1 280px; 
+          max-width: 320px;
+        }
         .committee-card { background: rgba(204,23,30,0.1); padding: 2rem; border-radius: 10px; text-align: center; transition: transform 0.3s; border: 1px solid rgba(204,23,30,0.2); }
         .committee-card:hover { transform: translateY(-5px); background: rgba(204,23,30,0.15); }
         .committee-card h3 { color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem; font-family: 'Lato', sans-serif; font-weight: 700; }
@@ -85,34 +94,36 @@
         <h2>Featured Committees</h2>
         <div class="committees-grid">
             <div class="committee-card">
-                <h3>UNSC</h3>
-                <p>The United Nations Security Council is charged with maintaining international peace and security. Delegates address crises and conflicts that challenge global stability.</p>
-                <p class="agenda">Sample Agenda: Addressing escalating tensions in the South China Sea</p>
+                <h3>DISEC</h3>
+                <p>The Disarmament and International Security Committee focuses on issues related to global security, arms control, and threats to peace.</p>
+            </div>
+            <div class="committee-card">
+                <h3>WHO</h3>
+                <p>The World Health Organisation addresses international public health challenges and coordinates efforts to combat global health crises.</p>
             </div>
             <div class="committee-card">
                 <h3>UNHRC</h3>
                 <p>The United Nations Human Rights Council works to promote and protect human rights around the world, ensuring accountability and justice for all.</p>
-                <p class="agenda">Sample Agenda: Protecting the rights of refugees in conflict zones</p>
-            </div>
-            <div class="committee-card">
-                <h3>DISEC</h3>
-                <p>The Disarmament and International Security Committee focuses on issues related to global security, arms control, and threats to peace.</p>
-                <p class="agenda">Sample Agenda: Regulating the use of autonomous weapons in warfare</p>
-            </div>
-            <div class="committee-card">
-                <h3>ECOSOC</h3>
-                <p>The Economic and Social Council coordinates international efforts to promote sustainable development and economic cooperation.</p>
-                <p class="agenda">Sample Agenda: Advancing global strategies for climate resilience</p>
             </div>
             <div class="committee-card">
                 <h3>Lok Sabha</h3>
                 <p>The Lok Sabha committee simulates the Indian Parliament, offering delegates a chance to debate domestic and international policies from a national perspective.</p>
-                <p class="agenda">Sample Agenda: Addressing cybersecurity threats to national security</p>
             </div>
             <div class="committee-card">
-                <h3>UNCEA</h3>
-                <p>The United Nations Committee on Extra-terrestrial Affairs explores the challenges and opportunities of humanity’s future beyond Earth.</p>
-                <p class="agenda">Sample Agenda: First contact with extraterrestrials and drafting universal law</p>
+                <h3>International Press (IP)</h3>
+                <p>The International Press plays the role of journalists and media houses, reporting, analyzing, and questioning delegates during committee sessions.</p>
+            </div>
+            <div class="committee-card">
+                <h3>UNOOSA</h3>
+                <p>The United Nations Office for Outer Space Affairs focuses on the peaceful exploration and use of outer space, and developing international cooperation in space law and exploration.</p>
+            </div>
+            <div class="committee-card">
+                <h3>HCC</h3>
+                <p>The Hawkins Crisis Committee is a fast-paced crisis simulation inspired by supernatural events in Hawkins, drawing from the Stranger Things universe.</p>
+            </div>
+            <div class="committee-card">
+                <h3>UNODC</h3>
+                <p>The United Nations Office on Drugs and Crime addresses global issues related to organized crime, illicit drugs, corruption, and terrorism.</p>
             </div>
         </div>
     </section>
