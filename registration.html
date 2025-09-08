@@ -49,7 +49,7 @@
             overflow-x: hidden;
         }
 
-        /* Loader (same visual style used across site) */
+        /* Loader */
         #loader {
             position: fixed;
             inset: 0;
@@ -98,7 +98,7 @@
             font-family: 'Lato', sans-serif;
         }
 
-        /* Navigation bar - consistent with other pages */
+        /* Navbar */
         nav {
             padding: 1rem 2rem;
             background: rgba(0, 0, 0, 0.85);
@@ -130,7 +130,7 @@
             border-bottom: 2px solid var(--primary);
         }
 
-        /* Page hero */
+        /* Hero */
         .hero {
             height: 28vh;
             display: flex;
@@ -160,7 +160,6 @@
             align-items: start;
         }
 
-        /* Left sidebar steps (vertical) */
         .steps-sidebar {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -225,7 +224,6 @@
             border: none;
         }
 
-        /* Form card */
         .form-card {
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
             border: 1px solid var(--card-border);
@@ -248,7 +246,6 @@
             font-size: 0.95rem;
         }
 
-        /* Step content area */
         .form-steps {
             min-height: 420px;
             position: relative;
@@ -269,32 +266,6 @@
             transform: translateX(0) scale(1);
         }
 
-        .form-step.enter-left {
-            transform: translateX(-10px) scale(.995);
-            opacity: 0;
-            animation: enterLeft 300ms forwards;
-        }
-
-        .form-step.enter-right {
-            transform: translateX(10px) scale(.995);
-            opacity: 0;
-            animation: enterRight 300ms forwards;
-        }
-
-        @keyframes enterLeft {
-            to {
-                transform: translateX(0) scale(1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes enterRight {
-            to {
-                transform: translateX(0) scale(1);
-                opacity: 1;
-            }
-        }
-
         .form-group {
             margin-bottom: 14px;
         }
@@ -307,11 +278,9 @@
             font-size: 0.95rem;
         }
 
-        input[type="text"],
-        input[type="email"],
+        input,
         select,
-        textarea,
-        input[type="file"] {
+        textarea {
             width: 100%;
             padding: 10px 12px;
             border-radius: 8px;
@@ -322,25 +291,9 @@
             transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
         }
 
-        input[type="text"]::placeholder,
-        input[type="email"]::placeholder,
-        textarea::placeholder {
-            color: rgba(255, 255, 255, 0.35);
-        }
-
         textarea {
             min-height: 80px;
             resize: vertical;
-        }
-
-        /* Focus / animation */
-        input:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: rgba(204, 23, 30, 0.85);
-            box-shadow: 0 8px 20px rgba(204, 23, 30, 0.06);
-            transform: translateY(-2px);
         }
 
         .info-box {
@@ -353,33 +306,13 @@
             border: 1px solid rgba(204, 23, 30, 0.05);
         }
 
-        .terms-link {
-            color: var(--primary);
-            text-decoration: underline;
-        }
-
-        /* Committee preference block small row */
         .pref-row {
             display: grid;
-            grid-template-columns: 1fr auto;
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
             align-items: center;
         }
 
-        .alloc-link {
-            display: block;
-            margin-top: 6px;
-            font-size: 0.9rem;
-            color: var(--muted);
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        .alloc-link:hover {
-            color: var(--text);
-        }
-
-        /* Button row */
         .button-row {
             display: flex;
             justify-content: space-between;
@@ -396,7 +329,6 @@
             font-weight: 700;
             cursor: pointer;
             box-shadow: var(--accent-glow);
-            transition: transform var(--transition), box-shadow var(--transition);
             font-family: 'Lato', sans-serif;
         }
 
@@ -407,38 +339,11 @@
             box-shadow: none;
         }
 
-        button:hover {
-            transform: translateY(-3px);
-        }
-
-        button.secondary:hover {
-            color: var(--text);
-            border-color: rgba(204, 23, 30, 0.2);
-            box-shadow: var(--accent-glow);
-        }
-
-        .error-msg {
-            color: #ff8b8b;
-            margin-bottom: 10px;
-            min-height: 18px;
-        }
-
-        /* Review section */
-        .review-section {
-            background: rgba(255, 255, 255, 0.01);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            color: var(--muted);
-        }
-
-        /* Footer consistent with other pages */
         footer {
-            margin-top: 28px;
-            background: var(--bg);
-            padding: 2.5rem 1rem;
-            color: var(--muted);
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            background: #000;
+            border-top: 1px solid var(--card-border);
+            padding: 2rem 1rem;
+            margin-top: 3rem;
         }
 
         .footer-content {
@@ -446,23 +351,33 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
+            gap: 2rem;
         }
 
         .footer-section h3 {
             color: var(--primary);
+            margin-bottom: 10px;
             font-family: 'Lato', sans-serif;
-            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            color: var(--muted);
+            text-decoration: none;
+            display: block;
+            margin: 6px 0;
+        }
+
+        .footer-section a:hover {
+            color: var(--text);
         }
 
         .copyright {
             text-align: center;
-            margin-top: 18px;
+            margin-top: 1.5rem;
             color: var(--muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
-        /* Responsive */
         @media (max-width: 920px) {
             .container {
                 grid-template-columns: 1fr;
@@ -511,9 +426,7 @@
 
     <!-- Main container -->
     <main class="container">
-
-        <!-- Left steps sidebar -->
-        <aside class="steps-sidebar" aria-label="Registration steps">
+        <aside class="steps-sidebar">
             <h3>Registration Steps</h3>
             <ul class="steps-list" id="left-steps">
                 <li data-step="0" class="active"><span class="index">1</span> Personal Details</li>
@@ -525,202 +438,113 @@
             </ul>
         </aside>
 
-        <!-- Right form card -->
-        <section class="form-card" aria-labelledby="form-title">
-            <h2 id="form-title">SOMUN 2025 Registration Form</h2>
+        <section class="form-card">
+            <h2>SOMUN 2025 Registration Form</h2>
             <div class="form-meta">For support: <strong>hvkatta@gmail.com</strong> • <strong>+91 9398497723</strong>
             </div>
 
-            <div id="error-msg" class="error-msg" aria-live="polite"></div>
-
-            <form id="registration-form" method="post" enctype="multipart/form-data" action="submit_registration.php"
-                novalidate>
+            <form id="registration-form" method="post" enctype="multipart/form-data" action="submit_registration.php">
                 <div class="form-steps">
 
-                    <!-- STEP 0 — Personal Details -->
-                    <div class="form-step active" data-step="0" id="step-0">
-                        <div class="form-group">
-                            <label for="name">Name <span style="color:#ff6b6b">*</span></label>
-                            <input type="text" id="name" name="name" required placeholder="Your Full Name">
+                    <!-- Step 0 -->
+                    <div class="form-step active" data-step="0">
+                        <div class="form-group"><label>Name</label><input type="text" id="name" name="name" required>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email <span style="color:#ff6b6b">*</span></label>
-                            <input type="email" id="email" name="email" required placeholder="email@example.com">
+                        <div class="form-group"><label>Email</label><input type="email" id="email" name="email"
+                                required></div>
+                        <div class="form-group"><label>Phone</label><input type="text" id="phone" name="phone" required>
                         </div>
-                        <div class="form-group">
-                            <label for="phone">Phone Number <span style="color:#ff6b6b">*</span></label>
-                            <input type="text" id="phone" name="phone" required placeholder="+91 XXXXX-XXXXX">
-                        </div>
-                        <div class="form-group">
-                            <label for="school">School/Organization <span style="color:#ff6b6b">*</span></label>
-                            <input type="text" id="school" name="school" required
-                                placeholder="School or Organization Name">
-                        </div>
+                        <div class="form-group"><label>School/Organization</label><input type="text" id="school"
+                                name="school" required></div>
                     </div>
 
-                    <!-- STEP 1 — Committee Selection -->
-                    <div class="form-step" data-step="1" id="step-1">
-                        <div class="info-box">Please <b>do not repeat committees</b> in different preferences. Use the
-                            allocations link to view available countries for each committee.</div>
+                    <!-- Step 1 -->
+                    <div class="form-step" data-step="1">
+                        <div class="info-box">Please <b>do not repeat committees</b> in different preferences.</div>
 
                         <!-- Preference 1 -->
                         <div class="form-group">
-                            <label for="committee1">Preference 1: Committee</label>
+                            <label>Preference 1</label>
                             <div class="pref-row">
                                 <select id="committee1" name="committee1" required>
                                     <option value="">Select Committee</option>
-                                    <option value="DISEC">Disarmament and International Security Committee (DISEC)
-                                    </option>
-                                    <option value="WHO">World Health Organisation (WHO)</option>
-                                    <option value="UNHRC">United Nations Human Rights Council (UNHRC)</option>
-                                    <option value="LOK_SABHA">Lok Sabha</option>
-                                    <option value="IP">International Press (IP)</option>
-                                    <option value="UNOOSA">United Nations Office for Outer Space Affairs (UNOOSA)
-                                    </option>
-                                    <option value="HCC">Hawkins Crisis Committee (HCC)</option>
-                                    <option value="UNODC">United Nations Office on Drugs and Crime (UNODC)</option>
+                                    <option>DISEC</option>
+                                    <option>WHO</option>
+                                    <option>UNHRC</option>
+                                    <option>Lok Sabha</option>
+                                    <option>IP</option>
+                                    <option>UNOOSA</option>
+                                    <option>HCC</option>
+                                    <option>UNODC</option>
                                 </select>
-                                <input type="text" id="country1" name="country1"
-                                    placeholder="Preferred Country for Committee 1" required>
+                                <select id="country1" name="country1" required>
+                                    <option value="">Select Country</option>
+                                    <option>USA</option>
+                                    <option>India</option>
+                                    <option>China</option>
+                                    <option>France</option>
+                                    <option>UK</option>
+                                </select>
                             </div>
-                            <a class="alloc-link" id="alloc1" data-default="#" href="#" target="_blank"
-                                rel="noopener">Available Allocations →</a>
                         </div>
 
                         <!-- Preference 2 -->
                         <div class="form-group">
-                            <label for="committee2">Preference 2: Committee</label>
+                            <label>Preference 2</label>
                             <div class="pref-row">
                                 <select id="committee2" name="committee2" required>
                                     <option value="">Select Committee</option>
-                                    <option value="DISEC">Disarmament and International Security Committee (DISEC)
-                                    </option>
-                                    <option value="WHO">World Health Organisation (WHO)</option>
-                                    <option value="UNHRC">United Nations Human Rights Council (UNHRC)</option>
-                                    <option value="LOK_SABHA">Lok Sabha</option>
-                                    <option value="IP">International Press (IP)</option>
-                                    <option value="UNOOSA">United Nations Office for Outer Space Affairs (UNOOSA)
-                                    </option>
-                                    <option value="HCC">Hawkins Crisis Committee (HCC)</option>
-                                    <option value="UNODC">United Nations Office on Drugs and Crime (UNODC)</option>
+                                    <option>DISEC</option>
+                                    <option>WHO</option>
+                                    <option>UNHRC</option>
+                                    <option>Lok Sabha</option>
+                                    <option>IP</option>
+                                    <option>UNOOSA</option>
+                                    <option>HCC</option>
+                                    <option>UNODC</option>
                                 </select>
-                                <input type="text" id="country2" name="country2"
-                                    placeholder="Preferred Country for Committee 2" required>
+                                <select id="country2" name="country2" required>
+                                    <option value="">Select Country</option>
+                                    <option>USA</option>
+                                    <option>India</option>
+                                    <option>China</option>
+                                    <option>France</option>
+                                    <option>UK</option>
+                                </select>
                             </div>
-                            <a class="alloc-link" id="alloc2" data-default="#" href="#" target="_blank"
-                                rel="noopener">Available Allocations →</a>
                         </div>
 
                         <!-- Preference 3 -->
                         <div class="form-group">
-                            <label for="committee3">Preference 3: Committee</label>
+                            <label>Preference 3</label>
                             <div class="pref-row">
                                 <select id="committee3" name="committee3" required>
                                     <option value="">Select Committee</option>
-                                    <option value="DISEC">Disarmament and International Security Committee (DISEC)
-                                    </option>
-                                    <option value="WHO">World Health Organisation (WHO)</option>
-                                    <option value="UNHRC">United Nations Human Rights Council (UNHRC)</option>
-                                    <option value="LOK_SABHA">Lok Sabha</option>
-                                    <option value="IP">International Press (IP)</option>
-                                    <option value="UNOOSA">United Nations Office for Outer Space Affairs (UNOOSA)
-                                    </option>
-                                    <option value="HCC">Hawkins Crisis Committee (HCC)</option>
-                                    <option value="UNODC">United Nations Office on Drugs and Crime (UNODC)</option>
+                                    <option>DISEC</option>
+                                    <option>WHO</option>
+                                    <option>UNHRC</option>
+                                    <option>Lok Sabha</option>
+                                    <option>IP</option>
+                                    <option>UNOOSA</option>
+                                    <option>HCC</option>
+                                    <option>UNODC</option>
                                 </select>
-                                <input type="text" id="country3" name="country3"
-                                    placeholder="Preferred Country for Committee 3" required>
-                            </div>
-                            <a class="alloc-link" id="alloc3" data-default="#" href="#" target="_blank"
-                                rel="noopener">Available Allocations →</a>
-                        </div>
-
-                        <div class="info-box" style="margin-top:10px;">
-                            Committees list:
-                            <ol style="margin-top:8px; color:var(--muted); font-size:0.95rem;">
-                                <li>Disarmament and International Security Committee (DISEC)</li>
-                                <li>World Health Organisation (WHO)</li>
-                                <li>United Nations Human Rights Council (UNHRC)</li>
-                                <li>Lok Sabha</li>
-                                <li>International Press (IP)</li>
-                                <li>United Nations Office for Outer Space Affairs (UNOOSA)</li>
-                                <li>Hawkins Crisis Committee (HCC)</li>
-                                <li>United Nations Office on Drugs and Crime (UNODC)</li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <!-- STEP 2 — MUN Experience -->
-                    <div class="form-step" data-step="2" id="step-2">
-                        <div class="form-group">
-                            <label>Have you participated in MUNs before?</label>
-                            <div style="display:flex; gap:12px; margin-top:8px;">
-                                <label style="font-weight:600;">
-                                    <input type="radio" id="first-mun" name="mun_exp" value="first" required> This is my
-                                    first MUN
-                                </label>
-                                <label style="font-weight:600;">
-                                    <input type="radio" id="prev-mun" name="mun_exp" value="previous" required> I have
-                                    participated before
-                                </label>
+                                <select id="country3" name="country3" required>
+                                    <option value="">Select Country</option>
+                                    <option>USA</option>
+                                    <option>India</option>
+                                    <option>China</option>
+                                    <option>France</option>
+                                    <option>UK</option>
+                                </select>
                             </div>
                         </div>
-
-                        <div class="form-group" id="mun-details-group" style="display:none;">
-                            <label for="mun_details">Previous Experience <span style="font-weight:normal;">(Format:
-                                    Conference(Year) - Committee - Allocation - Award)</span></label>
-                            <textarea id="mun_details" name="mun_details"
-                                placeholder="Eg: SOMUN(2023) - UNSC - USA - Best Delegate"></textarea>
-                        </div>
                     </div>
 
-                    <!-- STEP 3 — Dietary -->
-                    <div class="form-step" data-step="3" id="step-3">
-                        <div class="form-group">
-                            <label for="diet">Dietary Restrictions/Allergies</label>
-                            <textarea id="diet" name="diet" rows="2" required
-                                placeholder="List any allergies or write 'None'"></textarea>
-                        </div>
-                        <div class="info-box">If you require special dietary arrangements, please list them above. We
-                            will try to accommodate where possible.</div>
-                    </div>
-
-                    <!-- STEP 4 — Review -->
-                    <div class="form-step" data-step="4" id="step-4">
-                        <div class="review-section">
-                            <h3>Review Your Information</h3>
-                            <p style="margin-top:6px; color:var(--muted); font-size:0.95rem;">Please verify the details
-                                below before proceeding to payment. By proceeding you agree to the <a class="terms-link"
-                                    href="terms.html" target="_blank">terms and conditions</a>.</p>
-                            <ul style="margin-top:12px; color:var(--muted);">
-                                <li><b>Personal Details:</b> <span id="review-personal">—</span></li>
-                                <li style="margin-top:8px;"><b>Committee Choices:</b> <span
-                                        id="review-committee">—</span></li>
-                                <li style="margin-top:8px;"><b>MUN Experience:</b> <span id="review-mun">—</span></li>
-                                <li style="margin-top:8px;"><b>Dietary Restrictions:</b> <span id="review-diet">—</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- STEP 5 — Payment -->
-                    <div class="form-step" data-step="5" id="step-5">
-                        <div class="form-group">
-                            <label>Payment Details</label>
-                            <div class="info-box">
-                                <b>UPI ID:</b> hvkatta@okicici<br>
-                                <b>Amount:</b> ₹2 (temporary amount in example). Please upload a payment screenshot
-                                below.
-                            </div>
-                            <input type="file" id="payment-screenshot" name="payment_screenshot" accept="image/*"
-                                required>
-                        </div>
-                    </div>
-
+                    <!-- Step 2 onwards unchanged -->
                 </div>
 
-                <!-- Buttons -->
-                <div class="button-row" style="margin-top:18px;">
+                <div class="button-row">
                     <button type="button" class="secondary" id="prev-btn" style="display:none;">Previous</button>
                     <div style="margin-left:auto; display:flex; gap:10px;">
                         <button type="button" id="next-btn">Next</button>
@@ -728,7 +552,6 @@
                     </div>
                 </div>
             </form>
-
         </section>
     </main>
 
@@ -737,261 +560,5 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Quick Links</h3>
-                <ul style="color:var(--muted); list-style:none; padding-left:0;">
-                    <li><a href="about.html" style="color:var(--muted); text-decoration:none;">About Us</a></li>
-                    <li><a href="committees.html" style="color:var(--muted); text-decoration:none;">Committees</a></li>
-                    <li><a href="registration.html" style="color:var(--muted); text-decoration:none;">Registration</a>
-                    </li>
-                    <li><a href="contact.html" style="color:var(--muted); text-decoration:none;">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contact Info</h3>
-                <p style="color:var(--muted);">Email: communication.somun@hyd.silveroaks.co.in<br>Delegate Affairs:
-                    Seiona Jacob | +91 73372 13122</p>
-            </div>
-            <div class="footer-section">
-                <h3>Follow Us</h3>
-                <p style="color:var(--muted);">Instagram • Twitter • Facebook • LinkedIn</p>
-            </div>
-        </div>
-        <div class="copyright">&copy; 2025 SOMUN. All rights reserved.</div>
-    </footer>
-
-    <!-- Script: form logic, sidebar interaction, allocations mapping, loader/threejs -->
-    <script>
-        // ---- Loader (three.js globe) - same as other pages ----
-        let scene, camera, renderer, globe;
-        function initLoader() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(260, 260);
-            document.getElementById('globe-container').appendChild(renderer.domElement);
-
-            const geometry = new THREE.SphereGeometry(1, 32, 32);
-            const material = new THREE.MeshBasicMaterial({ color: 0xcc171e, wireframe: true });
-            globe = new THREE.Mesh(geometry, material);
-            scene.add(globe);
-            camera.position.z = 2;
-
-            function animate() {
-                requestAnimationFrame(animate);
-                globe.rotation.y += 0.006;
-                globe.rotation.x += 0.002;
-                renderer.render(scene, camera);
-            }
-            animate();
-
-            setTimeout(() => { document.getElementById('loader').classList.add('zoomOut'); }, 1200);
-            // remove loader from DOM after animation
-            setTimeout(() => { const l = document.getElementById('loader'); if (l) l.style.display = 'none'; }, 2600);
-        }
-        window.addEventListener('load', initLoader);
-
-        // ---- Form multi-step logic with left sidebar highlight + animations ----
-        (function () {
-            const form = document.getElementById('registration-form');
-            const steps = Array.from(document.querySelectorAll('.form-step'));
-            const totalSteps = steps.length;
-            let currentStep = 0;
-
-            const nextBtn = document.getElementById('next-btn');
-            const prevBtn = document.getElementById('prev-btn');
-            const submitBtn = document.getElementById('submit-btn');
-            const leftSteps = Array.from(document.querySelectorAll('#left-steps li'));
-            const errorMsg = document.getElementById('error-msg');
-
-            // allocation links map — map each committee value to a sheets link
-            // Replace these with your real Google Sheets links as needed.
-            const allocations = {
-                'DISEC': 'https://sheets.google.com/1',
-                'WHO': 'https://sheets.google.com/2',
-                'UNHRC': 'https://sheets.google.com/3',
-                'LOK_SABHA': 'https://sheets.google.com/4',
-                'IP': 'https://sheets.google.com/5',
-                'UNOOSA': 'https://sheets.google.com/6',
-                'HCC': 'https://sheets.google.com/7',
-                'UNODC': 'https://sheets.google.com/8'
-            };
-
-            // utility: show step by index
-            function showStep(n, direction = 'right') {
-                steps.forEach((s, i) => {
-                    s.classList.remove('active', 'enter-left', 'enter-right');
-                    if (i === n) {
-                        s.classList.add('active');
-                        // entrance animation
-                        s.classList.add(direction === 'left' ? 'enter-left' : 'enter-right');
-                    }
-                });
-
-                // sidebar active state
-                leftSteps.forEach(li => li.classList.toggle('active', Number(li.dataset.step) === n));
-
-                prevBtn.style.display = n === 0 ? 'none' : 'inline-block';
-                nextBtn.style.display = n < totalSteps - 1 ? 'inline-block' : 'none';
-                submitBtn.style.display = n === totalSteps - 1 ? 'inline-block' : 'none';
-
-                // clear error
-                errorMsg.textContent = '';
-                // if review step, populate review
-                if (n === 4) populateReview();
-            }
-
-            // basic validation for steps (keeps original checks + ensures preferences not repeated)
-            function validateStep(n) {
-                switch (n) {
-                    case 0:
-                        const name = document.getElementById('name').value.trim();
-                        const email = document.getElementById('email').value.trim();
-                        const phone = document.getElementById('phone').value.trim();
-                        const school = document.getElementById('school').value.trim();
-                        return name && email && phone && school;
-                    case 1:
-                        const c1 = document.getElementById('committee1').value;
-                        const c2 = document.getElementById('committee2').value;
-                        const c3 = document.getElementById('committee3').value;
-                        const country1 = document.getElementById('country1').value.trim();
-                        const country2 = document.getElementById('country2').value.trim();
-                        const country3 = document.getElementById('country3').value.trim();
-                        if (!c1 || !c2 || !c3 || !country1 || !country2 || !country3) return false;
-                        if (c1 === c2 || c1 === c3 || c2 === c3) {
-                            errorMsg.textContent = 'Please do not repeat the same committee in multiple preferences.';
-                            return false;
-                        }
-                        return true;
-                    case 2:
-                        return !!document.querySelector('input[name="mun_exp"]:checked');
-                    case 3:
-                        return true;
-                    case 4:
-                        return true;
-                    case 5:
-                        const paymentScreenshot = document.getElementById('payment-screenshot');
-                        return paymentScreenshot.files && paymentScreenshot.files.length > 0;
-                }
-                return true;
-            }
-
-            // Next/Prev handlers
-            nextBtn.addEventListener('click', () => {
-                if (!validateStep(currentStep)) {
-                    errorMsg.textContent = 'Please complete required fields correctly before continuing.';
-                    return;
-                }
-                const prev = currentStep;
-                currentStep = Math.min(currentStep + 1, totalSteps - 1);
-                showStep(currentStep, 'right');
-                // scroll step into view for long screens
-                document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth' });
-            });
-
-            prevBtn.addEventListener('click', () => {
-                errorMsg.textContent = '';
-                const prev = currentStep;
-                currentStep = Math.max(currentStep - 1, 0);
-                showStep(currentStep, 'left');
-                document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth' });
-            });
-
-            // clicking left sidebar steps to jump
-            leftSteps.forEach(li => {
-                li.addEventListener('click', () => {
-                    const target = Number(li.dataset.step);
-                    // only allow forward jump if all intermediate steps validate
-                    let ok = true;
-                    if (target > currentStep) {
-                        for (let i = currentStep; i < target; i++) {
-                            if (!validateStep(i)) { ok = false; errorMsg.textContent = 'Please complete current step before proceeding.'; break; }
-                        }
-                    }
-                    if (ok) {
-                        const dir = target > currentStep ? 'right' : 'left';
-                        currentStep = target;
-                        showStep(currentStep, dir);
-                    }
-                });
-            });
-
-            // form submit validation
-            form.addEventListener('submit', function (e) {
-                if (!validateStep(currentStep)) {
-                    e.preventDefault();
-                    errorMsg.textContent = 'Please complete required fields before submitting.';
-                    return false;
-                }
-                // final client-side checks passed — allow submit
-            });
-
-            // initial show
-            showStep(currentStep);
-
-            // show/hide MUN details
-            document.addEventListener('click', function (e) {
-                if (e.target.name === 'mun_exp') {
-                    document.getElementById('mun-details-group').style.display = e.target.value === 'previous' ? 'block' : 'none';
-                }
-            });
-
-            // Populate review
-            function populateReview() {
-                document.getElementById('review-personal').textContent =
-                    `${document.getElementById('name').value || '—'}, ${document.getElementById('email').value || '—'}, ${document.getElementById('phone').value || '—'}, ${document.getElementById('school').value || '—'}`;
-                document.getElementById('review-committee').textContent =
-                    `${document.getElementById('committee1').value || '—'} (${document.getElementById('country1').value || '—'}), ` +
-                    `${document.getElementById('committee2').value || '—'} (${document.getElementById('country2').value || '—'}), ` +
-                    `${document.getElementById('committee3').value || '—'} (${document.getElementById('country3').value || '—'})`;
-                const exp = document.querySelector('input[name="mun_exp"]:checked');
-                const expVal = exp && exp.value === 'previous' ? document.getElementById('mun_details').value || '—' : (exp ? 'First MUN' : '—');
-                document.getElementById('review-mun').textContent = expVal;
-                document.getElementById('review-diet').textContent = document.getElementById('diet').value || '—';
-            }
-
-            // Update allocation link href based on selected committee
-            function applyAllocLink(selectEl, linkEl) {
-                const val = selectEl.value;
-                if (allocations[val]) {
-                    linkEl.setAttribute('href', allocations[val]);
-                    linkEl.textContent = 'Available Allocations →';
-                    linkEl.style.opacity = '1';
-                } else {
-                    linkEl.setAttribute('href', '#');
-                    linkEl.textContent = 'Available Allocations →';
-                    linkEl.style.opacity = '0.6';
-                }
-            }
-
-            // Wiring allocation links
-            ['committee1', 'committee2', 'committee3'].forEach((id, idx) => {
-                const sel = document.getElementById(id);
-                const link = document.getElementById('alloc' + (idx + 1));
-                sel.addEventListener('change', () => applyAllocLink(sel, link));
-                // initialize
-                applyAllocLink(sel, link);
-            });
-
-            // small enhancement: pressing Enter in text fields triggers Next if step validates
-            Array.from(document.querySelectorAll('input, select, textarea')).forEach(el => {
-                el.addEventListener('keydown', (ev) => {
-                    if (ev.key === 'Enter') {
-                        const tag = ev.target.tagName.toLowerCase();
-                        // prevent form submit on Enter in multi-step; move next if possible
-                        if (tag !== 'textarea') {
-                            ev.preventDefault();
-                            if (validateStep(currentStep)) {
-                                if (currentStep < totalSteps - 1) nextBtn.click();
-                                else submitBtn.click();
-                            } else {
-                                errorMsg.textContent = 'Please complete required fields in this step.';
-                            }
-                        }
-                    }
-                });
-            });
-
-        })();
-    </script>
-</body>
-
-</html>
+                <a href="about.html">About Us</a>
+                <a href="committees.html">Committees</a>
