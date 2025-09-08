@@ -49,8 +49,6 @@ nav { padding:1rem 2rem; background-color: rgba(0,0,0,0.9); position:fixed; widt
     font-weight:900;
     text-transform:uppercase;
     letter-spacing:5px;
-    opacity:0;
-    transform:translateY(-50px);
 }
 
 .section { padding:5rem 2rem; max-width:1200px; margin:0 auto; }
@@ -63,21 +61,19 @@ nav { padding:1rem 2rem; background-color: rgba(0,0,0,0.9); position:fixed; widt
     margin-top:2rem;
 }
 
-@media (min-width:900px) and (max-width:1199px) {
-    .committees-grid { grid-template-columns:repeat(3, minmax(280px,1fr)); }
-    .committee-card:nth-last-child(2) { grid-column:2; }
-    .committee-card:last-child { grid-column:3; }
-}
-
 .committee-card {
     background: rgba(204,23,30,0.05);
     padding:2rem;
     border-radius:10px;
     text-align:center;
-    transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.3s ease;
     border:1px solid rgba(204,23,30,0.2);
+    transform: translateY(30px);
     opacity:0;
-    transform:translateY(30px);
+    transition: transform 0.6s ease, opacity 0.6s ease;
+}
+.committee-card.visible {
+    transform: translateY(0);
+    opacity:1;
 }
 .committee-card:hover {
     transform:translateY(-10px) scale(1.02);
@@ -94,9 +90,6 @@ nav { padding:1rem 2rem; background-color: rgba(0,0,0,0.9); position:fixed; widt
     transform: scale(1.05);
     box-shadow:0 10px 20px rgba(204,23,30,0.4);
 }
-
-body.loaded .committee-card { animation: fadeUp 0.6s ease-out forwards; }
-@keyframes fadeUp { 0% {opacity:0; transform:translateY(30px);} 100% {opacity:1; transform:translateY(0);} }
 
 .committee-card h3 { color: var(--primary); margin-bottom:1rem; font-size:1.5rem; font-family:'Lato',sans-serif; font-weight:700; }
 .committee-card p { font-size:1rem; line-height:1.6; font-family:'Source Sans Pro',sans-serif; }
@@ -234,9 +227,6 @@ function init() {
 
     setTimeout(()=>{
         document.getElementById('loader').classList.add('zoomOut');
-        document.body.classList.add('loaded');
-        startScrollAnimations();
-        typeHeroText();
     },3000);
 }
 
@@ -245,22 +235,6 @@ function animate() {
     globe.rotation.y += 0.005;
     globe.rotation.x += 0.002;
     renderer.render(scene,camera);
-}
-
-function startScrollAnimations() {
-    const cards = document.querySelectorAll('.committee-card');
-    const observer = new IntersectionObserver((entries, obs)=>{
-        entries.forEach((entry,index)=>{
-            if(entry.isIntersecting){
-                setTimeout(()=>{
-                    entry.target.style.opacity = "1";
-                    entry.target.style.transform = "translateY(0)";
-                }, index*150);
-                obs.unobserve(entry.target);
-            }
-        });
-    }, { threshold:0.2 });
-    cards.forEach(card=>observer.observe(card));
 }
 
 function typeHeroText() {
@@ -277,8 +251,24 @@ function typeHeroText() {
     }
     type();
 }
+function scrollCards() {
+    const cards = document.querySelectorAll('.committee-card');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+    cards.forEach(card => observer.observe(card));
+}
 
-window.addEventListener('load', init);
+window.addEventListener('load', ()=>{
+    typeHeroText();
+    init();
+    scrollCards();
+});
 </script>
 </body>
 </html>
