@@ -417,70 +417,29 @@
             box-shadow: var(--accent-glow);
         }
 
-        .error-msg {
-            color: #ff8b8b;
-            margin-bottom: 10px;
-            min-height: 18px;
-        }
-
-        /* Review section */
-        .review-section {
-            background: rgba(255, 255, 255, 0.01);
+        .info-box {
+            background: #e8f0fe;
             padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            color: var(--muted);
+            border-radius: 4px;
+            font-size: 0.95em;
+            margin-bottom: 16px;
         }
 
-        /* Footer consistent with other pages */
-        footer {
-            margin-top: 28px;
-            background: var(--bg);
-            padding: 2.5rem 1rem;
-            color: var(--muted);
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        .review-section {
+            background: #fafafa;
+            padding: 16px;
+            border-radius: 6px;
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
+        .terms-link {
+            color: #1976d2;
+            text-decoration: underline;
+            font-size: 0.95em;
         }
 
-        .footer-section h3 {
-            color: var(--primary);
-            font-family: 'Lato', sans-serif;
-            margin-bottom: 8px;
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 18px;
-            color: var(--muted);
-            font-size: 0.95rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 920px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-
-            .steps-sidebar {
-                position: relative;
-                top: auto;
-                display: flex;
-                gap: 10px;
-                overflow-x: auto;
-                padding: 10px;
-            }
-
-            .steps-list {
-                flex-direction: row;
-                gap: 8px;
-            }
+        .error-msg {
+            color: #c00;
+            margin-top: 8px;
         }
     </style>
 </head>
