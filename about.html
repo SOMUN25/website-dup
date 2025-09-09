@@ -197,6 +197,11 @@
             opacity: 1;
         }
 
+        .team-member a[href^="mailto"]:hover {
+            color: var(--primary) !important;
+            opacity: 1 !important;
+        }
+
         .copyright {
             margin-top: 3rem;
             padding-top: 2rem;
@@ -256,8 +261,9 @@
             </div>
             <div class="team-member">
                 <h3>Communications Team</h3>
-                <li><a href="mailto:communication.somun@hyd.silveroaks.co.in">communication.somun@hyd.
-                    silveroaks.co.in</a></li>
+                <div style="overflow-wrap: break-word;">
+                    <a href="mailto:communication.somun@hyd.silveroaks.co.in" style="color: var(--text); text-decoration: none; opacity: 0.8; transition: all 0.3s; display: inline-block; max-width: 100%; word-break: break-all;">communication.somun@hyd.silveroaks.co.in</a>
+                </div>
             </div>
         </div>
     </div>
