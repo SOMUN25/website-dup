@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         :root { 
-            --primary: #991116; 
+            --primary: #cc171e; 
             --text: #FFFFFF; 
             --bg: #000000; 
         }
@@ -22,7 +22,7 @@
         }
 
         body { 
-            background: #000000;
+            background: linear-gradient(to bottom, #000000, #1a1a1a);
             color: var(--text); 
             font-family: 'Source Sans Pro', sans-serif; 
             min-height: 100vh;
@@ -38,21 +38,18 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            opacity: 0.9;
+            opacity: 0.7;
         }
 
-        .mobile-nav-btn {
-            display: none;
+        .overlay {
             position: fixed;
-            top: 1rem;
-            right: 1rem;
-            z-index: 4;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.8rem;
-            cursor: pointer;
-            padding: 0.5rem;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.6) 100%);
+            pointer-events: none;
+            z-index: 2;
         }
 
         nav { 
@@ -100,16 +97,29 @@
         }
 
         .coming-soon h1 {
-            font-size: 5rem;
+            font-size: 6.5rem;
             color: #ffffff;
             font-family: 'Lato', sans-serif;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 15px;
-            text-shadow: 0 0 15px rgba(255,255,255,0.3);
+            letter-spacing: 12px;
+            text-shadow: 
+                0 0 10px rgba(255,255,255,0.5),
+                0 0 20px rgba(255,255,255,0.3),
+                0 0 30px rgba(255,255,255,0.2);
             animation: float 6s ease-in-out infinite;
             position: relative;
-            margin-top: 0;
+        }
+
+        .coming-soon h1::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
         }
 
         @keyframes float {
@@ -137,73 +147,18 @@
         }
 
         @media (max-width: 768px) {
-            .mobile-nav-btn {
-                display: block;
-            }
-
-            .nav-links {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0,0,0,0.95);
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 2rem;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .nav-links a {
-                font-size: 1.2rem;
-                padding: 1rem;
-            }
-
             .coming-soon h1 {
-                font-size: 2.8rem;
+                font-size: 4rem;
                 letter-spacing: 8px;
-                margin-top: -4rem;
-            }
-
-            #globe-container {
-                transform: scale(0.7) translateY(-15%);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .coming-soon h1 {
-                font-size: 2rem;
-                letter-spacing: 4px;
-                margin-top: -6rem;
-            }
-
-            #globe-container {
-                transform: scale(0.5) translateY(-25%);
-            }
-        }
-
-        @media (max-height: 600px) {
-            .coming-soon h1 {
-                font-size: 1.8rem;
-                margin-top: -2rem;
-            }
-
-            #globe-container {
-                transform: scale(0.4) translateY(-35%);
             }
         }
     </style>
 </head>
 <body>
+    <div class="overlay"></div>
     <div id="globe-container"></div>
     
     <nav>
-        <button class="mobile-nav-btn" aria-label="Toggle navigation">☰</button>
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
@@ -225,23 +180,6 @@
     </footer>
 
     <script>
-        // Mobile navigation functionality
-        const mobileBtn = document.querySelector('.mobile-nav-btn');
-        const navLinks = document.querySelector('.nav-links');
-
-        mobileBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileBtn.textContent = navLinks.classList.contains('active') ? '×' : '☰';
-        });
-
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                mobileBtn.textContent = '☰';
-            });
-        });
-
-        // Globe animation
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ 
@@ -254,22 +192,22 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         document.getElementById('globe-container').appendChild(renderer.domElement);
 
-        // Create main sphere with cleaner wireframe
-        const geometry = new THREE.SphereGeometry(5, 20, 20);
+        // Create main sphere
+        const geometry = new THREE.SphereGeometry(5, 64, 64);
         const material = new THREE.MeshBasicMaterial({
-            color: 0x991116,
+            color: 0xcc171e,
             wireframe: true,
             transparent: true,
-            opacity: 0.9
+            opacity: 0.8
         });
 
         // Create inner sphere
-        const innerGeometry = new THREE.SphereGeometry(4.8, 15, 15);
+        const innerGeometry = new THREE.SphereGeometry(4.8, 32, 32);
         const innerMaterial = new THREE.MeshBasicMaterial({
-            color: 0x991116,
+            color: 0xcc171e,
             wireframe: true,
             transparent: true,
-            opacity: 0.2
+            opacity: 0.3
         });
 
         const sphere = new THREE.Mesh(geometry, material);
@@ -278,21 +216,29 @@
         scene.add(sphere);
         scene.add(innerSphere);
 
-        // Adjust camera position based on screen size
-        function updateCameraPosition() {
-            const isMobile = window.innerWidth <= 768;
-            camera.position.z = isMobile ? 15 : 12;
-            camera.updateProjectionMatrix();
-        }
-        
-        updateCameraPosition();
+        camera.position.z = 10;
+
+        let targetRotationX = 0;
+        let targetRotationY = 0;
+        let currentRotationX = 0;
+        let currentRotationY = 0;
+
+        document.addEventListener('mousemove', (event) => {
+            targetRotationX = (event.clientY / window.innerHeight - 0.5) * 0.5;
+            targetRotationY = (event.clientX / window.innerWidth - 0.5) * 0.5;
+        });
 
         function animate() {
             requestAnimationFrame(animate);
-            sphere.rotation.x += 0.001;
-            sphere.rotation.y += 0.002;
             
-            innerSphere.rotation.x -= 0.001;
+            // Smooth rotation
+            currentRotationX += (targetRotationX - currentRotationX) * 0.05;
+            currentRotationY += (targetRotationY - currentRotationY) * 0.05;
+            
+            sphere.rotation.x = currentRotationX;
+            sphere.rotation.y += 0.003;
+            
+            innerSphere.rotation.x = -currentRotationX * 0.5;
             innerSphere.rotation.y -= 0.001;
             
             renderer.render(scene, camera);
@@ -304,7 +250,6 @@
             renderer.setSize(width, height);
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
-            updateCameraPosition();
         });
 
         animate();
