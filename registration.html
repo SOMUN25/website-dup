@@ -261,140 +261,10 @@
 
     .form-step {
       display: none;
-      opacity: 0;
-      transform: translateX(20px);
-      transition: all 0.4s ease-in-out;
     }
 
     .form-step.active {
       display: block;
-      opacity: 1;
-      transform: translateX(0);
-      animation: slideInFade 0.5s ease-out forwards;
-    }
-
-    .form-step.exiting {
-      opacity: 0;
-      transform: translateX(-20px);
-    }
-
-    @keyframes slideInFade {
-      from {
-        opacity: 0;
-        transform: translateX(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    /* Enhanced input animations */
-    input, select, textarea {
-      transition: all 0.3s ease;
-      border: 2px solid var(--card-border);
-    }
-
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(204, 23, 30, 0.1);
-      transform: translateY(-1px);
-    }
-
-    input:invalid:not(:placeholder-shown), select:invalid:not(:placeholder-shown) {
-      border-color: #ff6b6b;
-      box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
-    }
-
-    input:valid:not(:placeholder-shown), select:valid:not(:placeholder-shown) {
-      border-color: #51cf66;
-      box-shadow: 0 0 0 3px rgba(81, 207, 102, 0.1);
-    }
-
-    /* Step indicator animations */
-    .steps-list li {
-      transition: all 0.3s ease;
-    }
-
-    .steps-list li:hover {
-      background: rgba(255, 255, 255, 0.05);
-      transform: translateX(5px);
-    }
-
-    .steps-list li.active {
-      background: rgba(204, 23, 30, 0.15);
-      color: var(--text);
-      box-shadow: var(--accent-glow);
-      transform: translateX(8px);
-    }
-
-    .steps-list .index {
-      transition: all 0.3s ease;
-    }
-
-    .steps-list li.active .index {
-      background: var(--primary);
-      color: white;
-      transform: scale(1.1);
-    }
-
-    /* Button animations */
-    button {
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    button::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: width 0.3s ease, height 0.3s ease;
-    }
-
-    button:hover::before {
-      width: 300px;
-      height: 300px;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(204, 23, 30, 0.25);
-    }
-
-    /* Form validation feedback */
-    .validation-message {
-      color: #ff6b6b;
-      font-size: 12px;
-      margin-top: 4px;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: all 0.3s ease;
-    }
-
-    .validation-message.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Shake animation for invalid forms */
-    @keyframes shake {
-      0%, 20%, 40%, 60%, 80% {
-        transform: translateX(-5px);
-      }
-      10%, 30%, 50%, 70%, 90% {
-        transform: translateX(5px);
-      }
-      100% {
-        transform: translateX(0);
-      }
     }
 
     @media (max-width: 768px) {
@@ -419,6 +289,14 @@
         font-size: 12px;
       }
     }
+    footer { background-color:var(--bg); color:var(--text); text-align:center; padding:3rem 2rem; margin-top:4rem; border-top:1px solid rgba(255,255,255,0.1); font-family:'Source Sans Pro',sans-serif; }
+    .footer-content { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
+    .footer-section h3 { color:var(--primary); margin-bottom:1rem; font-family:'Lato',sans-serif; font-weight:700; }
+    .footer-section ul { list-style:none; }
+    .footer-section ul li { margin-bottom:0.5rem; }
+    .footer-section ul li a { color:var(--text); text-decoration:none; transition:color 0.3s; }
+    .footer-section ul li a:hover { color:var(--primary); }
+    .copyright { margin-top:2rem; padding-top:2rem; border-top:1px solid rgba(255,255,255,0.1); }
   </style>
 </head>
 <body>
@@ -553,18 +431,16 @@
             </div>
           </div>
           <div class="form-group" id="mun-details-group" style="display:none;">
-            <label for="mun_details">Previous Experience Details *</label>
+            <label for="mun_details">Previous Experience Details</label>
             <textarea id="mun_details" name="mun_details" rows="4" placeholder="Eg: SOMUN(2023) - UNSC - USA - Best Delegate"></textarea>
-            <div class="validation-message" id="mun_details-error">Please provide details about your previous experience</div>
           </div>
         </div>
 
         <!-- Step 3: Dietary Restrictions -->
         <div class="form-step" data-step="3">
           <div class="form-group">
-            <label for="diet">Dietary Restrictions or Allergies *</label>
-            <textarea id="diet" name="diet" rows="4" placeholder="List any allergies, dietary restrictions, or write 'None'" required></textarea>
-            <div class="validation-message" id="diet-error">Please specify your dietary restrictions or write 'None'</div>
+            <label for="diet">Dietary Restrictions or Allergies</label>
+            <textarea id="diet" name="diet" rows="4" placeholder="List any allergies, dietary restrictions, or write 'None'"></textarea>
           </div>
         </div>
 
@@ -662,23 +538,12 @@
 
     // Show specific step
     function showStep(step) {
-      // Add exit animation to current step
-      const currentActiveStep = document.querySelector('.form-step.active');
-      if (currentActiveStep) {
-        currentActiveStep.classList.add('exiting');
-        setTimeout(() => {
-          currentActiveStep.classList.remove('active', 'exiting');
-        }, 200);
-      }
+      // Update form steps
+      formSteps.forEach((formStep, index) => {
+        formStep.classList.toggle('active', index === step);
+      });
 
-      // Show new step with entrance animation
-      setTimeout(() => {
-        formSteps.forEach((formStep, index) => {
-          formStep.classList.toggle('active', index === step);
-        });
-      }, 200);
-
-      // Update sidebar with smooth transitions
+      // Update sidebar
       stepsList.forEach((li, index) => {
         li.classList.toggle('active', index === step);
       });
@@ -695,9 +560,6 @@
         field.disabled = fieldStepIndex !== step;
       });
 
-      // Clear validation messages
-      hideAllValidationMessages();
-
       // Populate review if on review step
       if (step === 4) {
         populateReview();
@@ -707,12 +569,6 @@
       if (step === totalSteps - 1) {
         updateSubmitButton();
       }
-
-      // Scroll to top of form smoothly
-      document.querySelector('.form-card').scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
-      });
     }
 
     // Populate review step
@@ -751,76 +607,15 @@
     }
 
     // Validate current step
-    // Validation helper functions
-    function showValidationMessage(fieldId, message) {
-      const field = document.getElementById(fieldId);
-      let errorElement = document.getElementById(fieldId + '-error');
-      
-      if (!errorElement) {
-        errorElement = document.createElement('div');
-        errorElement.className = 'validation-message';
-        errorElement.id = fieldId + '-error';
-        errorElement.textContent = message;
-        field.parentNode.appendChild(errorElement);
-      }
-      
-      errorElement.textContent = message;
-      errorElement.classList.add('show');
-      field.style.borderColor = '#ff6b6b';
-    }
-
-    function hideValidationMessage(fieldId) {
-      const errorElement = document.getElementById(fieldId + '-error');
-      if (errorElement) {
-        errorElement.classList.remove('show');
-      }
-      const field = document.getElementById(fieldId);
-      if (field) {
-        field.style.borderColor = '';
-      }
-    }
-
-    function hideAllValidationMessages() {
-      document.querySelectorAll('.validation-message').forEach(msg => {
-        msg.classList.remove('show');
-      });
-      document.querySelectorAll('input, select, textarea').forEach(field => {
-        field.style.borderColor = '';
-      });
-    }
-
     function validateCurrentStep() {
       const currentFormStep = formSteps[currentStep];
       const requiredFields = currentFormStep.querySelectorAll('input[required]:not([disabled]), select[required]:not([disabled]), textarea[required]:not([disabled])');
-      let isValid = true;
-
-      // Clear previous validation states
-      hideAllValidationMessages();
-
-      // Validate each required field
+      
       for (let field of requiredFields) {
-        const fieldValue = field.value.trim();
-        
-        if (!fieldValue) {
-          let fieldName = field.previousElementSibling?.textContent || field.placeholder || field.name || field.id;
-          fieldName = fieldName.replace('*', '').trim();
-          showValidationMessage(field.id, `${fieldName} is required`);
-          if (isValid) field.focus(); // Focus first invalid field
-          isValid = false;
-        } else if (field.type === 'email' && fieldValue) {
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(fieldValue)) {
-            showValidationMessage(field.id, 'Please enter a valid email address');
-            if (isValid) field.focus();
-            isValid = false;
-          }
-        } else if (field.type === 'tel' && fieldValue) {
-          const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-          if (!phoneRegex.test(fieldValue.replace(/[\s\-\(\)]/g, ''))) {
-            showValidationMessage(field.id, 'Please enter a valid phone number');
-            if (isValid) field.focus();
-            isValid = false;
-          }
+        if (!field.value.trim()) {
+          field.focus();
+          alert(`Please fill in the ${field.name || field.id} field.`);
+          return false;
         }
       }
 
@@ -834,46 +629,12 @@
         
         const uniqueCommittees = new Set(committees.filter(c => c));
         if (uniqueCommittees.size !== committees.filter(c => c).length) {
-          showValidationMessage('committee1', 'Please select different committees for each preference');
-          isValid = false;
-        }
-
-        // Validate country fields
-        const countries = [
-          document.getElementById('country1').value.trim(),
-          document.getElementById('country2').value.trim(),
-          document.getElementById('country3').value.trim()
-        ];
-
-        countries.forEach((country, index) => {
-          if (!country && committees[index]) {
-            showValidationMessage(`country${index + 1}`, 'Country/delegation is required');
-            isValid = false;
-          }
-        });
-      }
-
-      // Special validation for MUN experience step
-      if (currentStep === 2) {
-        const munExp = document.querySelector('input[name="mun_exp"]:checked');
-        if (munExp && munExp.value === 'prev') {
-          const munDetails = document.getElementById('mun_details').value.trim();
-          if (!munDetails) {
-            showValidationMessage('mun_details', 'Please provide details about your previous MUN experience');
-            isValid = false;
-          }
+          alert('Please select different committees for each preference.');
+          return false;
         }
       }
 
-      // Add shake animation for invalid form
-      if (!isValid) {
-        currentFormStep.style.animation = 'shake 0.5s ease-in-out';
-        setTimeout(() => {
-          currentFormStep.style.animation = '';
-        }, 500);
-      }
-
-      return isValid;
+      return true;
     }
 
     // Update submit button state
@@ -911,44 +672,7 @@
     document.querySelectorAll('input[name="mun_exp"]').forEach(radio => {
       radio.addEventListener('change', () => {
         const detailsGroup = document.getElementById('mun-details-group');
-        const detailsField = document.getElementById('mun_details');
-        
-        if (radio.value === 'prev') {
-          detailsGroup.style.display = 'block';
-          detailsField.setAttribute('required', 'required');
-        } else {
-          detailsGroup.style.display = 'none';
-          detailsField.removeAttribute('required');
-          detailsField.value = ''; // Clear the field
-          hideValidationMessage('mun_details');
-        }
-      });
-    });
-
-    // Real-time validation feedback
-    document.querySelectorAll('input, select, textarea').forEach(field => {
-      field.addEventListener('input', () => {
-        if (field.hasAttribute('required') && field.value.trim()) {
-          hideValidationMessage(field.id);
-          field.style.borderColor = '#51cf66';
-        }
-      });
-
-      field.addEventListener('blur', () => {
-        if (field.hasAttribute('required') && !field.disabled) {
-          const value = field.value.trim();
-          if (!value) {
-            const fieldName = field.previousElementSibling?.textContent || field.placeholder || field.name || field.id;
-            showValidationMessage(field.id, `${fieldName.replace('*', '').trim()} is required`);
-          } else if (field.type === 'email' && value) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(value)) {
-              showValidationMessage(field.id, 'Please enter a valid email address');
-            } else {
-              hideValidationMessage(field.id);
-            }
-          }
-        }
+        detailsGroup.style.display = radio.value === 'prev' ? 'block' : 'none';
       });
     });
 
