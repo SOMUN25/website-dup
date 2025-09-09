@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#cc171e">
+    <title>Committees - SOMUN 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #cc171e;
+            --text: #FFFFFF;
+            --bg: #000000;
+            --gradient: linear-gradient(45deg, #cc171e, #ff4b4b);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        nav {
+            padding: 1.2rem 2rem;
+            background-color: rgba(0, 0, 0, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: space-around;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .header {
+            padding-top: 100px;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Lato', sans-serif;
+            font-weight: 900;
+        }
+
+        .committees-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .committee-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .committee-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(204, 23, 30, 0.3);
+        }
+
+        .committee-card h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+        }
+
+        .committee-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .committee-card p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .agenda-list {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .agenda-list li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .agenda-list li::before {
+            content: '•';
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+        }
+
+        footer {
+            background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(20,20,20,1) 100%);
+            color: var(--text);
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s;
+            opacity: 0.8;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary);
+            opacity: 1;
+        }
+
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.8;
+        }
+        footer { background-color: var(--bg); color: var(--text); text-align: center; padding: 3rem 2rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); font-family: 'Source Sans Pro', sans-serif; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .footer-section h3 { color: var(--primary); margin-bottom: 1rem; font-family: 'Lato', sans-serif; font-weight: 700; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 0.5rem; }
+        .footer-section ul li a { color: var(--text); text-decoration: none; transition: color 0.3s; }
+        .footer-section ul li a:hover { color: var(--primary); }
+        .footer-section p a { color: var(--text); text-decoration: none; transition: color 0.3s; }
+        .footer-section p a:hover { color: var(--primary); }
+        .copyright { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="committees.html">Committees</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="registration.html">Register</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <header class="header">
+        <h1>SOMUN 2025 Committees</h1>
+    </header>
+
+    <div class="committees-container">
+        <div class="committee-card">
+            <h2>IP</h2>
+            <h3>International Press</h3>
+            <p>The International Press serves as the eyes and ears of the conference, documenting debates, conducting interviews, and providing comprehensive coverage of all committee proceedings.</p>
+        </div>
+
+        <div class="committee-card">
+            <h2>UNHRC</h2>
+            <h3>United Nations Human Rights Council</h3>
+            <p>Addressing critical human rights issues and promoting fundamental freedoms worldwide through international cooperation and dialogue.</p>
+        </div>
+
+        <div class="committee-card">
+            <h2>DISEC</h2>
+            <h3>Disarmament and International Security Committee</h3>
+            <p>Dealing with disarmament, global challenges, and threats to peace that affect the international community.</p>
+        </div>
+
+        <div class="committee-card">
+            <h2>UNOOSA</h2>
+            <h3>United Nations Office For Outer Space Affairs</h3>
+            <p>Promoting international cooperation in the peaceful use and exploration of space, and in the utilization of space science and technology.</p>
+        </div>
+
+        <div class="committee-card">
+            <h2>Lok Sabha</h2>
+            <h3>Lok Sabha</h3>
+            <p>India's lower house of Parliament, addressing domestic policy issues and legislative matters.</p>
+        </div>
+
+        <div class="committee-card">
+            <h2>WHO</h2>
+            <h3>World Health Organisation</h3>
+            <p>Leading global health initiatives and coordinating international health responses.</p>
+        </div>
+
+        <div class="committee-card">
+            <h2>UNODC</h2>
+            <h3>United Nations Office for Drugs and Crime</h3>
+            <p>Addressing transnational crime, drug trafficking, and international terrorism.</p>
+        </div>
+
+        <div class="committee-card">
+            <h2>HCC</h2>
+            <h3>Hawkins Crisis Council</h3>
+            <p>A specialized crisis committee dealing with dynamic scenarios requiring quick thinking and strategic decision-making.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="committees.html">Committees</a></li>
+                    <li><a href="registration.html">Registration</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><a href="mailto:communication.somun@hyd.silveroaks.co.in">communication.somun@hyd.silveroaks.co.in</a></li>
+                    <li>Phone: USG PR | Seiona Jacob | +91 73372 13122</li>
+                    <li>Phone: USG PR | Keshav Agarwal | +91 81436 02940</li>
+                    <li><a href="https://maps.app.goo.gl/Xb9bXhorMrZyny4o8">Silver Oaks International School, Mighty Oaks, Hyderabad, India - 500188</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="https://www.instagram.com/somunhyd/">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 SOMUN. All rights reserved.</p>
+            <p><a href="terms.html">Terms & Conditions</a></p>
+        </div>
+    </footer>
+</body>
+</html>
