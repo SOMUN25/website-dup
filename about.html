@@ -202,6 +202,21 @@
             opacity: 1 !important;
         }
 
+        .team-email-link {
+            color: var(--text);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s;
+            display: inline-block;
+            max-width: 100%;
+            word-break: break-all;
+        }
+
+        .team-email-link:hover {
+            color: var(--primary);
+            opacity: 1;
+        }
+
         .copyright {
             margin-top: 3rem;
             padding-top: 2rem;
@@ -262,7 +277,7 @@
             <div class="team-member">
                 <h3>Communications Team</h3>
                 <div style="overflow-wrap: break-word;">
-                    <a href="mailto:communication.somun@hyd.silveroaks.co.in" style="color: var(--text); text-decoration: none; opacity: 0.8; transition: all 0.3s; display: inline-block; max-width: 100%; word-break: break-all;">communication.somun@hyd.silveroaks.co.in</a>
+                    <a href="mailto:communication.somun@hyd.silveroaks.co.in" class="team-email-link">communication.somun@hyd.silveroaks.co.in</a>
                 </div>
             </div>
         </div>
