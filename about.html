@@ -72,55 +72,45 @@
         }
 
         .nav-container {
-          display: flex;
-          justify-content: space-between; /* pushes logo left + hamburger right */
-          align-items: center;
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
         }
-        
-        .logo a {
-          color: var(--text);
-          font-weight: 700;
-          font-size: 1.3rem;
-          text-decoration: none;
-        }
-        
+
         .hamburger {
-          display: none;
-          font-size: 2rem;
-          cursor: pointer;
-          color: var(--text);
+        display: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: var(--text);
         }
-        
-        /* Desktop nav links */
+
+        /* Default (desktop) */
         .nav-links {
-          display: flex;
-          gap: 1rem;
+        display: flex;
+        gap: 1rem;
         }
-        
-        /* Mobile */
+
+        /* Mobile fix */
         @media (max-width: 768px) {
-          .hamburger {
-            display: block; /* shows hamburger on mobile */
-          }
-        
-          .nav-links {
-            display: none; /* hide by default */
+        .hamburger {
+            display: block;
+        }
+        .nav-links {
+            display: none;
             flex-direction: column;
             text-align: center;
             background-color: rgba(0,0,0,0.95);
             position: absolute;
-            top: 70px;  /* drop below navbar */
+            top: 70px;
             left: 0;
             width: 100%;
             padding: 1rem 0;
-          }
-        
-          .nav-links.active {
-            display: flex; /* show when toggled */
-          }
+        }
+        .nav-links.active {
+            display: flex;
+        }
         }
 
 
