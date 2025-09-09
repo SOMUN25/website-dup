@@ -73,10 +73,18 @@
 
         .nav-container {
           display: flex;
-          justify-content: space-between;
+          justify-content: space-between; /* pushes logo left + hamburger right */
           align-items: center;
           max-width: 1200px;
           margin: 0 auto;
+          padding: 0 1rem;
+        }
+        
+        .logo a {
+          color: var(--text);
+          font-weight: 700;
+          font-size: 1.3rem;
+          text-decoration: none;
         }
         
         .hamburger {
@@ -86,30 +94,32 @@
           color: var(--text);
         }
         
-        /* Default (desktop) */
+        /* Desktop nav links */
         .nav-links {
           display: flex;
           gap: 1rem;
         }
         
-        /* Mobile fix */
+        /* Mobile */
         @media (max-width: 768px) {
           .hamburger {
-            display: block;
+            display: block; /* shows hamburger on mobile */
           }
+        
           .nav-links {
-            display: none;
+            display: none; /* hide by default */
             flex-direction: column;
             text-align: center;
             background-color: rgba(0,0,0,0.95);
             position: absolute;
-            top: 70px;
+            top: 70px;  /* drop below navbar */
             left: 0;
             width: 100%;
             padding: 1rem 0;
           }
+        
           .nav-links.active {
-            display: flex;
+            display: flex; /* show when toggled */
           }
         }
 
