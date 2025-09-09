@@ -53,6 +53,48 @@
       color: var(--primary);
       border-bottom: 2px solid var(--primary);
     }
+    .nav-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .hamburger {
+      display: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+    
+    /* Default (desktop) */
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    /* Mobile fix */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        text-align: center;
+        background-color: rgba(0,0,0,0.95);
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+    }
+
 
     .hero {
       height: 40vh;
@@ -155,15 +197,28 @@
 
 <body>
   <nav>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="committees.html">Committees</a>
-      <a href="schedule.html">Schedule</a>
-      <a href="registration.html">Register</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </nav>
+    <div class="nav-container">
+        <div class="hamburger" onclick="toggleMenu()">
+        ☰
+        </div>
+        <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="committees.html">Committees</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="registration.html">Register</a>
+        <a href="contact.html">Contact</a>
+        </div>
+    </div>
+    </nav>
+
+    <script>
+    function toggleMenu() {
+        document.getElementById("nav-links").classList.toggle("active");
+    }
+    </script>
+
+  
 
   <section class="hero">
     <h1>Terms and Conditions</h1>
