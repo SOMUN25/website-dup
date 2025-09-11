@@ -377,6 +377,132 @@
         .footer-section p a:hover { color: var(--primary); }
         .copyright { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
 
+            }
+
+
+        /* Announcement Banner */
+        .announcement-banner {
+            background: var(--gradient);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            z-index: 99;
+            box-shadow: 0 4px 15px rgba(204, 23, 30, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .announcement-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .announcement-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
+        }
+
+        .announcement-text strong {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .announcement-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .announcement-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-banner {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+        }
+
+        .close-banner:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Adjust hero section to account for banner */
+        .hero {
+            margin-top: 70px;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .announcement-banner {
+                padding: 0.8rem 1rem;
+                top: 70px;
+            }
+
+            .announcement-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.8rem;
+            }
+
+            .announcement-text {
+                font-size: 1rem;
+                line-height: 1.4;
+            }
+
+            .announcement-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .close-banner {
+                position: absolute;
+                top: 0.5rem;
+                right: 0.5rem;
+                font-size: 1.2rem;
+                margin: 0;
+            }
+
+            .hero {
+                margin-top: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .announcement-text {
+                font-size: 0.9rem;
+            }
+
+            .announcement-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -401,17 +527,35 @@
     </div>
     </nav>
 
-    <script>
-    function toggleMenu() {
-        document.getElementById("nav-links").classList.toggle("active");
-    }
-    </script>
+    <script>
+    function toggleMenu() {
+        document.getElementById("nav-links").classList.toggle("active");
+    }
 
+    function closeBanner() {
+        document.querySelector('.announcement-banner').style.display = 'none';
+        document.querySelector('.hero').style.marginTop = '0';
+    }
+    </script>
 
+    <!-- Announcement Banner -->
+    <div class="announcement-banner" id="announcementBanner">
+        <div class="announcement-content">
+            <div class="announcement-text">
+                🎉 <strong>Allocation Matrix is out!</strong>
+            </div>
+            <a href="#" target="_blank" class="announcement-btn" onclick="window.open('https://1drv.ms/x/c/0e3d8456416b22a1/EWyndBeGunxLg2PWvp3SZ14BW9YL448prVCfoDp8lQY-dg?e=1yAQHZ', '_blank')">
+                View Matrix
+            </a>
+            <button class="close-banner" onclick="closeBanner()" aria-label="Close announcement">
+                ×
+            </button>
+        </div>
+    </div>
     <section class="hero">
         <div class="hero-content">
             <h1>SOMUN 2025</h1>
-            <p>Shaping Tomorrow's Leaders Today</p>
+            <p>Think, Talk, Transform.</p>
             <a href="registration.html" target="_blank" class="cta-button">Register Now</a>
         </div>
     </section>
