@@ -382,17 +382,16 @@
 
         /* Announcement Banner */
         .announcement-banner {
-            background: var(--gradient);
+            background: linear-gradient(45deg, #cc171e, #ff4b4b);
             padding: 1rem 2rem;
             position: fixed;
-            top: 85px;
+            top: 70px;
             left: 0;
             right: 0;
-            z-index: 101;
+            z-index: 99;
             box-shadow: 0 4px 15px rgba(204, 23, 30, 0.3);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            display: block;
+            width: 100%;
         }
 
         .announcement-content {
@@ -454,14 +453,14 @@
 
         /* Adjust hero section to account for banner */
         .hero {
-            margin-top: 140px;
+            margin-top: 130px;
         }
 
         /* Mobile responsive */
         @media (max-width: 768px) {
             .announcement-banner {
                 padding: 0.8rem 1rem;
-                top: 85px;
+                top: 70px;
             }
 
             .announcement-content {
@@ -489,7 +488,7 @@
             }
 
             .hero {
-                margin-top: 160px;
+                margin-top: 150px;
             }
         }
 
