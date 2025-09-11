@@ -423,14 +423,15 @@
             background: rgba(255, 255, 255, 0.9);
             color: #cc171e;
             text-decoration: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
             font-weight: 700;
             transition: all 0.3s ease;
             border: 2px solid rgba(255, 255, 255, 0.3);
             white-space: nowrap;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-size: 0.9rem;
         }
 
         .announcement-btn:hover {
@@ -438,28 +439,6 @@
             color: #cc171e;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .close-banner {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #FFFFFF;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            margin-left: 1rem;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .close-banner:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
         }
 
         /* Adjust hero section to account for banner */
@@ -491,16 +470,6 @@
             .announcement-btn {
                 padding: 0.7rem 1.2rem;
                 font-size: 0.9rem;
-            }
-
-            .close-banner {
-                position: absolute;
-                top: -10px;
-                right: 0;
-                font-size: 1.2rem;
-                margin: 0;
-                width: 35px;
-                height: 35px;
             }
 
             nav {
@@ -555,12 +524,6 @@
     function toggleMenu() {
         document.getElementById("nav-links").classList.toggle("active");
     }
-
-    function closeBanner() {
-        document.querySelector('.announcement-banner').style.display = 'none';
-        document.querySelector('nav').style.top = '0';
-        document.querySelector('.hero').style.marginTop = '80px';
-    }
     </script>
 
     <!-- Announcement Banner -->
@@ -572,9 +535,6 @@
             <a href="#" target="_blank" class="announcement-btn" onclick="window.open('https://1drv.ms/x/c/0e3d8456416b22a1/EWyndBeGunxLg2PWvp3SZ14BW9YL448prVCfoDp8lQY-dg?e=1yAQHZ', '_blank')">
                 View Matrix
             </a>
-            <button class="close-banner" onclick="closeBanner()" aria-label="Close announcement">
-                ×
-            </button>
         </div>
     </div>
     <section class="hero">
