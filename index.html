@@ -97,9 +97,9 @@
         nav {
             padding: 1.2rem 2rem;
             background-color: rgba(0, 0, 0, 0.95);
-            position: fixed;
+            position: sticky;
             width: 100%;
-            top: 60px;
+            top: 0;
             z-index: 100;
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -384,7 +384,7 @@
         .announcement-banner {
             background: linear-gradient(45deg, #cc171e, #ff4b4b);
             padding: 1rem 2rem;
-            position: fixed;
+            position: sticky;
             top: 0;
             left: 0;
             right: 0;
@@ -441,9 +441,9 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        /* Adjust hero section to account for banner */
+        /* Hero section */
         .hero {
-            margin-top: 140px;
+            margin-top: 0;
         }
 
         /* Mobile responsive */
@@ -473,15 +473,15 @@
             }
 
             nav {
-                top: 80px;
+                top: 0;
             }
 
             .nav-links.active {
-                top: 150px;
+                top: 70px;
             }
 
             .hero {
-                margin-top: 160px;
+                margin-top: 0;
             }
         }
 
