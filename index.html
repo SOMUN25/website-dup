@@ -385,13 +385,14 @@
             background: linear-gradient(45deg, #cc171e, #ff4b4b);
             padding: 1rem 2rem;
             position: fixed;
-            top: 70px;
+            top: 85px;
             left: 0;
             right: 0;
-            z-index: 99;
-            box-shadow: 0 4px 15px rgba(204, 23, 30, 0.3);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(204, 23, 30, 0.5);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
             width: 100%;
+            min-height: 60px;
         }
 
         .announcement-content {
@@ -406,49 +407,59 @@
         .announcement-text {
             font-size: 1.1rem;
             font-weight: 600;
-            color: var(--text);
+            color: #FFFFFF;
             flex: 1;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .announcement-text strong {
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
+            color: #FFFFFF;
         }
 
         .announcement-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: var(--text);
+            background: rgba(255, 255, 255, 0.9);
+            color: #cc171e;
             text-decoration: none;
             padding: 0.8rem 1.5rem;
             border-radius: 25px;
-            font-weight: 600;
+            font-weight: 700;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             white-space: nowrap;
-            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .announcement-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: #FFFFFF;
+            color: #cc171e;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .close-banner {
-            background: none;
-            border: none;
-            color: var(--text);
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #FFFFFF;
             font-size: 1.5rem;
             cursor: pointer;
             padding: 0.5rem;
             border-radius: 50%;
             transition: all 0.3s ease;
             margin-left: 1rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .close-banner:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
         }
 
         /* Adjust hero section to account for banner */
@@ -460,18 +471,21 @@
         @media (max-width: 768px) {
             .announcement-banner {
                 padding: 0.8rem 1rem;
-                top: 70px;
+                top: 85px;
+                min-height: 80px;
             }
 
             .announcement-content {
                 flex-direction: column;
                 text-align: center;
                 gap: 0.8rem;
+                position: relative;
             }
 
             .announcement-text {
                 font-size: 1rem;
                 line-height: 1.4;
+                padding-right: 40px;
             }
 
             .announcement-btn {
@@ -481,14 +495,16 @@
 
             .close-banner {
                 position: absolute;
-                top: 0.5rem;
-                right: 0.5rem;
+                top: -10px;
+                right: 0;
                 font-size: 1.2rem;
                 margin: 0;
+                width: 35px;
+                height: 35px;
             }
 
             .hero {
-                margin-top: 150px;
+                margin-top: 170px;
             }
         }
 
