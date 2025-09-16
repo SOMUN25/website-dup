@@ -205,21 +205,22 @@
             z-index: 2;
             flex: 1;
             display: flex;
-            flex-direction: column;   /* stack h1 and h3 */
-            justify-content: center;  /* center vertically */
-            align-items: center;      /* center horizontally */
+            flex-direction: column;
+            justify-content: center;   /* center vertically */
+            align-items: center;       /* center horizontally */
             text-align: center;
             padding: 2rem;
             gap: 1rem;
+            overflow-wrap: break-word; /* prevents overflow on phones */
         }
         
         .coming-soon h1 {
-            font-size: 5rem;
+            font-size: clamp(2rem, 6vw, 5rem); /* auto-resizes with screen */
             color: #ffffff;
             font-family: 'Lato', sans-serif;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 15px;
+            letter-spacing: clamp(3px, 1vw, 15px);
             text-shadow: 0 0 15px rgba(255,255,255,0.3);
             animation: float 6s ease-in-out infinite;
             margin: 0;
@@ -227,40 +228,21 @@
         }
         
         .coming-soon h3 {
-            font-size: 2rem;
+            font-size: clamp(1rem, 3vw, 2rem);
             font-weight: 400;
             color: #cccccc;
-            letter-spacing: 5px;
+            letter-spacing: clamp(1px, 0.5vw, 5px);
             text-shadow: 0 0 8px rgba(255,255,255,0.2);
             margin: 0;
             line-height: 1.4;
         }
         
-        /* Tablet */
-        @media (max-width: 768px) {
-            .coming-soon h1 {
-                font-size: 3rem;
-                letter-spacing: 8px;
-            }
-            .coming-soon h3 {
-                font-size: 1.4rem;
-                letter-spacing: 3px;
-            }
-        }
-        
-        /* Mobile */
+        /* Remove float animation on very small screens (less glitchy) */
         @media (max-width: 480px) {
             .coming-soon h1 {
-                font-size: 2rem;
-                letter-spacing: 4px;
-            }
-            .coming-soon h3 {
-                font-size: 1rem;
-                letter-spacing: 2px;
+                animation: none;
             }
         }
-
-
 
            
     </style>
@@ -372,6 +354,7 @@
     </script>
 </body>
 </html>
+
 
 
 
