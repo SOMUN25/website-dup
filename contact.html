@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#cc171e">
     <title>Contact - SOMUN 2025</title>
+    <link rel="icon" type="image/x-icon" href="icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -348,7 +349,19 @@
 
         <div class="contact-form">
             <h2>Send Message</h2>
-            <form id="contactForm">
+            <form action="https://api.web3forms.com/submit" method="POST" id="contactForm">
+                <!-- Replace YOUR_ACCESS_KEY_HERE with your actual Web3Forms access key -->
+                <input type="hidden" name="access_key" value="a085b0e4-933a-43bb-83ad-ed5ec6abe88c">
+                
+                <!-- Optional: Customize redirect page after form submission -->
+                <input type="hidden" name="redirect" value="https://web3forms.com/success">
+                
+                <!-- Optional: Set custom subject -->
+                <input type="hidden" name="subject" value="New Contact Form Submission from SOMUN Website">
+                
+                <!-- Optional: Set sender email -->
+                <input type="hidden" name="from_name" value="SOMUN Contact Form">
+                
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" required>
@@ -365,24 +378,35 @@
                     <label for="message">Message</label>
                     <textarea id="message" name="message" rows="5" required></textarea>
                 </div>
+                
+                <!-- Honeypot spam protection -->
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                
                 <button type="submit" class="submit-btn">Send Message</button>
+                
+                <p style="font-size: 0.85rem; color: #888; text-align: center; margin-top: 1rem; opacity: 0.7;">
+                    Powered by <a href="https://web3forms.com" target="_blank" style="color: #888; text-decoration: underline;">Web3Forms</a>
+                </p>
             </form>
         </div>
     </div>
 
     <script>
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-        e.preventDefault();
+    // Optional: Add form submission feedback
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.querySelector('.submit-btn');
+    const originalBtnText = submitBtn.textContent;
+
+    form.addEventListener('submit', function(e) {
+        // Change button text to show submission is in progress
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
         
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const subject = document.getElementById('subject').value;
-        const message = document.getElementById('message').value;
-        
-        const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${encodeURIComponent(message)}`;
-        const mailtoLink = `mailto:somunprteam@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
-        
-        window.location.href = mailtoLink;
+        // Reset button after a delay (in case of errors)
+        setTimeout(() => {
+            submitBtn.textContent = originalBtnText;
+            submitBtn.disabled = false;
+        }, 10000);
     });
     </script>
 
