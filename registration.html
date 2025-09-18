@@ -1,13 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Redirecting...</title>
-  <script>
-    window.location.href = "https://forms.gle/cQwtraZSmYt7TtfcA";
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule | SOMUN 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root { 
+            --primary: #cc171e; 
+            --text: #FFFFFF; 
+            --bg: #000000; 
+        }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        body { 
+            background: #000000;
+            color: var(--text); 
+            font-family: 'Source Sans Pro', sans-serif; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #globe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.8;
+        }
+
+        nav { 
+            position: relative;
+            z-index: 3;
+            padding: 1.5rem 2rem; 
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-links { 
+            display: flex; 
+            justify-content: space-around; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+
+        .nav-links a { 
+            color: var(--text); 
+            text-decoration: none; 
+            font-weight: 600; 
+            padding: 0.5rem 1rem; 
+            transition: all 0.3s; 
+            border-bottom: 2px solid transparent; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover { 
+            color: var(--primary); 
+            border-bottom: 2px solid var(--primary); 
+        }
+        .nav-container {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        
+        .hamburger {
+          display: none;
+          font-size: 2rem;
+          cursor: pointer;
+          color: var(--text);
+        }
+        
+        /* Default (desktop) */
+        .nav-links {
+          display: flex;
+          gap: 1rem;
+        }
+        
+        /* Mobile fix */
+        @media (max-width: 768px) {
+          .hamburger {
+            display: block;
+          }
+          .nav-links {
+            display: none;
+            flex-direction: column;
+            text-align: center;
+            background-color: rgba(0,0,0,0.95);
+            position: absolute;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            padding: 1rem 0;
+          }
+          .nav-links.active {
+            display: flex;
+          }
+        }
+
+
+        .coming-soon {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .coming-soon h1 {
+            font-size: 5rem;
+            color: #ffffff;
+            font-family: 'Lato', sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 15px;
+            text-shadow: 0 0 15px rgba(255,255,255,0.3);
+            animation: float 6s ease-in-out infinite;
+            position: relative;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        footer {
+            position: relative;
+            z-index: 3;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .coming-soon h1 {
+                font-size: 2.5rem;
+                letter-spacing: 6px;
+            }
+
+            #globe-container {
+                transform: scale(0.7);
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .coming-soon h1 {
+                font-size: 2rem;
+                letter-spacing: 4px;
+            }
+
+            #globe-container {
+                transform: scale(0.5);
+            }
+        } 
+        footer { background-color: var(--bg); color: var(--text); text-align: center; padding: 3rem 2rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); font-family: 'Source Sans Pro', sans-serif; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .footer-section h3 { color: var(--primary); margin-bottom: 1rem; font-family: 'Lato', sans-serif; font-weight: 700; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 0.5rem; }
+        .footer-section ul li a { color: var(--text); text-decoration: none; transition: color 0.3s; }
+        .footer-section ul li a:hover { color: var(--primary); }
+        .footer-section p a { color: var(--text); text-decoration: none; transition: color 0.3s; }
+        .footer-section p a:hover { color: var(--primary); }
+        .copyright { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        .coming-soon {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;   /* center vertically */
+            align-items: center;       /* center horizontally */
+            text-align: center;
+            padding: 2rem;
+            gap: 1rem;
+            overflow-wrap: break-word; /* prevents overflow on phones */
+        }
+        
+        .coming-soon h1 {
+            font-size: clamp(2rem, 6vw, 5rem); /* auto-resizes with screen */
+            color: #ffffff;
+            font-family: 'Lato', sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: clamp(3px, 1vw, 15px);
+            text-shadow: 0 0 15px rgba(255,255,255,0.3);
+            animation: float 6s ease-in-out infinite;
+            margin: 0;
+            line-height: 1.2;
+        }
+        
+        .coming-soon h3 {
+            font-size: clamp(1rem, 3vw, 2rem);
+            font-weight: 400;
+            color: #cccccc;
+            letter-spacing: clamp(1px, 0.5vw, 5px);
+            text-shadow: 0 0 8px rgba(255,255,255,0.2);
+            margin: 0;
+            line-height: 1.4;
+        }
+        
+        /* Remove float animation on very small screens (less glitchy) */
+        @media (max-width: 480px) {
+            .coming-soon h1 {
+                animation: none;
+            }
+        }
+
+           
+    </style>
 </head>
 <body>
-  <p>Redirecting... If not, <a href="https://forms.gle/cQwtraZSmYt7TtfcA">click here</a>.</p>
+    <div id="globe-container"></div>
+    
+    <nav>
+    <div class="nav-container">
+        <div class="hamburger" onclick="toggleMenu()">
+        ☰
+        </div>
+        <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="committees.html">Committees</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="registration.html">Register</a>
+        <a href="contact.html">Contact</a>
+        </div>
+    </div>
+    </nav>
+
+    <script>
+    function toggleMenu() {
+        document.getElementById("nav-links").classList.toggle("active");
+    }
+    </script>
+
+
+    <main class="coming-soon">
+        <h1>EARLY BIRD REGISTRATIONS</h1>
+        <h3>Have come to an end...</h3>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="committees.html">Committees</a></li>
+                    <li><a href="registration.html">Registration</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><a href="mailto:somunprteam@gmail.com">somunprteam@gmail.com</a></li>
+                    <li>Phone: USG PR | Seiona Jacob | +91 73372 13122</li>
+                    <li>Phone: USG PR | Keshav Agarwal | +91 81436 02940</li>
+                    <li><a href="https://maps.app.goo.gl/Xb9bXhorMrZyny4o8">Silver Oaks International School, Mighty Oaks, Hyderabad, India - 500188</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="https://www.instagram.com/somunhyd/">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 SOMUN. All rights reserved.</p>
+            <p><a href="terms.html">Terms & Conditions</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ 
+            alpha: true, 
+            antialias: true,
+            powerPreference: "high-performance"
+        });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        document.getElementById('globe-container').appendChild(renderer.domElement);
+
+        const geometry = new THREE.SphereGeometry(5, 32, 32);
+        const material = new THREE.MeshBasicMaterial({
+            color: 0xcc171e,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.9
+        });
+
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        camera.position.z = 10;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            sphere.rotation.x += 0.001;
+            sphere.rotation.y += 0.002;
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+
+        animate();
+    </script>
 </body>
 </html>
+
+
+
+
+
