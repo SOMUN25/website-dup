@@ -727,84 +727,68 @@
       }
     }
 
-    /* UPI App Direct Payment Buttons */
+    /* Universal UPI Payment Button */
     .upi-apps-container {
       display: none; /* Hidden by default, shown only on mobile */
-      margin: 1rem 0;
-      padding: 1rem;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
+      margin: 1rem 0 0 0;
+      padding: 0;
+      background: none;
+      border: none;
+      border-radius: 0;
     }
 
-    .upi-apps-title {
-      color: var(--primary);
-      font-size: 14px;
-      font-weight: 600;
+    .or-separator {
       text-align: center;
-      margin-bottom: 1rem;
+      margin: 15px 0 10px 0;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
     }
 
-    .upi-apps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 0.8rem;
-    }
-
-    .upi-app-btn {
+    .universal-upi-btn {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      padding: 1rem 0.8rem;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      justify-content: center;
+      gap: 15px;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      border: none;
       border-radius: 12px;
+      color: white;
+      font-family: 'Lato', sans-serif;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
       text-decoration: none;
-      color: var(--text);
-      position: relative;
-      overflow: hidden;
     }
 
-    .upi-app-btn:hover {
+    .universal-upi-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-      border-color: var(--primary);
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+      background: linear-gradient(135deg, #45a049, #4CAF50);
     }
 
-    .upi-app-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      transition: left 0.5s ease;
-    }
-
-    .upi-app-btn:hover::before {
-      left: 100%;
-    }
-
-    .upi-app-icon {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .upi-app-name {
-      font-size: 12px;
-      font-weight: 600;
+    .universal-upi-btn .upi-text {
       text-align: center;
     }
 
-    .gpay { background: linear-gradient(135deg, #4285f4, #34a853); }
-    .phonepe { background: linear-gradient(135deg, #5f259f, #7b68ee); }
-    .paytm { background: linear-gradient(135deg, #00baf2, #0099cc); }
-    .bhim { background: linear-gradient(135deg, #ff6600, #ff9933); }
+    .universal-upi-btn .upi-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
 
-    /* Show UPI apps only on mobile devices */
+    .universal-upi-btn .upi-subtitle {
+      font-size: 12px;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
+    /* Show UPI button only on touch-enabled mobile devices */
     @media (max-width: 768px) and (hover: none) and (pointer: coarse) {
       .upi-apps-container {
         display: block;
@@ -1965,6 +1949,11 @@
         <div class="form-step" data-step="5">
           <div class="form-group">
             <label>Payment Details</label>
+            <div class="info-box">
+              <div style="font-size: 18px; font-weight: 700; color: var(--primary); text-align: center; padding: 8px; background: rgba(204, 23, 30, 0.1); border: 1px solid rgba(204, 23, 30, 0.3); border-radius: 8px; margin: 4px 0;">
+                Registration Fee: ₹3000
+              </div>
+            </div>
             <div class="info-box" style="text-align:center;">
               <div class="qr-label">Scan QR Code to Pay</div>
               <div id="qr-container">
@@ -1978,10 +1967,16 @@
               <button type="button" id="qr-refresh-btn" class="qr-refresh-btn" onclick="refreshQRCode()">
                 <span class="refresh-text">Refresh QR Code</span>
               </button>
-            </div>
-            <div class="info-box">
-              <div style="font-size: 18px; font-weight: 700; color: var(--primary); text-align: center; padding: 8px; background: rgba(204, 23, 30, 0.1); border: 1px solid rgba(204, 23, 30, 0.3); border-radius: 8px; margin: 4px 0;">
-                Registration Fee: ₹3000
+              
+              <!-- Universal UPI Payment Button (Mobile Only) -->
+              <div class="upi-apps-container" id="upi-apps-container">
+                <div class="or-separator">— OR —</div>
+                <button type="button" class="universal-upi-btn" onclick="openUniversalUPI()">
+                  <div class="upi-text">
+                    <div class="upi-title">Pay with UPI</div>
+                    <div class="upi-subtitle">Opens your preferred UPI app</div>
+                  </div>
+                </button>
               </div>
             </div>
             <div class="payment-code-box">
@@ -1993,27 +1988,15 @@
               </div>
             </div>
             
-            <!-- UPI App Direct Payment Buttons (Mobile Only) -->
+            <!-- Universal UPI Payment Button (Mobile Only) -->
             <div class="upi-apps-container" id="upi-apps-container">
-              <div class="upi-apps-title">🚀 Pay directly with your preferred UPI app</div>
-              <div class="upi-apps-grid">
-                <button type="button" class="upi-app-btn gpay" onclick="openUPIApp('gpay')">
-                  <div class="upi-app-icon">🟢</div>
-                  <div class="upi-app-name">Google Pay</div>
-                </button>
-                <button type="button" class="upi-app-btn phonepe" onclick="openUPIApp('phonepe')">
-                  <div class="upi-app-icon">🟣</div>
-                  <div class="upi-app-name">PhonePe</div>
-                </button>
-                <button type="button" class="upi-app-btn paytm" onclick="openUPIApp('paytm')">
-                  <div class="upi-app-icon">🔵</div>
-                  <div class="upi-app-name">Paytm</div>
-                </button>
-                <button type="button" class="upi-app-btn bhim" onclick="openUPIApp('bhim')">
-                  <div class="upi-app-icon">🟠</div>
-                  <div class="upi-app-name">BHIM UPI</div>
-                </button>
-              </div>
+              <button type="button" class="universal-upi-btn" onclick="openUniversalUPI()">
+                <div class="upi-icon">�</div>
+                <div class="upi-text">
+                  <div class="upi-title">Pay with UPI</div>
+                  <div class="upi-subtitle">Opens your preferred UPI app</div>
+                </div>
+              </button>
             </div>
             
             <label for="screenshot">Upload UPI Transaction Screenshot *</label>
@@ -2760,8 +2743,8 @@ Thank you!`);
       window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
     }
 
-    // UPI App Direct Payment Function
-    function openUPIApp(appName) {
+    // Universal UPI Payment Function
+    function openUniversalUPI() {
       if (!uniquePaymentCode) {
         uniquePaymentCode = generatePaymentCode();
         document.getElementById('payment-code-display').textContent = uniquePaymentCode;
@@ -2772,44 +2755,20 @@ Thank you!`);
       const name = 'SOMUN 2025';
       const note = uniquePaymentCode;
       
-      // Create UPI URL with app-specific schemes
+      // Universal UPI URL that works with all UPI apps
       const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}&note=${encodeURIComponent(note)}`;
       
-      let appUrl;
-      
-      switch(appName) {
-        case 'gpay':
-          // Google Pay specific URL scheme
-          appUrl = `tez://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
-          break;
-        case 'phonepe':
-          // PhonePe specific URL scheme
-          appUrl = `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
-          break;
-        case 'paytm':
-          // Paytm specific URL scheme
-          appUrl = `paytmmp://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
-          break;
-        case 'bhim':
-          // BHIM specific URL scheme
-          appUrl = `bhim://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
-          break;
-        default:
-          appUrl = upiUrl;
-      }
-      
-      // Try to open the app-specific URL first, then fallback to generic UPI
       try {
-        window.location.href = appUrl;
+        // This will open the user's default UPI app or show app selection
+        window.location.href = upiUrl;
         
-        // Fallback to generic UPI URL after a short delay if app doesn't open
-        setTimeout(() => {
-          window.location.href = upiUrl;
-        }, 1000);
+        // Show success feedback
+        showNotification('Opening UPI app...', 'success');
       } catch (error) {
         console.error('Error opening UPI app:', error);
-        // Ultimate fallback - show manual UPI details
+        // Fallback - show manual UPI details
         showManualUPIDetails();
+        showNotification('Please use the QR code or manual payment details', 'info');
       }
     }
 
