@@ -1140,17 +1140,6 @@
       font-weight: 700;
     }
 
-    /* Enhanced gradient text for supported browsers */
-    @supports (background-clip: text) or (-webkit-background-clip: text) {
-      .footer-section h3 {
-        background: var(--gradient);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: transparent;
-      }
-    }
-
     .footer-section ul {
       list-style: none;
     }
@@ -1190,6 +1179,174 @@
 
     .copyright a:hover {
       color: var(--primary);
+    }
+
+    /* Additional Mobile Responsive Improvements */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+        gap: 1rem;
+      }
+      
+      .form-card {
+        padding: 1.5rem;
+        margin: 0;
+      }
+      
+      .form-card h2 {
+        font-size: 1.5rem;
+      }
+      
+      .form-group label {
+        font-size: 14px;
+      }
+      
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 12px;
+      }
+      
+      .pref-row {
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .pref-row select,
+      .pref-row input {
+        width: 100%;
+      }
+      
+      .nav-container {
+        padding: 1rem;
+      }
+      
+      .progress-container {
+        margin: 1rem 0;
+      }
+      
+      .progress-step {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+      
+      .qr-container {
+        padding: 15px;
+      }
+      
+      #qr-code-img {
+        max-width: 200px !important;
+      }
+      
+      .payment-code-box {
+        padding: 15px;
+      }
+      
+      .payment-code {
+        font-size: 16px;
+        padding: 10px;
+      }
+      
+      .support-panel {
+        min-width: 280px;
+        max-width: 90vw;
+        right: 10px;
+        bottom: 70px;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: left;
+      }
+      
+      .footer-section h3 {
+        font-size: 1.2rem;
+      }
+      
+      .footer-section ul li {
+        margin-bottom: 0.6rem;
+        font-size: 14px;
+      }
+      
+      footer {
+        padding: 3rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .form-card {
+        padding: 1rem;
+      }
+      
+      .form-card h2 {
+        font-size: 1.3rem;
+      }
+      
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      
+      .info-box {
+        padding: 12px;
+        font-size: 14px;
+      }
+      
+      .payment-code {
+        font-size: 14px;
+        word-break: break-all;
+      }
+      
+      .copy-btn {
+        width: 100%;
+        margin-top: 8px;
+      }
+      
+      .qr-refresh-btn {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+      
+      .support-panel {
+        min-width: 250px;
+        bottom: 60px;
+      }
+      
+      .support-contact {
+        padding: 10px;
+      }
+      
+      .contact-item {
+        flex-direction: column;
+        gap: 6px;
+      }
+      
+      .contact-actions {
+        align-self: flex-start;
+      }
+      
+      .footer-section ul li {
+        font-size: 13px;
+      }
+      
+      footer {
+        padding: 2rem 0.5rem;
+      }
+    }
+
+    /* Touch device improvements */
+    @media (hover: none) and (pointer: coarse) {
+      .copy-btn,
+      .qr-refresh-btn,
+      .action-btn {
+        min-height: 44px; /* iOS recommended touch target */
+      }
+      
+      .support-button {
+        min-height: 44px;
+        min-width: 44px;
+      }
     }
   </style>
 </head>
