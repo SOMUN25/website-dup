@@ -1,361 +1,2941 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule | SOMUN 2025</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <style>
-        :root { 
-            --primary: #cc171e; 
-            --text: #FFFFFF; 
-            --bg: #000000; 
-        }
-        
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-        }
+  <meta charset="utf-8" />
+  <title>SOMUN 2025 — Registration</title>
+  <link rel="icon" type="image/x-icon" href="icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Using QRious library for better compatibility -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <style>
+    :root {
+      --primary: #cc171e;
+      --text: #FFFFFF;
+      --muted: #bfbfbf;
+      --bg: #0a0a0a;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --card-border: rgba(255, 255, 255, 0.06);
+      --accent-glow: 0 6px 18px rgba(204, 23, 30, 0.14);
+      --gradient: linear-gradient(45deg, #cc171e, #ff4b4b);
+    }
 
-        body { 
-            background: #000000;
-            color: var(--text); 
-            font-family: 'Source Sans Pro', sans-serif; 
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        #globe-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            opacity: 0.8;
-        }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Source Sans Pro', sans-serif;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
 
-        nav { 
-            position: relative;
-            z-index: 3;
-            padding: 1.5rem 2rem; 
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
+    /* Loader */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 1200;
+    }
 
-        .nav-links { 
-            display: flex; 
-            justify-content: space-around; 
-            max-width: 1200px; 
-            margin: 0 auto; 
-        }
+    #loader.zoomOut {
+      animation: zoomOut 1s ease forwards, fadeOut 1s ease forwards 1s;
+    }
 
-        .nav-links a { 
-            color: var(--text); 
-            text-decoration: none; 
-            font-weight: 600; 
-            padding: 0.5rem 1rem; 
-            transition: all 0.3s; 
-            border-bottom: 2px solid transparent; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-        }
+    @keyframes zoomOut {
+      from { transform: scale(1); }
+      to { transform: scale(1.16); }
+    }
 
-        .nav-links a:hover { 
-            color: var(--primary); 
-            border-bottom: 2px solid var(--primary); 
-        }
-        .nav-container {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-        
-        .hamburger {
-          display: none;
-          font-size: 2rem;
-          cursor: pointer;
-          color: var(--text);
-        }
-        
-        /* Default (desktop) */
-        .nav-links {
-          display: flex;
-          gap: 1rem;
-        }
-        
-        /* Mobile fix */
-        @media (max-width: 768px) {
-          .hamburger {
-            display: block;
-          }
-          .nav-links {
-            display: none;
-            flex-direction: column;
-            text-align: center;
-            background-color: rgba(0,0,0,0.95);
-            position: absolute;
-            top: 70px;
-            left: 0;
-            width: 100%;
-            padding: 1rem 0;
-          }
-          .nav-links.active {
-            display: flex;
-          }
-        }
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
 
+    #globe-container {
+      width: 260px;
+      height: 260px;
+    }
 
-        .coming-soon {
-            position: relative;
-            z-index: 2;
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-        }
+    .loader-text {
+      margin-top: 18px;
+      font-size: 18px;
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Lato', sans-serif;
+      letter-spacing: 2px;
+    }
 
-        .coming-soon h1 {
-            font-size: 5rem;
-            color: #ffffff;
-            font-family: 'Lato', sans-serif;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 15px;
-            text-shadow: 0 0 15px rgba(255,255,255,0.3);
-            animation: float 6s ease-in-out infinite;
-            position: relative;
-        }
+    /* Navbar */
+    nav {
+      background: rgba(0, 0, 0, 0.85);
+      padding: 1rem 2rem;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 900;
+      backdrop-filter: blur(10px);
+    }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
 
-        footer {
-            position: relative;
-            z-index: 3;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
+    .nav-logo {
+      color: var(--primary);
+      font-size: 1.5rem;
+      font-weight: 700;
+      font-family: 'Lato', sans-serif;
+      text-decoration: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            color: rgba(255,255,255,0.7);
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex: 1;
+    }
 
-        @media (max-width: 768px) {
-            .coming-soon h1 {
-                font-size: 2.5rem;
-                letter-spacing: 6px;
-            }
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 2px solid transparent;
+      transition: all .2s;
+    }
 
-            #globe-container {
-                transform: scale(0.7);
-            }
+    .nav-links a:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
 
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 1rem;
-            }
-        }
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 1001;
+      position: relative;
+      background: rgba(204, 23, 30, 0.8);
+      border-radius: 4px;
+      border: 2px solid var(--primary);
+      min-width: 40px;
+      min-height: 40px;
+      justify-content: center;
+      align-items: center;
+    }
 
-        @media (max-width: 480px) {
-            .coming-soon h1 {
-                font-size: 2rem;
-                letter-spacing: 4px;
-            }
+    .hamburger:hover {
+      background: var(--primary);
+    }
 
-            #globe-container {
-                transform: scale(0.5);
-            }
-        } 
-        footer { background-color: var(--bg); color: var(--text); text-align: center; padding: 3rem 2rem; margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1); font-family: 'Source Sans Pro', sans-serif; }
-        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-        .footer-section h3 { color: var(--primary); margin-bottom: 1rem; font-family: 'Lato', sans-serif; font-weight: 700; }
-        .footer-section ul { list-style: none; }
-        .footer-section ul li { margin-bottom: 0.5rem; }
-        .footer-section ul li a { color: var(--text); text-decoration: none; transition: color 0.3s; }
-        .footer-section ul li a:hover { color: var(--primary); }
-        .footer-section p a { color: var(--text); text-decoration: none; transition: color 0.3s; }
-        .footer-section p a:hover { color: var(--primary); }
-        .copyright { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
-        .coming-soon {
-            position: relative;
-            z-index: 2;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;   /* center vertically */
-            align-items: center;       /* center horizontally */
-            text-align: center;
-            padding: 2rem;
-            gap: 1rem;
-            overflow-wrap: break-word; /* prevents overflow on phones */
-        }
-        
-        .coming-soon h1 {
-            font-size: clamp(2rem, 6vw, 5rem); /* auto-resizes with screen */
-            color: #ffffff;
-            font-family: 'Lato', sans-serif;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: clamp(3px, 1vw, 15px);
-            text-shadow: 0 0 15px rgba(255,255,255,0.3);
-            animation: float 6s ease-in-out infinite;
-            margin: 0;
-            line-height: 1.2;
-        }
-        
-        .coming-soon h3 {
-            font-size: clamp(1rem, 3vw, 2rem);
-            font-weight: 400;
-            color: #cccccc;
-            letter-spacing: clamp(1px, 0.5vw, 5px);
-            text-shadow: 0 0 8px rgba(255,255,255,0.2);
-            margin: 0;
-            line-height: 1.4;
-        }
-        
-        /* Remove float animation on very small screens (less glitchy) */
-        @media (max-width: 480px) {
-            .coming-soon h1 {
-                animation: none;
-            }
-        }
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: var(--text);
+      margin: 2px 0;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+      display: block;
+    }
 
-           
-    </style>
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    /* Mobile Menu Overlay */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+
+    .mobile-menu .nav-links {
+      flex-direction: column;
+      gap: 2rem;
+      text-align: center;
+      display: flex;
+    }
+
+    .mobile-menu .nav-links a {
+      font-size: 1.5rem;
+      padding: 1rem 2rem;
+      border-bottom: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      color: var(--text);
+      text-decoration: none;
+      display: block;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .mobile-menu .nav-links a:hover {
+      background: rgba(204, 23, 30, 0.2);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    /* Hero */
+    .hero {
+      height: 26vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 64px;
+      background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('/api/placeholder/1920/600');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      font-family: 'Lato', sans-serif;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      margin: 2.5rem auto;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      padding: 0 1rem;
+      min-height: 0; /* Allow grid items to shrink */
+    }
+
+    .steps-sidebar {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px;
+      position: sticky;
+      top: 96px;
+      height: fit-content;
+    }
+
+    .steps-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .steps-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.3s ease;
+      transform: scale(1);
+    }
+
+    .steps-list li:hover {
+      background: rgba(255, 255, 255, 0.02);
+      transform: scale(1.02);
+    }
+
+    .steps-list li.active {
+      background: rgba(204, 23, 30, 0.1);
+      color: var(--text);
+      box-shadow: var(--accent-glow);
+      transform: scale(1.05);
+      animation: stepActivate 0.4s ease;
+    }
+
+    @keyframes stepActivate {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1.05); }
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      width: 100%;
+      height: 4px;
+      background: var(--card-border);
+      border-radius: 2px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), #ff4444);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+      box-shadow: 0 0 10px rgba(204, 23, 30, 0.3);
+    }
+
+    /* Enhanced form card animation */
+    .form-card {
+      animation: formCardAppear 0.6s ease;
+    }
+
+    @keyframes formCardAppear {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* QR Loading Animation */
+    @keyframes qrPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    #qr-loading {
+      animation: qrPulse 2s ease-in-out infinite;
+    }
+
+    /* File input enhancement */
+    input[type="file"] {
+      border: 2px dashed var(--card-border);
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    input[type="file"]:hover {
+      border-color: var(--primary);
+      background: rgba(204, 23, 30, 0.05);
+    }
+
+    .steps-list .index {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-family: 'Lato', sans-serif;
+      background: var(--card-bg);
+    }
+
+    .form-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+    }
+
+    .form-group {
+      margin: 20px 0;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+    }
+
+    .form-step.active .form-group {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .form-step.active .form-group:nth-child(1) { transition-delay: 0.05s; }
+    .form-step.active .form-group:nth-child(2) { transition-delay: 0.1s; }
+    .form-step.active .form-group:nth-child(3) { transition-delay: 0.15s; }
+    .form-step.active .form-group:nth-child(4) { transition-delay: 0.2s; }    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text);
+      font-size: 14px;
+      transition: all 0.3s ease;
+      transform: translateY(0);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(204, 23, 30, 0.15);
+      transform: none;
+    }
+
+    .pref-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .info-box {
+      background: rgba(20, 20, 20, 0.9);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 14px;
+      color: var(--muted);
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    button {
+      background: var(--primary);
+      color: var(--text);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--accent-glow);
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(204, 23, 30, 0.25);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button.secondary {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--muted);
+      box-shadow: none;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .form-step {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .form-step.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .payment-code-box {
+      background: rgba(204, 23, 30, 0.1);
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .payment-code {
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--primary);
+      letter-spacing: 1px;
+    }
+
+    .copy-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-top: 8px;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: #a51419;
+      transform: translateY(-1px);
+    }
+
+    /* Professional QR Code Styling */
+    #qr-container {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      border: 2px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 16px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #qr-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), #ff4444);
+      border-radius: 16px 16px 0 0;
+    }
+
+    #qr-code-img {
+      max-width: 240px !important;
+      border-radius: 12px !important;
+      box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.6),
+        0 0 0 3px rgba(255, 255, 255, 0.1),
+        0 0 0 6px var(--card-border) !important;
+      display: none;
+      margin: 0 auto;
+      transition: all 0.3s ease;
+      background: white;
+      padding: 8px;
+    }
+
+    #qr-code-img:hover {
+      transform: scale(1.02);
+      box-shadow: 
+        0 12px 35px rgba(0, 0, 0, 0.7),
+        0 0 0 3px rgba(255, 255, 255, 0.15),
+        0 0 0 6px var(--primary);
+    }
+
+    .qr-label {
+      color: var(--primary);
+      font-weight: 700;
+      font-family: 'Lato', sans-serif;
+      margin-bottom: 12px;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .qr-instructions {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 12px;
+      line-height: 1.4;
+    }
+
+    .qr-enlarge-hint {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 8px;
+      opacity: 0.8;
+      font-style: italic;
+    }
+
+    #qr-code-img {
+      cursor: pointer;
+    }
+
+    /* QR Code Enlargement Overlay */
+    .qr-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2500;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .qr-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .qr-enlarged {
+      width: 80vmin;
+      height: 80vmin;
+      max-width: 600px;
+      max-height: 600px;
+      min-width: 300px;
+      min-height: 300px;
+      border-radius: 20px;
+      box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.8),
+        0 0 0 4px rgba(255, 255, 255, 0.2),
+        0 0 0 8px var(--primary);
+      transform: scale(0.8);
+      transition: all 0.3s ease;
+      background: white;
+      padding: 20px;
+      object-fit: contain;
+    }
+
+    .qr-overlay.show .qr-enlarged {
+      transform: scale(1);
+    }
+
+    .qr-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(204, 23, 30, 0.4);
+    }
+
+    .qr-close-btn:hover {
+      background: #a51419;
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(204, 23, 30, 0.6);
+    }
+
+    /* QR Refresh Button Styling */
+    .qr-refresh-btn {
+      margin-top: 12px;
+      padding: 8px 16px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      position: relative;
+      min-width: 120px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .qr-refresh-btn:hover:not(:disabled) {
+      background: #a51419;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(204, 23, 30, 0.4);
+    }
+
+    .qr-refresh-btn:disabled {
+      background: #666;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .qr-refresh-btn.loading {
+      background: #666;
+      cursor: not-allowed;
+    }
+
+    /* Loading spinner animation */
+    .refresh-spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid transparent;
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* QR Code regeneration animation */
+    #qr-code-img.regenerating {
+      animation: qrFadeRegenerate 0.6s ease-in-out;
+    }
+
+    @keyframes qrFadeRegenerate {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.2;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* Universal UPI Payment Button */
+    .upi-apps-container {
+      display: none; /* Hidden by default, shown only on mobile */
+      margin: 1rem 0 0 0;
+      padding: 0;
+      background: none;
+      border: none;
+      border-radius: 0;
+    }
+
+    .or-separator {
+      text-align: center;
+      margin: 15px 0 10px 0;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .universal-upi-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-family: 'Lato', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+      text-decoration: none;
+    }
+
+    .universal-upi-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+      background: linear-gradient(135deg, #45a049, #4CAF50);
+    }
+
+    .universal-upi-btn .upi-text {
+      text-align: center;
+    }
+
+    .universal-upi-btn .upi-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .universal-upi-btn .upi-subtitle {
+      font-size: 12px;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
+    /* Show UPI button only on touch-enabled mobile devices */
+    @media (max-width: 768px) and (hover: none) and (pointer: coarse) {
+      .upi-apps-container {
+        display: block;
+      }
+    }
+
+    /* Custom Dialog System */
+    .dialog-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .dialog-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .dialog-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      transform: scale(0.8) translateY(20px);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .dialog-overlay.show .dialog-box {
+      transform: scale(1) translateY(0);
+    }
+
+    .dialog-title {
+      color: var(--primary);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .dialog-message {
+      color: var(--text);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .dialog-button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .dialog-button:hover {
+      background: #a51419;
+      transform: translateY(-1px);
+    }
+
+    /* Support Widget Styles */
+    .support-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1100;
+    }
+
+    .support-button {
+      background: linear-gradient(135deg, var(--primary), #ff4444);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(204, 23, 30, 0.4);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .support-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(204, 23, 30, 0.6);
+    }
+
+    .support-button.error-state {
+      animation: errorPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes errorPulse {
+      0%, 100% { 
+        box-shadow: 0 4px 15px rgba(204, 23, 30, 0.4);
+      }
+      50% { 
+        box-shadow: 0 6px 25px rgba(204, 23, 30, 0.8);
+        transform: scale(1.05);
+      }
+    }
+
+    .support-panel {
+      position: absolute;
+      bottom: 60px;
+      right: 0;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      min-width: 320px;
+      max-width: 400px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transform: translateY(10px) scale(0.95);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .support-panel.show {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .support-header {
+      color: var(--primary);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .support-contact {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 12px;
+    }
+
+    .support-contact h4 {
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 6px 0;
+      font-size: 13px;
+    }
+
+    .contact-info {
+      color: var(--text);
+      flex: 1;
+    }
+
+    .contact-actions {
+      display: flex;
+      gap: 4px;
+    }
+
+    .action-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn:hover {
+      background: #a51419;
+      transform: scale(1.05);
+    }
+
+    .action-btn.whatsapp {
+      background: #25d366;
+    }
+
+    .action-btn.whatsapp:hover {
+      background: #1fa651;
+    }
+
+    .support-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 16px;
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .support-close:hover {
+      color: var(--text);
+    }
+
+    /* Support Widget Animations */
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .container {
+        grid-template-columns: 240px 1fr;
+        gap: 1.5rem;
+      }
+      
+      .steps-sidebar {
+        padding: 16px;
+      }
+      
+      .form-card {
+        padding: 24px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0 0.5rem;
+      }
+      
+      .steps-sidebar {
+        position: static;
+        padding: 12px;
+      }
+      
+      .steps-list {
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 4px;
+        padding-bottom: 8px;
+      }
+      
+      .steps-list li {
+        flex-shrink: 0;
+        padding: 8px 12px;
+        font-size: 12px;
+        min-width: fit-content;
+      }
+      
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      
+      /* Mobile Navigation */
+      .hamburger {
+        display: flex !important;
+        position: relative;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: left 0.3s ease;
+        z-index: 999;
+      }
+      
+      .nav-links.active {
+        left: 0;
+      }
+      
+      .nav-links a {
+        font-size: 1.5rem;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        color: var(--text);
+        text-decoration: none;
+        display: block;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+      }
+      
+      .nav-links a:hover {
+        background: rgba(204, 23, 30, 0.2);
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+      
+      .nav-logo {
+        position: static;
+        transform: none;
+        margin: 0 auto;
+      }
+      
+      nav {
+        padding: 1rem;
+      }
+      
+      .nav-container {
+        padding: 0;
+        width: 100%;
+        justify-content: flex-start;
+        gap: 1rem;
+      }
+      
+      .form-card {
+        padding: 20px;
+      }
+      
+      .pref-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      
+      .button-row {
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .button-row button {
+        width: 100%;
+      }
+      
+      /* Support widget mobile adjustments */
+      .support-panel {
+        min-width: 280px;
+        max-width: calc(100vw - 40px);
+        right: 10px;
+        bottom: 70px;
+      }
+      
+      .contact-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      
+      .contact-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        height: 20vh;
+        margin-top: 60px;
+      }
+      
+      .hero h1 {
+        font-size: 1.5rem;
+        padding: 0 1rem;
+      }
+      
+      /* Mobile Menu 480px adjustments */
+      .mobile-menu .nav-links a {
+        font-size: 1.3rem;
+        padding: 0.8rem;
+      }
+      
+      .nav-logo {
+        font-size: 1.2rem;
+      }
+      
+      .hamburger {
+        display: flex !important;
+        padding: 6px;
+        background: var(--primary) !important;
+        border: 2px solid var(--text) !important;
+        min-width: 35px;
+        min-height: 35px;
+      }
+      
+      .hamburger span {
+        width: 22px;
+        height: 2px;
+      }
+      
+      .nav-links {
+        gap: 0.5rem;
+        font-size: 12px;
+      }
+      
+      .nav-links a {
+        padding: 0.5rem;
+      }
+      
+      .container {
+        padding: 0 0.25rem;
+      }
+      
+      .form-card {
+        padding: 16px;
+        margin: 0.5rem 0;
+      }
+      
+      .steps-list li {
+        padding: 6px 8px;
+        font-size: 10px;
+      }
+      
+      .steps-list .index {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+      }
+      
+      input, select, textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 12px;
+      }
+      
+      .dialog-box {
+        max-width: 320px;
+        padding: 20px;
+        margin: 0 10px;
+      }
+      
+      /* QR Code mobile optimizations */
+      #qr-container {
+        padding: 15px;
+      }
+      
+      #qr-code-img {
+        max-width: 200px !important;
+      }
+      
+      .qr-instructions {
+        font-size: 12px;
+        line-height: 1.3;
+      }
+      
+      /* Support widget very small screens */
+      .support-widget {
+        bottom: 15px;
+        right: 15px;
+      }
+      
+      .support-button {
+        padding: 10px 16px;
+        font-size: 12px;
+      }
+      
+      .support-panel {
+        min-width: 260px;
+        padding: 15px;
+        right: 5px;
+        bottom: 60px;
+      }
+      
+      .support-contact {
+        padding: 12px;
+      }
+      
+      .contact-item {
+        font-size: 12px;
+      }
+      
+      .action-btn {
+        padding: 3px 6px;
+        font-size: 10px;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .hamburger {
+        display: flex !important;
+        min-width: 30px;
+        min-height: 30px;
+        padding: 4px;
+      }
+      
+      .hamburger span {
+        width: 20px;
+        height: 2px;
+      }
+      
+      .hero h1 {
+        font-size: 1.2rem;
+      }
+      
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.25rem;
+      }
+      
+      .form-card {
+        padding: 12px;
+      }
+      
+      .steps-list {
+        gap: 2px;
+      }
+      
+      .steps-list li {
+        padding: 4px 6px;
+        font-size: 9px;
+      }
+      
+      .dialog-box {
+        max-width: 280px;
+        padding: 16px;
+      }
+      
+      .support-panel {
+        min-width: 240px;
+        padding: 12px;
+      }
+      
+      .support-header {
+        font-size: 16px;
+      }
+      
+      .contact-item {
+        font-size: 11px;
+      }
+    }
+
+    /* Landscape tablet adjustments */
+    @media (max-width: 1024px) and (orientation: landscape) {
+      .hero {
+        height: 22vh;
+      }
+      
+      .container {
+        grid-template-columns: 220px 1fr;
+      }
+    }
+
+    /* High DPI screens */
+    @media (-webkit-min-device-pixel-ratio: 2) {
+      #qr-code-img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+      }
+    }
+    footer { background-color:var(--bg); color:var(--text); text-align:center; padding:3rem 2rem; margin-top:4rem; border-top:1px solid rgba(255,255,255,0.1); font-family:'Source Sans Pro',sans-serif; }
+    .footer-content { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:2rem; }
+    .footer-section h3 { color:var(--primary); margin-bottom:1rem; font-family:'Lato',sans-serif; font-weight:700; }
+    .footer-section ul { list-style:none; }
+    .footer-section ul li { margin-bottom:0.5rem; }
+    .footer-section ul li a { color:var(--text); text-decoration:none; transition:color 0.3s; }
+    .footer-section ul li a:hover { color:var(--primary); }
+    .copyright { margin-top:2rem; padding-top:2rem; border-top:1px solid rgba(255,255,255,0.1); }
+
+    /* Footer Styles */
+    footer {
+      background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(20,20,20,1) 100%);
+      color: var(--text);
+      text-align: center;
+      padding: 4rem 2rem;
+      margin-top: 4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+    }
+
+    .footer-section h3 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-section ul li a {
+      color: var(--text);
+      text-decoration: none;
+      transition: all 0.3s;
+      opacity: 0.8;
+    }
+
+    .footer-section ul li a:hover {
+      color: var(--primary);
+      opacity: 1;
+    }
+
+    .copyright {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      opacity: 0.8;
+    }
+
+    .copyright p {
+      margin-bottom: 0.5rem;
+    }
+
+    .copyright a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .copyright a:hover {
+      color: var(--primary);
+    }
+
+    /* Additional Mobile Responsive Improvements */
+    @media (max-width: 768px) {
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      
+      .container {
+        max-width: 100%;
+        margin: 0;
+        display: block; /* Change from grid to block */
+        padding: 0;
+        gap: 0;
+      }
+      
+      .steps-sidebar {
+        display: none; /* Hide sidebar on mobile */
+      }
+      
+      .form-card {
+        width: 100%;
+        max-width: 100%;
+        padding: 1rem;
+        margin: 0;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        min-height: 100vh;
+      }
+      
+      .form-card h2 {
+        font-size: 1.5rem;
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+      
+      .form-group label {
+        font-size: 14px;
+      }
+      
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 12px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .pref-row {
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .pref-row select,
+      .pref-row input {
+        width: 100%;
+      }
+      
+      .nav-container {
+        padding: 0.5rem 1rem;
+      }
+      
+      .progress-container {
+        margin: 1rem 0;
+      }
+      
+      .progress-step {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+      
+      .qr-container {
+        padding: 15px;
+      }
+      
+      #qr-code-img {
+        max-width: 200px !important;
+      }
+      
+      .payment-code-box {
+        padding: 15px;
+      }
+      
+      .payment-code {
+        font-size: 16px;
+        padding: 10px;
+        word-break: break-all;
+      }
+      
+      .support-panel {
+        min-width: 280px;
+        max-width: 90vw;
+        right: 10px;
+        bottom: 70px;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: left;
+      }
+      
+      .footer-section h3 {
+        font-size: 1.2rem;
+      }
+      
+      .footer-section ul li {
+        margin-bottom: 0.6rem;
+        font-size: 14px;
+      }
+      
+      footer {
+        padding: 3rem 1rem;
+      }
+      
+      /* Make navigation buttons full width */
+      .nav-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-container .submit-btn,
+      .nav-container button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .form-card {
+        padding: 0.5rem;
+        border-radius: 0;
+        min-height: 100vh;
+      }
+      
+      .form-card h2 {
+        font-size: 1.2rem;
+        padding: 1rem 0;
+      }
+      
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        font-size: 16px;
+        padding: 14px;
+        border-radius: 8px;
+      }
+      
+      .info-box {
+        padding: 12px;
+        font-size: 14px;
+        margin: 1rem 0;
+      }
+      
+      .payment-code {
+        font-size: 14px;
+        word-break: break-all;
+        padding: 12px;
+      }
+      
+      .copy-btn {
+        width: 100%;
+        margin-top: 8px;
+        padding: 12px;
+        font-size: 16px;
+      }
+      
+      .qr-refresh-btn {
+        font-size: 14px;
+        padding: 10px 16px;
+        width: 100%;
+      }
+      
+      .support-panel {
+        min-width: 90vw;
+        max-width: 95vw;
+        right: 2.5vw;
+        left: 2.5vw;
+        bottom: 60px;
+      }
+      
+      .support-contact {
+        padding: 8px;
+      }
+      
+      .contact-item {
+        flex-direction: column;
+        gap: 6px;
+      }
+      
+      .contact-actions {
+        align-self: flex-start;
+      }
+      
+      .footer-section ul li {
+        font-size: 13px;
+      }
+      
+      footer {
+        padding: 2rem 0.5rem;
+      }
+      
+      /* Progress bar mobile adjustments */
+      .progress-container {
+        margin: 0.5rem 0;
+      }
+      
+      .progress-bar {
+        height: 6px;
+      }
+      
+      /* Navigation buttons */
+      .nav-container {
+        position: sticky;
+        bottom: 0;
+        background: var(--bg);
+        border-top: 1px solid var(--card-border);
+        padding: 1rem;
+        margin: 0 -0.5rem;
+      }
+      
+      .nav-container button {
+        padding: 14px;
+        font-size: 16px;
+        border-radius: 8px;
+      }
+    }
+
+    /* Touch device improvements */
+    @media (hover: none) and (pointer: coarse) {
+      .copy-btn,
+      .qr-refresh-btn,
+      .action-btn {
+        min-height: 44px; /* iOS recommended touch target */
+      }
+      
+      .support-button {
+        min-height: 44px;
+        min-width: 44px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- Custom Dialog -->
+  <div id="dialog-overlay" class="dialog-overlay">
+    <div class="dialog-box">
+      <div id="dialog-title" class="dialog-title"></div>
+      <div id="dialog-message" class="dialog-message"></div>
+      <button id="dialog-button" class="dialog-button">OK</button>
+    </div>
+  </div>
+
+  <!-- QR Code Enlargement Overlay -->
+  <div id="qr-overlay" class="qr-overlay">
+    <button class="qr-close-btn" onclick="closeQROverlay()">×</button>
+    <img id="qr-enlarged-img" class="qr-enlarged" src="" alt="Enlarged QR Code">
+  </div>
+
+  <!-- Support Widget -->
+  <div class="support-widget">
+    <button class="support-button" id="support-btn">
+      <span>💬</span> Need Help?
+    </button>
+    <div class="support-panel" id="support-panel">
+      <button class="support-close" id="support-close">×</button>
+      <div class="support-header">Contact Support</div>
+      
+      <div class="support-contact">
+        <h4>Vaibhav Gannavarapu</h4>
+        <div class="contact-item">
+          <span class="contact-info">gnv.vaibhav@gmail.com</span>
+          <div class="contact-actions">
+            <button class="action-btn" onclick="copyToClipboard('gnv.vaibhav@gmail.com')">Copy</button>
+            <button class="action-btn" onclick="sendEmail('gnv.vaibhav@gmail.com', 'SOMUN 2025 Registration Support')">Email</button>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-info">+91 9908971951</span>
+          <div class="contact-actions">
+            <button class="action-btn" onclick="copyToClipboard('+91 9908971951')">Copy</button>
+            <button class="action-btn whatsapp" onclick="openWhatsApp('+919908971951')">WhatsApp</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="support-contact">
+        <h4>Satya Bhuvanesh</h4>
+        <div class="contact-item">
+          <span class="contact-info">14sh0326@hyd.silveroaks.co.in</span>
+          <div class="contact-actions">
+            <button class="action-btn" onclick="copyToClipboard('14sh0326@hyd.silveroaks.co.in')">Copy</button>
+            <button class="action-btn" onclick="sendEmail('14sh0326@hyd.silveroaks.co.in', 'SOMUN 2025 Registration Support')">Email</button>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-info">+91 6301940530</span>
+          <div class="contact-actions">
+            <button class="action-btn" onclick="copyToClipboard('+91 6301940530')">Copy</button>
+            <button class="action-btn whatsapp" onclick="openWhatsApp('+916301940530')">WhatsApp</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="support-contact">
+        <h4>Om Suraj</h4>
+        <div class="contact-item">
+          <span class="contact-info">omsurajkashikarjhcsclass6@gmail.com</span>
+          <div class="contact-actions">
+            <button class="action-btn" onclick="copyToClipboard('omsurajkashikarjhcsclass6@gmail.com')">Copy</button>
+            <button class="action-btn" onclick="sendEmail('omsurajkashikarjhcsclass6@gmail.com', 'SOMUN 2025 Registration Support')">Email</button>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-info">+91 9014994272</span>
+          <div class="contact-actions">
+            <button class="action-btn" onclick="copyToClipboard('+91 9014994272')">Copy</button>
+            <button class="action-btn whatsapp" onclick="openWhatsApp('+919014994272')">WhatsApp</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loader -->
+  <div id="loader">
     <div id="globe-container"></div>
-    
-    <nav>
-    <div class="nav-container">
-        <div class="hamburger" onclick="toggleMenu()">
-        ☰
-        </div>
-        <div class="nav-links" id="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="committees.html">Committees</a>
-        <a href="schedule.html">Schedule</a>
-        <a href="registration.html">Register</a>
-        <a href="contact.html">Contact</a>
-        </div>
-    </div>
-    </nav>
+    <div class="loader-text">SOMUN 2025</div>
+  </div>
 
-    <script>
-    function toggleMenu() {
-        document.getElementById("nav-links").classList.toggle("active");
-    }
-    </script>
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-container">
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <a href="index.html" class="nav-logo">SOMUN 2025</a>
+      
+      <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="committees.html">Committees</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="registration.html">Register</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
 
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Delegate Registration</h1>
+  </section>
 
-    <main class="coming-soon">
-        <h1>EARLY BIRD REGISTRATIONS</h1>
-        <h3>Have come to an end...</h3>
-    </main>
+  <!-- Main -->
+  <main class="container">
+    <aside class="steps-sidebar">
+      <ul class="steps-list" id="steps-list">
+        <li data-step="0" class="active"><span class="index">1</span> Personal Details</li>
+        <li data-step="1"><span class="index">2</span> Committee Selection</li>
+        <li data-step="2"><span class="index">3</span> MUN Experience</li>
+        <li data-step="3"><span class="index">4</span> Dietary Restrictions</li>
+        <li data-step="4"><span class="index">5</span> Review</li>
+        <li data-step="5"><span class="index">6</span> Payment</li>
+      </ul>
+    </aside>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="committees.html">Committees</a></li>
-                    <li><a href="registration.html">Registration</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contact Info</h3>
-                <ul>
-                    <li><a href="mailto:somunprteam@gmail.com">somunprteam@gmail.com</a></li>
-                    <li>Phone: USG PR | Seiona Jacob | +91 73372 13122</li>
-                    <li>Phone: USG PR | Keshav Agarwal | +91 81436 02940</li>
-                    <li><a href="https://maps.app.goo.gl/Xb9bXhorMrZyny4o8">Silver Oaks International School, Mighty Oaks, Hyderabad, India - 500188</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Follow Us</h3>
-                <ul>
-                    <li><a href="https://www.instagram.com/somunhyd/">Instagram</a></li>
-                </ul>
-            </div>
+    <section class="form-card">
+      <h2>SOMUN 2025 Registration Form</h2>
+      <div class="progress-container">
+        <div id="progress-bar" class="progress-bar" style="width: 16.67%"></div>
+      </div>
+      <form id="registration-form" enctype="multipart/form-data">
+        <!-- Step 0: Personal Details -->
+        <div class="form-step active" data-step="0">
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" placeholder="Enter 10-digit mobile number" required>
+          </div>
+          <div class="form-group">
+            <label for="school">School/Organization *</label>
+            <input type="text" id="school" name="school" required>
+          </div>
         </div>
-        <div class="copyright">
-            <p>&copy; 2025 SOMUN. All rights reserved.</p>
-            <p><a href="terms.html">Terms & Conditions</a></p>
-        </div>
-    </footer>
 
-    <script>
+        <!-- Step 1: Committee Selection -->
+        <div class="form-step" data-step="1">
+          <div class="info-box">
+            Please <strong>do not repeat committees</strong> in different preferences.
+          </div>
+          <div class="form-group">
+            <label>Preference 1 *</label>
+            <div class="pref-row">
+              <select id="committee1" name="committee1" required>
+                <option value="">Select Committee</option>
+                <option value="DISEC">DISEC</option>
+                <option value="ECOSOC">ECOSOC</option>
+                <option value="WHO">WHO</option>
+                <option value="UNHRC">UNHRC</option>
+                <option value="UNCSW">UNCSW</option>
+                <option value="Lok Sabha">Lok Sabha</option>
+                <option value="IP">IP</option>
+                <option value="UNOOSA">UNOOSA</option>
+                <option value="HCC (Stranger Things)">HCC (Stranger Things)</option>
+                <option value="UNODC">UNODC</option>
+              </select>
+              <input type="text" id="country1" name="country1" placeholder="Enter Countries" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Preference 2 *</label>
+            <div class="pref-row">
+              <select id="committee2" name="committee2" required>
+                <option value="">Select Committee</option>
+                <option value="DISEC">DISEC</option>
+                <option value="ECOSOC">ECOSOC</option>
+                <option value="WHO">WHO</option>
+                <option value="UNHRC">UNHRC</option>
+                <option value="UNCSW">UNCSW</option>
+                <option value="Lok Sabha">Lok Sabha</option>
+                <option value="IP">IP</option>
+                <option value="UNOOSA">UNOOSA</option>
+                <option value="HCC (Stranger Things)">HCC (Stranger Things)</option>
+                <option value="UNODC">UNODC</option>
+              </select>
+              <input type="text" id="country2" name="country2" placeholder="Enter Countries" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Preference 3 *</label>
+            <div class="pref-row">
+              <select id="committee3" name="committee3" required>
+                <option value="">Select Committee</option>
+                <option value="DISEC">DISEC</option>
+                <option value="ECOSOC">ECOSOC</option>
+                <option value="WHO">WHO</option>
+                <option value="UNHRC">UNHRC</option>
+                <option value="UNCSW">UNCSW</option>
+                <option value="Lok Sabha">Lok Sabha</option>
+                <option value="IP">IP</option>
+                <option value="UNOOSA">UNOOSA</option>
+                <option value="HCC (Stranger Things)">HCC (Stranger Things)</option>
+                <option value="UNODC">UNODC</option>
+              </select>
+              <input type="text" id="country3" name="country3" placeholder="Enter Countries" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: MUN Experience -->
+        <div class="form-step" data-step="2">
+          <div class="form-group">
+            <label>Have you participated in MUNs before? *</label>
+            <div style="display:flex; gap:12px; margin-top: 8px;">
+              <label style="display: flex; align-items: center; gap: 6px;">
+                <input type="radio" name="mun_exp" value="first" required> First MUN
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px;">
+                <input type="radio" name="mun_exp" value="prev" required> Participated before
+              </label>
+            </div>
+          </div>
+          <div id="mun-format-guide" style="display:none; margin-top: 12px; padding: 12px; background: rgba(204, 23, 30, 0.1); border: 1px solid rgba(204, 23, 30, 0.3); border-radius: 8px;">
+            <div style="color: var(--primary); font-weight: 600; font-size: 13px; margin-bottom: 6px;">
+              📝 Format for Previous Experience Details:
+            </div>
+            <div style="color: var(--muted); font-size: 12px; line-height: 1.4;">
+              <strong>Format:</strong> MUN Name(Year) - Committee - Country - Award (if any)<br>
+            </div>
+          </div>
+          <div class="form-group" id="mun-details-group" style="display:none;">
+            <label for="mun_details">Previous Experience Details</label>
+            <textarea id="mun_details" name="mun_details" rows="4" placeholder="Eg: SOMUN(2023) - UNSC - USA - Best Delegate"></textarea>
+          </div>
+        </div>
+
+        <!-- Step 3: Dietary Restrictions -->
+        <div class="form-step" data-step="3">
+          <div class="form-group">
+            <label for="diet">Dietary Restrictions or Allergies</label>
+            <textarea id="diet" name="diet" rows="4" placeholder="List any allergies, dietary restrictions, or write 'None'"></textarea>
+          </div>
+        </div>
+
+        <!-- Step 4: Review -->
+        <div class="form-step" data-step="4">
+          <div class="info-box">
+            <h3>Review Your Information</h3>
+            <p><strong>Personal:</strong> <span id="review-personal">—</span></p>
+            <p><strong>Committees:</strong> <span id="review-committee">—</span></p>
+            <p><strong>MUN Experience:</strong> <span id="review-mun">—</span></p>
+            <p><strong>Dietary:</strong> <span id="review-diet">—</span></p>
+          </div>
+        </div>
+
+        <!-- Step 5: Payment -->
+        <div class="form-step" data-step="5">
+          <div class="form-group">
+            <label>Payment Details</label>
+            <div class="info-box">
+              <div style="font-size: 18px; font-weight: 700; color: var(--primary); text-align: center; padding: 8px; background: rgba(204, 23, 30, 0.1); border: 1px solid rgba(204, 23, 30, 0.3); border-radius: 8px; margin: 4px 0;">
+                Registration Fee: ₹3000
+              </div>
+            </div>
+            <div class="info-box" style="text-align:center;">
+              <div class="qr-label">Scan QR Code to Pay</div>
+              <div id="qr-container">
+                <img id="qr-code-img" src="" alt="UPI QR Code" onclick="enlargeQR()">
+                <div id="qr-loading" style="color: var(--muted);">Generating QR Code...</div>
+                <div class="qr-enlarge-hint">Click QR code to enlarge</div>
+              </div>
+              <div class="qr-instructions">
+                Point your camera at the QR code or use any UPI app to scan and pay
+              </div>
+              <button type="button" id="qr-refresh-btn" class="qr-refresh-btn" onclick="refreshQRCode()">
+                <span class="refresh-text">Refresh QR Code</span>
+              </button>
+              
+              <!-- Universal UPI Payment Button (Mobile Only) -->
+              <div class="upi-apps-container" id="upi-apps-container">
+                <div class="or-separator">— OR —</div>
+                <button type="button" class="universal-upi-btn" onclick="openUniversalUPI()">
+                  <div class="upi-text">
+                    <div class="upi-title">Pay with UPI</div>
+                    <div class="upi-subtitle">Opens your preferred UPI app</div>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div class="payment-code-box">
+              <div><strong>Your Payment Reference Code:</strong></div>
+              <div class="payment-code" id="payment-code-display">-</div>
+              <button type="button" class="copy-btn" id="copy-code-btn" onclick="copyPaymentCode()">Copy Code</button>
+              <div style="color: var(--muted); font-size: 12px; margin-top: 8px;">
+                This code is automatically included in the QR payment
+              </div>
+            </div>
+            
+            <!-- Universal UPI Payment Button (Mobile Only) -->
+            <div class="upi-apps-container" id="upi-apps-container">
+              <button type="button" class="universal-upi-btn" onclick="openUniversalUPI()">
+                <div class="upi-icon">�</div>
+                <div class="upi-text">
+                  <div class="upi-title">Pay with UPI</div>
+                  <div class="upi-subtitle">Opens your preferred UPI app</div>
+                </div>
+              </button>
+            </div>
+            
+            <label for="screenshot">Upload UPI Transaction Screenshot *</label>
+            <input type="file" id="screenshot" name="screenshot" accept="image/*" required>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button type="button" class="secondary" id="prev-btn" style="display:none;">Previous</button>
+          <button type="button" id="next-btn">Next</button>
+          <button type="submit" id="submit-btn" style="display:none;" disabled>Submit Registration</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // Global variables
+    let currentStep = 0;
+    const totalSteps = 6;
+    let uniquePaymentCode = '';
+
+    // DOM elements
+    const nextBtn = document.getElementById('next-btn');
+    const prevBtn = document.getElementById('prev-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const formSteps = document.querySelectorAll('.form-step');
+    const stepsList = document.querySelectorAll('#steps-list li');
+
+    // Hamburger Menu Functionality
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+
+    function toggleMobileMenu() {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+      
+      // Prevent body scroll when menu is open
+      if (navLinks.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    function closeMobileMenu() {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Hamburger menu event listeners
+    if (hamburger && navLinks) {
+      hamburger.addEventListener('click', toggleMobileMenu);
+      
+      // Close menu when clicking on nav links
+      navLinks.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A') {
+          closeMobileMenu();
+        }
+      });
+      
+      // Close menu on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+          closeMobileMenu();
+        }
+      });
+
+      // Close menu on window resize if it gets too large
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+          closeMobileMenu();
+        }
+      });
+    }
+
+    // Generate unique payment code
+    function generatePaymentCode() {
+      const timestamp = Date.now().toString();
+      const randomStr = Math.random().toString(36).substring(2, 8).toUpperCase();
+      return `SOMUN25-${timestamp.slice(-6)}${randomStr}`;
+    }
+
+    // Generate UPI QR Code using QRious library for better compatibility
+    function generateUPIQRCode(paymentCode) {
+      return new Promise((resolve) => {
+        try {
+          const upiId = 'vizag70953024@barodampay';
+          const amount = '3000';
+          const name = 'SOMUN 2025';
+          
+          // Enhanced UPI URL format for better Google Pay compatibility
+          // Google Pay prefers 'note' parameter along with 'tn' for transaction description
+          const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(paymentCode)}&note=${encodeURIComponent(paymentCode)}&mc=0000&mode=02&purpose=00`;
+          
+          console.log('Generated UPI URL:', upiUrl); // Debug log
+          
+          // Check if QRious library is available
+          if (typeof QRious === 'undefined') {
+            console.error('QRious library not loaded');
+            resolve(null);
+            return;
+          }
+
+          // Create canvas element
+          const canvas = document.createElement('canvas');
+          
+          // Generate QR code using QRious with professional theme colors
+          const qr = new QRious({
+            element: canvas,
+            value: upiUrl,
+            size: 240,
+            foreground: '#cc171e',  // Your primary brand color
+            background: '#ffffff',  // Clean white background for better contrast
+            level: 'H'  // High error correction for better reliability
+          });
+          
+          resolve(canvas.toDataURL());
+        } catch (error) {
+          console.error('QR Code generation failed:', error);
+          resolve(null);
+        }
+      });
+    }
+
+    // Loader globe animation
+    function initLoader() {
+      try {
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ 
-            alpha: true, 
-            antialias: true,
-            powerPreference: "high-performance"
-        });
+        const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(260, 260);
         
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        document.getElementById('globe-container').appendChild(renderer.domElement);
-
-        const geometry = new THREE.SphereGeometry(5, 32, 32);
-        const material = new THREE.MeshBasicMaterial({
-            color: 0xcc171e,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.9
-        });
-
-        const sphere = new THREE.Mesh(geometry, material);
-        scene.add(sphere);
-
-        camera.position.z = 10;
-
-        function animate() {
-            requestAnimationFrame(animate);
-            sphere.rotation.x += 0.001;
-            sphere.rotation.y += 0.002;
-            renderer.render(scene, camera);
+        const container = document.getElementById('globe-container');
+        if (container) {
+          container.appendChild(renderer.domElement);
         }
 
-        window.addEventListener('resize', () => {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-        });
+        const globe = new THREE.Mesh(
+          new THREE.SphereGeometry(1, 32, 32),
+          new THREE.MeshBasicMaterial({ color: 0xcc171e, wireframe: true })
+        );
+        scene.add(globe);
+        camera.position.z = 2;
 
+        function animate() {
+          requestAnimationFrame(animate);
+          globe.rotation.y += 0.006;
+          renderer.render(scene, camera);
+        }
         animate();
-    </script>
+
+        setTimeout(() => {
+          const loader = document.getElementById('loader');
+          if (loader) {
+            loader.classList.add('zoomOut');
+            setTimeout(() => {
+              loader.style.display = 'none';
+            }, 2000);
+          }
+        }, 1200);
+      } catch (error) {
+        console.error('Loader error:', error);
+        // Hide loader if there's an error
+        setTimeout(() => {
+          const loader = document.getElementById('loader');
+          if (loader) loader.style.display = 'none';
+        }, 1000);
+      }
+    }
+
+    // Show specific step with subtle transitions
+    function showStep(step) {
+      // Update form steps
+      formSteps.forEach((formStep, index) => {
+        formStep.classList.toggle('active', index === step);
+      });
+
+      // Update sidebar
+      stepsList.forEach((li, index) => {
+        li.classList.toggle('active', index === step);
+      });
+
+      // Update progress bar
+      const progressBar = document.getElementById('progress-bar');
+      const progressPercent = ((step + 1) / totalSteps) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+
+      // Update buttons
+      prevBtn.style.display = step === 0 ? 'none' : 'inline-block';
+      nextBtn.style.display = step === totalSteps - 1 ? 'none' : 'inline-block';
+      submitBtn.style.display = step === totalSteps - 1 ? 'inline-block' : 'none';
+
+      // Enable/disable required fields based on current step
+      document.querySelectorAll('input[required], select[required], textarea[required]').forEach(field => {
+        const fieldStep = field.closest('.form-step');
+        const fieldStepIndex = Array.from(formSteps).indexOf(fieldStep);
+        field.disabled = fieldStepIndex !== step;
+      });
+
+      // Populate review if on review step
+      if (step === 4) {
+        populateReview();
+      }
+
+      // Generate QR code if on payment step
+      if (step === 5) {
+        generatePaymentQR();
+      }
+
+      // Update submit button state
+      if (step === totalSteps - 1) {
+        updateSubmitButton();
+      }
+    }
+
+    // Populate review step
+    function populateReview() {
+      const name = document.getElementById('name').value || '—';
+      const email = document.getElementById('email').value || '—';
+      const phone = document.getElementById('phone').value || '—';
+      const school = document.getElementById('school').value || '—';
+      
+      document.getElementById('review-personal').textContent = `${name}, ${email}, ${phone}, ${school}`;
+
+      const committee1 = document.getElementById('committee1').value || '—';
+      const country1 = document.getElementById('country1').value || '—';
+      const committee2 = document.getElementById('committee2').value || '—';
+      const country2 = document.getElementById('country2').value || '—';
+      const committee3 = document.getElementById('committee3').value || '—';
+      const country3 = document.getElementById('country3').value || '—';
+      
+      document.getElementById('review-committee').textContent = 
+        `${committee1} (${country1}), ${committee2} (${country2}), ${committee3} (${country3})`;
+
+      const munExp = document.querySelector('input[name="mun_exp"]:checked');
+      if (munExp) {
+        if (munExp.value === 'first') {
+          document.getElementById('review-mun').textContent = 'First MUN';
+        } else {
+          const details = document.getElementById('mun_details').value || 'Participated before';
+          document.getElementById('review-mun').textContent = details;
+        }
+      } else {
+        document.getElementById('review-mun').textContent = '—';
+      }
+
+      const diet = document.getElementById('diet').value || 'None specified';
+      document.getElementById('review-diet').textContent = diet;
+    }
+
+    // Generate payment QR code
+    function generatePaymentQR() {
+      if (!uniquePaymentCode) {
+        uniquePaymentCode = generatePaymentCode();
+      }
+      
+      // Display payment code
+      document.getElementById('payment-code-display').textContent = uniquePaymentCode;
+      
+      // Wait for library to be fully loaded
+      setTimeout(() => {
+        generateUPIQRCode(uniquePaymentCode).then(qrDataUrl => {
+          const qrImg = document.getElementById('qr-code-img');
+          const qrLoading = document.getElementById('qr-loading');
+          
+          if (qrDataUrl) {
+            qrImg.src = qrDataUrl;
+            qrImg.style.display = 'block';
+            qrLoading.style.display = 'none';
+            
+            // Ensure QR image is centered
+            qrImg.style.margin = '0 auto';
+            qrImg.style.display = 'block';
+          } else {
+            // Fallback: show manual UPI details
+            showManualUPIDetails();
+          }
+        }).catch(error => {
+          console.error('Error in generatePaymentQR:', error);
+          showManualUPIDetails();
+        });
+      }, 500); // Wait 500ms for library to load
+    }
+
+    // Fallback function to show manual UPI details
+    function showManualUPIDetails() {
+      const qrLoading = document.getElementById('qr-loading');
+      qrLoading.innerHTML = `
+        <div style="background: rgba(204, 23, 30, 0.1); border: 1px solid var(--primary); border-radius: 8px; padding: 16px; text-align: left;">
+          <strong>Manual Payment Details:</strong><br>
+          <strong>UPI ID:</strong> vizag70953024@barodampay<br>
+          <strong>Amount:</strong> ₹3000<br>
+          <strong>Payment Description:</strong> ${uniquePaymentCode}<br>
+          <small style="color: var(--muted);">Use these details if QR code doesn't work</small>
+        </div>
+      `;
+    }
+
+    // Animated QR Code refresh function
+    function refreshQRCode() {
+      const refreshBtn = document.getElementById('qr-refresh-btn');
+      const refreshText = refreshBtn.querySelector('.refresh-text');
+      const qrImg = document.getElementById('qr-code-img');
+      const qrLoading = document.getElementById('qr-loading');
+      
+      // Disable button and show loading state
+      refreshBtn.disabled = true;
+      refreshBtn.classList.add('loading');
+      refreshBtn.innerHTML = '<div class="refresh-spinner"></div> <span>Refreshing...</span>';
+      
+      // Add regeneration animation to existing QR
+      if (qrImg.style.display !== 'none') {
+        qrImg.classList.add('regenerating');
+      }
+      
+      // Show loading text
+      qrLoading.style.display = 'block';
+      qrLoading.textContent = 'Generating new QR Code...';
+      qrImg.style.display = 'none';
+      
+      // Generate new payment code for refresh
+      uniquePaymentCode = generatePaymentCode();
+      document.getElementById('payment-code-display').textContent = uniquePaymentCode;
+      
+      // Simulate realistic generation time
+      setTimeout(() => {
+        generateUPIQRCode(uniquePaymentCode).then(qrDataUrl => {
+          if (qrDataUrl) {
+            // Hide loading and show new QR with animation
+            qrLoading.style.display = 'none';
+            qrImg.src = qrDataUrl;
+            qrImg.style.display = 'block';
+            qrImg.style.margin = '0 auto';
+            
+            // Remove regeneration animation after a brief delay
+            setTimeout(() => {
+              qrImg.classList.remove('regenerating');
+            }, 100);
+            
+            // Show success feedback
+            showNotification('QR Code refreshed successfully!');
+          } else {
+            showManualUPIDetails();
+            showNotification('QR refresh failed, showing manual details');
+          }
+          
+          // Reset button state
+          setTimeout(() => {
+            refreshBtn.disabled = false;
+            refreshBtn.classList.remove('loading');
+            refreshBtn.innerHTML = '<span class="refresh-text">Refresh QR Code</span>';
+          }, 500);
+          
+        }).catch(error => {
+          console.error('Error refreshing QR:', error);
+          showManualUPIDetails();
+          showNotification('QR refresh failed, showing manual details');
+          
+          // Reset button state
+          refreshBtn.disabled = false;
+          refreshBtn.classList.remove('loading');
+          refreshBtn.innerHTML = '<span class="refresh-text">Refresh QR Code</span>';
+        });
+      }, 1500); // 1.5 second delay to show the loading animation
+    }
+
+    // Copy payment code to clipboard
+    function copyPaymentCode() {
+      const paymentCode = document.getElementById('payment-code-display').textContent;
+      navigator.clipboard.writeText(paymentCode).then(() => {
+        const btn = document.getElementById('copy-code-btn');
+        const originalText = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.style.background = '#28a745';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = 'var(--primary)';
+        }, 2000);
+      }).catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = paymentCode;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        const btn = document.getElementById('copy-code-btn');
+        const originalText = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.style.background = '#28a745';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = 'var(--primary)';
+        }, 2000);
+      });
+    }
+
+    // Custom Dialog System
+    function showDialog(title, message, callback = null) {
+      const overlay = document.getElementById('dialog-overlay');
+      const titleElement = document.getElementById('dialog-title');
+      const messageElement = document.getElementById('dialog-message');
+      const button = document.getElementById('dialog-button');
+
+      titleElement.textContent = title;
+      messageElement.textContent = message;
+      
+      overlay.classList.add('show');
+      
+      const handleClose = () => {
+        overlay.classList.remove('show');
+        button.removeEventListener('click', handleClose);
+        if (callback) callback();
+      };
+      
+      button.addEventListener('click', handleClose);
+      
+      // Close on overlay click
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          handleClose();
+        }
+      });
+    }
+
+    // Custom alert replacement
+    function customAlert(message, title = 'Notice') {
+      showDialog(title, message);
+    }
+
+    // Get user-friendly field name
+    function getFieldDisplayName(field) {
+      const fieldNames = {
+        'name': 'Name',
+        'email': 'Email',
+        'phone': 'Phone',
+        'school': 'School',
+        'committee1': 'Committee Preference 1',
+        'country1': 'Country Preference 1',
+        'committee2': 'Committee Preference 2', 
+        'country2': 'Country Preference 2',
+        'committee3': 'Committee Preference 3',
+        'country3': 'Country Preference 3',
+        'mun_details': 'MUN Experience Details',
+        'diet': 'Dietary Restrictions',
+        'screenshot': 'Payment Screenshot'
+      };
+      
+      return fieldNames[field.name] || fieldNames[field.id] || field.name || field.id;
+    }
+
+    // Validate current step
+    function validateCurrentStep() {
+      const currentFormStep = formSteps[currentStep];
+      const requiredFields = currentFormStep.querySelectorAll('input[required]:not([disabled]), select[required]:not([disabled]), textarea[required]:not([disabled])');
+      
+      for (let field of requiredFields) {
+        if (!field.value.trim()) {
+          field.focus();
+          const fieldName = getFieldDisplayName(field);
+          customAlert(`Please fill in the ${fieldName} field.`, 'Required Field Missing');
+          return false;
+        }
+        
+        // Email validation
+        if (field.type === 'email') {
+          const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+          if (!emailRegex.test(field.value.trim())) {
+            field.focus();
+            customAlert('Please enter a valid email address (e.g., example@domain.com).', 'Invalid Email Format');
+            return false;
+          }
+        }
+        
+        // Phone number validation (Indian format)
+        if (field.type === 'tel' || field.id === 'phone') {
+          const phoneValue = field.value.trim().replace(/\D/g, ''); // Remove all non-digits
+          const phoneRegex = /^[6-9]\d{9}$/; // Indian mobile: starts with 6-9, followed by 9 digits
+          
+          if (!phoneRegex.test(phoneValue)) {
+            field.focus();
+            customAlert('Please enter a valid Indian mobile number (10 digits starting with 6, 7, 8, or 9).', 'Invalid Phone Number');
+            return false;
+          }
+          
+          // Auto-format the phone number (remove any existing formatting and add clean format)
+          field.value = phoneValue;
+        }
+      }
+
+      // Special validation for committee step
+      if (currentStep === 1) {
+        const committees = [
+          document.getElementById('committee1').value,
+          document.getElementById('committee2').value,
+          document.getElementById('committee3').value
+        ];
+        
+        const uniqueCommittees = new Set(committees.filter(c => c));
+        if (uniqueCommittees.size !== committees.filter(c => c).length) {
+          customAlert('Please select different committees for each preference.', 'Committee Selection Error');
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    // Update submit button state
+    function updateSubmitButton() {
+      const screenshot = document.getElementById('screenshot');
+      submitBtn.disabled = !screenshot.files.length;
+    }
+
+    // Event listeners
+    nextBtn.addEventListener('click', () => {
+      if (validateCurrentStep() && currentStep < totalSteps - 1) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (currentStep > 0) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    });
+
+    // Sidebar navigation
+    stepsList.forEach((li, index) => {
+      li.addEventListener('click', () => {
+        if (index <= currentStep || validateCurrentStep()) {
+          currentStep = index;
+          showStep(currentStep);
+        }
+      });
+    });
+
+    // MUN experience toggle
+    document.querySelectorAll('input[name="mun_exp"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        const detailsGroup = document.getElementById('mun-details-group');
+        const formatGuide = document.getElementById('mun-format-guide');
+        
+        if (radio.value === 'prev') {
+          detailsGroup.style.display = 'block';
+          formatGuide.style.display = 'block';
+        } else {
+          detailsGroup.style.display = 'none';
+          formatGuide.style.display = 'none';
+        }
+      });
+    });
+
+    // File upload change
+    document.getElementById('screenshot').addEventListener('change', updateSubmitButton);
+
+    // Real-time phone number formatting and validation
+    document.getElementById('phone').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, ''); // Remove all non-digits
+      
+      // Limit to 10 digits
+      if (value.length > 10) {
+        value = value.substr(0, 10);
+      }
+      
+      // Format as XXXXX-XXXXX for better readability
+      if (value.length > 5) {
+        value = value.substr(0, 5) + '-' + value.substr(5);
+      }
+      
+      e.target.value = value;
+    });
+
+    // Real-time email validation feedback
+    document.getElementById('email').addEventListener('blur', function(e) {
+      const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+      const value = e.target.value.trim();
+      
+      if (value && !emailRegex.test(value)) {
+        e.target.style.borderColor = 'var(--primary)';
+        e.target.style.boxShadow = '0 0 5px rgba(204, 23, 30, 0.3)';
+      } else {
+        e.target.style.borderColor = '';
+        e.target.style.boxShadow = '';
+      }
+    });
+
+    // Form submission
+    document.getElementById('registration-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (!validateCurrentStep()) {
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        const screenshotFile = document.getElementById('screenshot').files[0];
+        let screenshotBase64 = '';
+        let screenshotFilename = '';
+        
+        if (screenshotFile) {
+          const reader = new FileReader();
+          screenshotBase64 = await new Promise((resolve) => {
+            reader.onload = () => resolve(reader.result);
+            reader.readAsDataURL(screenshotFile);
+          });
+          
+          // Create a clean filename with name and payment code
+          const cleanName = document.getElementById('name').value.replace(/[^a-zA-Z0-9]/g, '_');
+          const fileExtension = screenshotFile.name.split('.').pop();
+          screenshotFilename = `${cleanName}_${uniquePaymentCode}.${fileExtension}`;
+        }
+
+        const formData = {
+          name: document.getElementById('name').value,
+          email: document.getElementById('email').value,
+          phone: document.getElementById('phone').value,
+          school: document.getElementById('school').value,
+          committee1: document.getElementById('committee1').value,
+          country1: document.getElementById('country1').value,
+          committee2: document.getElementById('committee2').value,
+          country2: document.getElementById('country2').value,
+          committee3: document.getElementById('committee3').value,
+          country3: document.getElementById('country3').value,
+          mun_exp: document.querySelector('input[name="mun_exp"]:checked')?.value || '',
+          mun_details: document.getElementById('mun_details').value,
+          diet: document.getElementById('diet').value,
+          payment_code: uniquePaymentCode, // Unique code for matching with UPI statements
+          screenshot: screenshotBase64,
+          screenshot_filename: screenshotFilename // Custom filename with name and payment code
+        };
+
+        /* 
+        PAYMENT VERIFICATION INSTRUCTIONS FOR ADMINISTRATORS:
+        1. Each registration generates a unique payment code (format: SOMUN25-XXXXXX)
+        2. This code is embedded in the UPI QR transaction as the payment description
+        3. Screenshot files are automatically named: [Name]_[PaymentCode].[extension]
+           Example: "John_Doe_SOMUN25-123456ABC.jpg"
+        4. To verify payments:
+           - Check your UPI statement/transaction history
+           - Look for payments with the registration amount (₹3000)
+           - Match the payment description with the payment_code in your Excel sheet
+           - Cross-reference with uploaded screenshot using the custom filename
+        5. The payment_code and screenshot_filename columns in your registration data will help identify each payment
+        */
+
+        // Create a hidden iframe for submission to avoid CORS issues and new tabs
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.name = 'hiddenFrame';
+        document.body.appendChild(iframe);
+        
+        // Create a hidden form for submission
+        const hiddenForm = document.createElement('form');
+        hiddenForm.method = 'POST';
+        hiddenForm.action = 'https://script.google.com/macros/s/AKfycbyPIjxQy3_Iw79BEAd6OIEz5iU5JG1bhVpRAdZWpBOsPedLgzvbCJhiiI1Mx1tm72_U/exec';
+        hiddenForm.target = 'hiddenFrame';
+        
+        // Add all form data as hidden inputs
+        Object.keys(formData).forEach(key => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = formData[key];
+          hiddenForm.appendChild(input);
+        });
+        
+        document.body.appendChild(hiddenForm);
+        hiddenForm.submit();
+        
+        // Clean up after submission
+        setTimeout(() => {
+          document.body.removeChild(hiddenForm);
+          document.body.removeChild(iframe);
+        }, 2000);
+        
+        // Show success message
+        customAlert('Registration submitted successfully! You will receive a confirmation email shortly.', 'Success');
+        document.getElementById('registration-form').reset();
+        currentStep = 0;
+        showStep(currentStep);
+      } catch (error) {
+        console.error('Submission error:', error);
+        customAlert('Submission failed. Please check your internet connection and try again.', 'Submission Error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Registration';
+      }
+    });
+
+    // Support Widget Functions
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showNotification('Copied to clipboard!');
+      }).catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showNotification('Copied to clipboard!');
+      });
+    }
+
+    function sendEmail(email, subject) {
+      const body = encodeURIComponent(`Hello,
+
+I need help with SOMUN 2025 registration.
+
+My details:
+- Name: 
+- Email: 
+- Issue: 
+
+Please help me resolve this.
+
+Thank you!`);
+      
+      window.open(`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${body}`, '_blank');
+    }
+
+    function openWhatsApp(phone) {
+      const message = encodeURIComponent(`Hello! I need help with SOMUN 2025 registration. Could you please assist me?`);
+      window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+    }
+
+    // Universal UPI Payment Function
+    function openUniversalUPI() {
+      if (!uniquePaymentCode) {
+        uniquePaymentCode = generatePaymentCode();
+        document.getElementById('payment-code-display').textContent = uniquePaymentCode;
+      }
+      
+      const upiId = 'vizag70953024@barodampay';
+      const amount = '3000';
+      const name = 'SOMUN 2025';
+      const note = uniquePaymentCode;
+      
+      // Universal UPI URL that works with all UPI apps
+      const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}&note=${encodeURIComponent(note)}`;
+      
+      try {
+        // This will open the user's default UPI app or show app selection
+        window.location.href = upiUrl;
+        
+        // Show success feedback
+        showNotification('Opening UPI app...', 'success');
+      } catch (error) {
+        console.error('Error opening UPI app:', error);
+        // Fallback - show manual UPI details
+        showManualUPIDetails();
+        showNotification('Please use the QR code or manual payment details', 'info');
+      }
+    }
+
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--primary);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 2000;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        animation: slideIn 0.3s ease;
+      `;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease forwards';
+        setTimeout(() => document.body.removeChild(notification), 300);
+      }, 2000);
+    }
+
+    function showSupportOnError() {
+      const supportBtn = document.getElementById('support-btn');
+      const supportPanel = document.getElementById('support-panel');
+      
+      // Add error state styling
+      supportBtn.classList.add('error-state');
+      supportBtn.innerHTML = '<span>⚠️</span> Need Help?';
+      
+      // Auto-show the support panel
+      supportPanel.classList.add('show');
+      
+      // Remove error state after 10 seconds
+      setTimeout(() => {
+        supportBtn.classList.remove('error-state');
+        supportBtn.innerHTML = '<span>💬</span> Need Help?';
+      }, 10000);
+    }
+
+    // Initialize Support Widget
+    document.addEventListener('DOMContentLoaded', () => {
+      const supportBtn = document.getElementById('support-btn');
+      const supportPanel = document.getElementById('support-panel');
+      const supportClose = document.getElementById('support-close');
+      
+      supportBtn.addEventListener('click', () => {
+        supportPanel.classList.toggle('show');
+      });
+      
+      supportClose.addEventListener('click', () => {
+        supportPanel.classList.remove('show');
+      });
+      
+      // Close panel when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.support-widget')) {
+          supportPanel.classList.remove('show');
+        }
+      });
+    });
+
+    // Override the existing customAlert to trigger support widget on errors
+    const originalCustomAlert = customAlert;
+    customAlert = function(message, title = 'Notice') {
+      originalCustomAlert(message, title);
+      
+      // Show support widget for error messages
+      if (title.toLowerCase().includes('error') || title.toLowerCase().includes('failed') || message.toLowerCase().includes('error')) {
+        showSupportOnError();
+      }
+    };
+
+    // QR Code Enlargement Functions
+    function enlargeQR() {
+      const qrImg = document.getElementById('qr-code-img');
+      const enlargedImg = document.getElementById('qr-enlarged-img');
+      const overlay = document.getElementById('qr-overlay');
+      
+      if (qrImg.src && qrImg.style.display !== 'none') {
+        // Close mobile menu if open
+        closeMobileMenu();
+        
+        enlargedImg.src = qrImg.src;
+        overlay.classList.add('show');
+        
+        // Prevent body scroll when overlay is open
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeQROverlay() {
+      const overlay = document.getElementById('qr-overlay');
+      overlay.classList.remove('show');
+      
+      // Restore body scroll
+      document.body.style.overflow = '';
+    }
+
+    // Close QR overlay on escape key or clicking outside
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeQROverlay();
+      }
+    });
+
+    document.getElementById('qr-overlay').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        closeQROverlay();
+      }
+    });
+
+    // Initialize
+    window.addEventListener('load', () => {
+      initLoader();
+      showStep(0);
+    });
+  </script>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="committees.html">Committees</a></li>
+          <li><a href="registration.html">Registration</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Info</h3>
+        <ul>
+          <li><a href="mailto:communication.somun@hyd.silveroaks.co.in">communication.somun@hyd.silveroaks.co.in</a></li>
+          <li>Phone: USG PR | Seiona Jacob | +91 73372 13122</li>
+          <li>Phone: USG PR | Keshav Agarwal | +91 81436 02940</li>
+          <li><a href="https://maps.app.goo.gl/Xb9bXhorMrZyny4o8">Silver Oaks International School, Mighty Oaks, Hyderabad, India - 500188</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <ul>
+          <li><a href="https://www.instagram.com/somunhyd/">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2025 SOMUN. All rights reserved.</p>
+      <p><a href="terms.html">Terms & Conditions</a></p>
+    </div>
+  </footer>
 </body>
 </html>
-
-
-
-
-
