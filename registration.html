@@ -20,6 +20,7 @@
       --card-bg: rgba(255, 255, 255, 0.03);
       --card-border: rgba(255, 255, 255, 0.06);
       --accent-glow: 0 6px 18px rgba(204, 23, 30, 0.14);
+      --gradient: linear-gradient(45deg, #cc171e, #ff4b4b);
     }
 
     * {
@@ -1111,6 +1112,85 @@
     .footer-section ul li a { color:var(--text); text-decoration:none; transition:color 0.3s; }
     .footer-section ul li a:hover { color:var(--primary); }
     .copyright { margin-top:2rem; padding-top:2rem; border-top:1px solid rgba(255,255,255,0.1); }
+
+    /* Footer Styles */
+    footer {
+      background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(20,20,20,1) 100%);
+      color: var(--text);
+      text-align: center;
+      padding: 4rem 2rem;
+      margin-top: 4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+    }
+
+    .footer-section h3 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+    }
+
+    /* Enhanced gradient text for supported browsers */
+    @supports (background-clip: text) or (-webkit-background-clip: text) {
+      .footer-section h3 {
+        background: var(--gradient);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-section ul li a {
+      color: var(--text);
+      text-decoration: none;
+      transition: all 0.3s;
+      opacity: 0.8;
+    }
+
+    .footer-section ul li a:hover {
+      color: var(--primary);
+      opacity: 1;
+    }
+
+    .copyright {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      opacity: 0.8;
+    }
+
+    .copyright p {
+      margin-bottom: 0.5rem;
+    }
+
+    .copyright a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .copyright a:hover {
+      color: var(--primary);
+    }
   </style>
 </head>
 <body>
@@ -1267,8 +1347,10 @@
               <select id="committee1" name="committee1" required>
                 <option value="">Select Committee</option>
                 <option value="DISEC">DISEC</option>
+                <option value="ECOSOC">ECOSOC</option>
                 <option value="WHO">WHO</option>
                 <option value="UNHRC">UNHRC</option>
+                <option value="UNCSW">UNCSW</option>
                 <option value="Lok Sabha">Lok Sabha</option>
                 <option value="IP">IP</option>
                 <option value="UNOOSA">UNOOSA</option>
@@ -1284,8 +1366,10 @@
               <select id="committee2" name="committee2" required>
                 <option value="">Select Committee</option>
                 <option value="DISEC">DISEC</option>
+                <option value="ECOSOC">ECOSOC</option>
                 <option value="WHO">WHO</option>
                 <option value="UNHRC">UNHRC</option>
+                <option value="UNCSW">UNCSW</option>
                 <option value="Lok Sabha">Lok Sabha</option>
                 <option value="IP">IP</option>
                 <option value="UNOOSA">UNOOSA</option>
@@ -1301,8 +1385,10 @@
               <select id="committee3" name="committee3" required>
                 <option value="">Select Committee</option>
                 <option value="DISEC">DISEC</option>
+                <option value="ECOSOC">ECOSOC</option>
                 <option value="WHO">WHO</option>
                 <option value="UNHRC">UNHRC</option>
+                <option value="UNCSW">UNCSW</option>
                 <option value="Lok Sabha">Lok Sabha</option>
                 <option value="IP">IP</option>
                 <option value="UNOOSA">UNOOSA</option>
@@ -1325,6 +1411,14 @@
               <label style="display: flex; align-items: center; gap: 6px;">
                 <input type="radio" name="mun_exp" value="prev" required> Participated before
               </label>
+            </div>
+          </div>
+          <div id="mun-format-guide" style="display:none; margin-top: 12px; padding: 12px; background: rgba(204, 23, 30, 0.1); border: 1px solid rgba(204, 23, 30, 0.3); border-radius: 8px;">
+            <div style="color: var(--primary); font-weight: 600; font-size: 13px; margin-bottom: 6px;">
+              📝 Format for Previous Experience Details:
+            </div>
+            <div style="color: var(--muted); font-size: 12px; line-height: 1.4;">
+              <strong>Format:</strong> MUN Name(Year) - Committee - Country - Award (if any)<br>
             </div>
           </div>
           <div class="form-group" id="mun-details-group" style="display:none;">
@@ -1371,7 +1465,9 @@
               </button>
             </div>
             <div class="info-box">
-              <strong>Registration Fee: ₹2700</strong>
+              <div style="font-size: 18px; font-weight: 700; color: var(--primary); text-align: center; padding: 8px; background: rgba(204, 23, 30, 0.1); border: 1px solid rgba(204, 23, 30, 0.3); border-radius: 8px; margin: 4px 0;">
+                Registration Fee: ₹3000
+              </div>
             </div>
             <div class="payment-code-box">
               <div><strong>Your Payment Reference Code:</strong></div>
@@ -1419,8 +1515,8 @@
     function generateUPIQRCode(paymentCode) {
       return new Promise((resolve) => {
         try {
-          const upiId = '9908971951@fam';
-          const amount = '1';
+          const upiId = 'vizag70953024@barodampay';
+          const amount = '3000';
           const name = 'SOMUN 2025';
           
           // Enhanced UPI URL format for better Google Pay compatibility
@@ -1624,7 +1720,7 @@
         <div style="background: rgba(204, 23, 30, 0.1); border: 1px solid var(--primary); border-radius: 8px; padding: 16px; text-align: left;">
           <strong>Manual Payment Details:</strong><br>
           <strong>UPI ID:</strong> vizag70953024@barodampay<br>
-          <strong>Amount:</strong> ₹2700<br>
+          <strong>Amount:</strong> ₹3000<br>
           <strong>Payment Description:</strong> ${uniquePaymentCode}<br>
           <small style="color: var(--muted);">Use these details if QR code doesn't work</small>
         </div>
@@ -1852,7 +1948,15 @@
     document.querySelectorAll('input[name="mun_exp"]').forEach(radio => {
       radio.addEventListener('change', () => {
         const detailsGroup = document.getElementById('mun-details-group');
-        detailsGroup.style.display = radio.value === 'prev' ? 'block' : 'none';
+        const formatGuide = document.getElementById('mun-format-guide');
+        
+        if (radio.value === 'prev') {
+          detailsGroup.style.display = 'block';
+          formatGuide.style.display = 'block';
+        } else {
+          detailsGroup.style.display = 'none';
+          formatGuide.style.display = 'none';
+        }
       });
     });
 
@@ -1915,7 +2019,7 @@
            Example: "John_Doe_SOMUN25-123456ABC.jpg"
         4. To verify payments:
            - Check your UPI statement/transaction history
-           - Look for payments with the registration amount (₹2700)
+           - Look for payments with the registration amount (₹3000)
            - Match the payment description with the payment_code in your Excel sheet
            - Cross-reference with uploaded screenshot using the custom filename
         5. The payment_code and screenshot_filename columns in your registration data will help identify each payment
@@ -2120,5 +2224,38 @@ Thank you!`);
       showStep(0);
     });
   </script>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="committees.html">Committees</a></li>
+          <li><a href="registration.html">Registration</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Info</h3>
+        <ul>
+          <li><a href="mailto:communication.somun@hyd.silveroaks.co.in">communication.somun@hyd.silveroaks.co.in</a></li>
+          <li>Phone: USG PR | Seiona Jacob | +91 73372 13122</li>
+          <li>Phone: USG PR | Keshav Agarwal | +91 81436 02940</li>
+          <li><a href="https://maps.app.goo.gl/Xb9bXhorMrZyny4o8">Silver Oaks International School, Mighty Oaks, Hyderabad, India - 500188</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <ul>
+          <li><a href="https://www.instagram.com/somunhyd/">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2025 SOMUN. All rights reserved.</p>
+      <p><a href="terms.html">Terms & Conditions</a></p>
+    </div>
+  </footer>
 </body>
 </html>
