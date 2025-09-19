@@ -95,6 +95,7 @@
       align-items: center;
       max-width: 1200px;
       margin: 0 auto;
+      position: relative;
     }
 
     .nav-logo {
@@ -103,12 +104,16 @@
       font-weight: 700;
       font-family: 'Lato', sans-serif;
       text-decoration: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     .nav-links {
       display: flex;
       justify-content: center;
       gap: 2rem;
+      flex: 1;
     }
 
     .nav-links a {
@@ -129,17 +134,30 @@
       display: none;
       flex-direction: column;
       cursor: pointer;
-      padding: 5px;
+      padding: 8px;
       z-index: 1001;
+      position: relative;
+      background: rgba(204, 23, 30, 0.8);
+      border-radius: 4px;
+      border: 2px solid var(--primary);
+      min-width: 40px;
+      min-height: 40px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hamburger:hover {
+      background: var(--primary);
     }
 
     .hamburger span {
       width: 25px;
       height: 3px;
       background: var(--text);
-      margin: 3px 0;
+      margin: 2px 0;
       transition: all 0.3s ease;
       border-radius: 2px;
+      display: block;
     }
 
     .hamburger.active span:nth-child(1) {
@@ -180,19 +198,26 @@
       flex-direction: column;
       gap: 2rem;
       text-align: center;
+      display: flex;
     }
 
     .mobile-menu .nav-links a {
       font-size: 1.5rem;
-      padding: 1rem;
+      padding: 1rem 2rem;
       border-bottom: none;
       border-radius: 8px;
       transition: all 0.3s ease;
+      color: var(--text);
+      text-decoration: none;
+      display: block;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
     }
 
     .mobile-menu .nav-links a:hover {
       background: rgba(204, 23, 30, 0.2);
       color: var(--primary);
+      border-color: var(--primary);
     }
 
     /* Hero */
@@ -702,6 +727,90 @@
       }
     }
 
+    /* UPI App Direct Payment Buttons */
+    .upi-apps-container {
+      display: none; /* Hidden by default, shown only on mobile */
+      margin: 1rem 0;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+    }
+
+    .upi-apps-title {
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .upi-apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.8rem;
+    }
+
+    .upi-app-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 0.8rem;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upi-app-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      border-color: var(--primary);
+    }
+
+    .upi-app-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .upi-app-btn:hover::before {
+      left: 100%;
+    }
+
+    .upi-app-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .upi-app-name {
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .gpay { background: linear-gradient(135deg, #4285f4, #34a853); }
+    .phonepe { background: linear-gradient(135deg, #5f259f, #7b68ee); }
+    .paytm { background: linear-gradient(135deg, #00baf2, #0099cc); }
+    .bhim { background: linear-gradient(135deg, #ff6600, #ff9933); }
+
+    /* Show UPI apps only on mobile devices */
+    @media (max-width: 768px) and (hover: none) and (pointer: coarse) {
+      .upi-apps-container {
+        display: block;
+      }
+    }
+
     /* Custom Dialog System */
     .dialog-overlay {
       position: fixed;
@@ -993,11 +1102,18 @@
       
       /* Mobile Navigation */
       .hamburger {
-        display: flex;
+        display: flex !important;
+        position: relative;
       }
       
       .nav-links {
-        display: none;
+        display: none !important;
+      }
+      
+      .nav-logo {
+        position: static;
+        transform: none;
+        margin: 0 auto;
       }
       
       nav {
@@ -1006,6 +1122,9 @@
       
       .nav-container {
         padding: 0;
+        width: 100%;
+        justify-content: flex-start;
+        gap: 1rem;
       }
       
       .form-card {
@@ -1065,6 +1184,15 @@
       
       .nav-logo {
         font-size: 1.2rem;
+      }
+      
+      .hamburger {
+        display: flex !important;
+        padding: 6px;
+        background: var(--primary) !important;
+        border: 2px solid var(--text) !important;
+        min-width: 35px;
+        min-height: 35px;
       }
       
       .hamburger span {
@@ -1159,6 +1287,18 @@
     }
 
     @media (max-width: 320px) {
+      .hamburger {
+        display: flex !important;
+        min-width: 30px;
+        min-height: 30px;
+        padding: 4px;
+      }
+      
+      .hamburger span {
+        width: 20px;
+        height: 2px;
+      }
+      
       .hero h1 {
         font-size: 1.2rem;
       }
@@ -1636,6 +1776,12 @@
   <!-- Navbar -->
   <nav>
     <div class="nav-container">
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
       <a href="index.html" class="nav-logo">SOMUN 2025</a>
       
       <div class="nav-links">
@@ -1645,12 +1791,6 @@
         <a href="schedule.html">Schedule</a>
         <a href="registration.html">Register</a>
         <a href="contact.html">Contact</a>
-      </div>
-      
-      <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
       </div>
     </div>
   </nav>
@@ -1703,7 +1843,7 @@
           </div>
           <div class="form-group">
             <label for="phone">Phone Number *</label>
-            <input type="tel" id="phone" name="phone" required>
+            <input type="tel" id="phone" name="phone" placeholder="Enter 10-digit mobile number" required>
           </div>
           <div class="form-group">
             <label for="school">School/Organization *</label>
@@ -1852,6 +1992,30 @@
                 This code is automatically included in the QR payment
               </div>
             </div>
+            
+            <!-- UPI App Direct Payment Buttons (Mobile Only) -->
+            <div class="upi-apps-container" id="upi-apps-container">
+              <div class="upi-apps-title">🚀 Pay directly with your preferred UPI app</div>
+              <div class="upi-apps-grid">
+                <button type="button" class="upi-app-btn gpay" onclick="openUPIApp('gpay')">
+                  <div class="upi-app-icon">🟢</div>
+                  <div class="upi-app-name">Google Pay</div>
+                </button>
+                <button type="button" class="upi-app-btn phonepe" onclick="openUPIApp('phonepe')">
+                  <div class="upi-app-icon">🟣</div>
+                  <div class="upi-app-name">PhonePe</div>
+                </button>
+                <button type="button" class="upi-app-btn paytm" onclick="openUPIApp('paytm')">
+                  <div class="upi-app-icon">🔵</div>
+                  <div class="upi-app-name">Paytm</div>
+                </button>
+                <button type="button" class="upi-app-btn bhim" onclick="openUPIApp('bhim')">
+                  <div class="upi-app-icon">🟠</div>
+                  <div class="upi-app-name">BHIM UPI</div>
+                </button>
+              </div>
+            </div>
+            
             <label for="screenshot">Upload UPI Transaction Screenshot *</label>
             <input type="file" id="screenshot" name="screenshot" accept="image/*" required>
           </div>
@@ -1883,15 +2047,22 @@
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobile-menu');
 
+    // Debug logging
+    console.log('Hamburger element:', hamburger);
+    console.log('Mobile menu element:', mobileMenu);
+
     function toggleMobileMenu() {
+      console.log('Toggle mobile menu called');
       hamburger.classList.toggle('active');
       mobileMenu.classList.toggle('active');
       
       // Prevent body scroll when menu is open
       if (mobileMenu.classList.contains('active')) {
         document.body.style.overflow = 'hidden';
+        console.log('Menu opened');
       } else {
         document.body.style.overflow = 'auto';
+        console.log('Menu closed');
       }
     }
 
@@ -1902,28 +2073,33 @@
     }
 
     // Hamburger menu event listeners
-    hamburger.addEventListener('click', toggleMobileMenu);
-    
-    // Close menu when clicking outside
-    mobileMenu.addEventListener('click', (e) => {
-      if (e.target === mobileMenu) {
-        closeMobileMenu();
-      }
-    });
-    
-    // Close menu on escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-        closeMobileMenu();
-      }
-    });
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', toggleMobileMenu);
+      console.log('Hamburger event listener added');
+      
+      // Close menu when clicking outside
+      mobileMenu.addEventListener('click', (e) => {
+        if (e.target === mobileMenu) {
+          closeMobileMenu();
+        }
+      });
+      
+      // Close menu on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+          closeMobileMenu();
+        }
+      });
 
-    // Close menu on window resize if it gets too large
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
-        closeMobileMenu();
-      }
-    });
+      // Close menu on window resize if it gets too large
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+          closeMobileMenu();
+        }
+      });
+    } else {
+      console.error('Hamburger or mobile menu element not found!');
+    }
 
     // Generate unique payment code
     function generatePaymentCode() {
@@ -2314,6 +2490,31 @@
           customAlert(`Please fill in the ${fieldName} field.`, 'Required Field Missing');
           return false;
         }
+        
+        // Email validation
+        if (field.type === 'email') {
+          const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+          if (!emailRegex.test(field.value.trim())) {
+            field.focus();
+            customAlert('Please enter a valid email address (e.g., example@domain.com).', 'Invalid Email Format');
+            return false;
+          }
+        }
+        
+        // Phone number validation (Indian format)
+        if (field.type === 'tel' || field.id === 'phone') {
+          const phoneValue = field.value.trim().replace(/\D/g, ''); // Remove all non-digits
+          const phoneRegex = /^[6-9]\d{9}$/; // Indian mobile: starts with 6-9, followed by 9 digits
+          
+          if (!phoneRegex.test(phoneValue)) {
+            field.focus();
+            customAlert('Please enter a valid Indian mobile number (10 digits starting with 6, 7, 8, or 9).', 'Invalid Phone Number');
+            return false;
+          }
+          
+          // Auto-format the phone number (remove any existing formatting and add clean format)
+          field.value = phoneValue;
+        }
       }
 
       // Special validation for committee step
@@ -2383,6 +2584,37 @@
 
     // File upload change
     document.getElementById('screenshot').addEventListener('change', updateSubmitButton);
+
+    // Real-time phone number formatting and validation
+    document.getElementById('phone').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, ''); // Remove all non-digits
+      
+      // Limit to 10 digits
+      if (value.length > 10) {
+        value = value.substr(0, 10);
+      }
+      
+      // Format as XXXXX-XXXXX for better readability
+      if (value.length > 5) {
+        value = value.substr(0, 5) + '-' + value.substr(5);
+      }
+      
+      e.target.value = value;
+    });
+
+    // Real-time email validation feedback
+    document.getElementById('email').addEventListener('blur', function(e) {
+      const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+      const value = e.target.value.trim();
+      
+      if (value && !emailRegex.test(value)) {
+        e.target.style.borderColor = 'var(--primary)';
+        e.target.style.boxShadow = '0 0 5px rgba(204, 23, 30, 0.3)';
+      } else {
+        e.target.style.borderColor = '';
+        e.target.style.boxShadow = '';
+      }
+    });
 
     // Form submission
     document.getElementById('registration-form').addEventListener('submit', async (e) => {
@@ -2526,6 +2758,59 @@ Thank you!`);
     function openWhatsApp(phone) {
       const message = encodeURIComponent(`Hello! I need help with SOMUN 2025 registration. Could you please assist me?`);
       window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+    }
+
+    // UPI App Direct Payment Function
+    function openUPIApp(appName) {
+      if (!uniquePaymentCode) {
+        uniquePaymentCode = generatePaymentCode();
+        document.getElementById('payment-code-display').textContent = uniquePaymentCode;
+      }
+      
+      const upiId = 'vizag70953024@barodampay';
+      const amount = '3000';
+      const name = 'SOMUN 2025';
+      const note = uniquePaymentCode;
+      
+      // Create UPI URL with app-specific schemes
+      const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}&note=${encodeURIComponent(note)}`;
+      
+      let appUrl;
+      
+      switch(appName) {
+        case 'gpay':
+          // Google Pay specific URL scheme
+          appUrl = `tez://upi/pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+          break;
+        case 'phonepe':
+          // PhonePe specific URL scheme
+          appUrl = `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+          break;
+        case 'paytm':
+          // Paytm specific URL scheme
+          appUrl = `paytmmp://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+          break;
+        case 'bhim':
+          // BHIM specific URL scheme
+          appUrl = `bhim://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+          break;
+        default:
+          appUrl = upiUrl;
+      }
+      
+      // Try to open the app-specific URL first, then fallback to generic UPI
+      try {
+        window.location.href = appUrl;
+        
+        // Fallback to generic UPI URL after a short delay if app doesn't open
+        setTimeout(() => {
+          window.location.href = upiUrl;
+        }, 1000);
+      } catch (error) {
+        console.error('Error opening UPI app:', error);
+        // Ultimate fallback - show manual UPI details
+        showManualUPIDetails();
+      }
     }
 
     function showNotification(message) {
