@@ -1768,7 +1768,7 @@
       
       <a href="index.html" class="nav-logo">SOMUN 2025</a>
       
-      <div class="nav-links">
+      <div class="nav-links" id="nav-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="committees.html">Committees</a>
@@ -1778,18 +1778,6 @@
       </div>
     </div>
   </nav>
-
-  <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu" id="mobile-menu">
-    <div class="nav-links">
-      <a href="index.html" onclick="closeMobileMenu()">Home</a>
-      <a href="about.html" onclick="closeMobileMenu()">About</a>
-      <a href="committees.html" onclick="closeMobileMenu()">Committees</a>
-      <a href="schedule.html" onclick="closeMobileMenu()">Schedule</a>
-      <a href="registration.html" onclick="closeMobileMenu()">Register</a>
-      <a href="contact.html" onclick="closeMobileMenu()">Contact</a>
-    </div>
-  </div>
 
   <!-- Hero -->
   <section class="hero">
@@ -2028,60 +2016,50 @@
 
     // Hamburger Menu Functionality
     const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    // Debug logging
-    console.log('Hamburger element:', hamburger);
-    console.log('Mobile menu element:', mobileMenu);
+    const navLinks = document.getElementById('nav-links');
 
     function toggleMobileMenu() {
-      console.log('Toggle mobile menu called');
       hamburger.classList.toggle('active');
-      mobileMenu.classList.toggle('active');
+      navLinks.classList.toggle('active');
       
       // Prevent body scroll when menu is open
-      if (mobileMenu.classList.contains('active')) {
+      if (navLinks.classList.contains('active')) {
         document.body.style.overflow = 'hidden';
-        console.log('Menu opened');
       } else {
         document.body.style.overflow = 'auto';
-        console.log('Menu closed');
       }
     }
 
     function closeMobileMenu() {
       hamburger.classList.remove('active');
-      mobileMenu.classList.remove('active');
+      navLinks.classList.remove('active');
       document.body.style.overflow = 'auto';
     }
 
     // Hamburger menu event listeners
-    if (hamburger && mobileMenu) {
+    if (hamburger && navLinks) {
       hamburger.addEventListener('click', toggleMobileMenu);
-      console.log('Hamburger event listener added');
       
-      // Close menu when clicking outside
-      mobileMenu.addEventListener('click', (e) => {
-        if (e.target === mobileMenu) {
+      // Close menu when clicking on nav links
+      navLinks.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A') {
           closeMobileMenu();
         }
       });
       
       // Close menu on escape key
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
           closeMobileMenu();
         }
       });
 
       // Close menu on window resize if it gets too large
       window.addEventListener('resize', () => {
-        if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+        if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
           closeMobileMenu();
         }
       });
-    } else {
-      console.error('Hamburger or mobile menu element not found!');
     }
 
     // Generate unique payment code
