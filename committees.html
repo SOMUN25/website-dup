@@ -132,6 +132,35 @@
             font-weight: 900;
         }
 
+        .instruction-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text);
+            opacity: 0.9;
+            box-shadow: 0 4px 20px rgba(204, 23, 30, 0.1);
+        }
+
+        .instruction-text .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .instruction-text {
+                margin: 0 1rem 2rem 1rem;
+                padding: 1.2rem 1.5rem;
+                font-size: 1.1rem;
+            }
+        }
+
         .committees-container {
             max-width: 1200px;
             margin: 2rem auto;
@@ -194,6 +223,229 @@
             margin-bottom: 1rem;
             line-height: 1.6;
             opacity: 0.9;
+        }
+
+        .committee-card {
+            cursor: pointer;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+            box-shadow: 0 20px 60px rgba(204, 23, 30, 0.4);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .modal-image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .modal-poster {
+            max-width: 400px;
+            max-height: 533px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-info-container {
+            margin-bottom: 3rem;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .modal-icon {
+            width: 80px;
+            height: 80px;
+            margin-right: 2rem;
+            opacity: 0.8;
+            object-fit: contain;
+        }
+
+        .modal-title h2 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+        }
+
+        .modal-title h3 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-description {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .modal-section {
+            margin-bottom: 3rem;
+        }
+
+        .modal-section h4 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+        }
+
+        .agenda-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .agenda-list li {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+            border-left: 3px solid var(--primary);
+            font-size: 1.1rem;
+            line-height: 1.5;
+            text-align: left;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .background-guide {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .pdf-embed {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-top: 1rem;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: var(--gradient);
+            color: var(--text);
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(204, 23, 30, 0.4);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .modal-content {
+                padding: 2rem;
+                max-width: 95vw;
+                max-height: 95vh;
+            }
+
+            .modal-poster {
+                max-width: 300px;
+                max-height: 400px;
+            }
+
+            .modal-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .modal-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+
+            .modal-title h2 {
+                font-size: 2.5rem;
+            }
+
+            .pdf-embed {
+                height: 400px;
+            }
         }
 
         .agenda-list {
@@ -332,69 +584,73 @@
         <h1>SOMUN 2025 Committees</h1>
     </header>
 
+    <div class="instruction-text">
+        <p>📋 <span class="highlight">Tap on any committee below</span> to view detailed information, agenda, and download the background guide for comprehensive preparation materials.</p>
+    </div>
+
     <div class="committees-container">
-        <div class="committee-card">
+        <div class="committee-card" onclick="openModal('ip')">
             <img src="ip.png" alt="IP Icon" class="committee-icon">
             <h2>IP</h2>
             <h3>International Press</h3>
             <p>The International Press serves as the eyes and ears of the conference, documenting debates, conducting interviews, and providing comprehensive coverage of all committee proceedings.</p>
         </div>
 
-        <div class="committee-card">
+        <div class="committee-card" onclick="openModal('unhrc')">
             <img src="unhrc.png" alt="UNHRC Icon" class="committee-icon">
             <h2>UNHRC</h2>
             <h3>United Nations Human Rights Council</h3>
             <p>Addressing critical human rights issues and promoting fundamental freedoms worldwide through international cooperation and dialogue.</p>
         </div>
 
-        <div class="committee-card">
+        <div class="committee-card" onclick="openModal('disec')">
             <img src="disec.png" alt="DISEC Icon" class="committee-icon">
             <h2>DISEC</h2>
             <h3>Disarmament and International Security Committee</h3>
             <p>Dealing with disarmament, global challenges, and threats to peace that affect the international community.</p>
         </div>
 
-        <div class="committee-card">
+        <div class="committee-card" onclick="openModal('unoosa')">
             <img src="unoosa.png" alt="UNOOSA Icon" class="committee-icon">
             <h2>UNOOSA</h2>
             <h3>United Nations Office For Outer Space Affairs</h3>
             <p>Promoting international cooperation in the peaceful use and exploration of space, and in the utilization of space science and technology.</p>
         </div>
 
-        <div class="committee-card">
+        <div class="committee-card" onclick="openModal('loksabha')">
             <img src="loksabha.png" alt="Lok Sabha Icon" class="committee-icon">
             <h2>Lok Sabha</h2>
             <h3>India's Lower House of Parliament</h3>
             <p>Addressing domestic policy issues and legislative matters.</p>
         </div>
 
-        <div class="committee-card">
+        <div class="committee-card" onclick="openModal('who')">
             <img src="who.png" alt="WHO Icon" class="committee-icon">
             <h2>WHO</h2>
             <h3>World Health Organisation</h3>
             <p>Leading global health initiatives and coordinating international health responses.</p>
         </div>
 
-        <div class="committee-card">
+        <div class="committee-card" onclick="openModal('unodc')">
             <img src="unodc.png" alt="UNODC Icon" class="committee-icon">
             <h2>UNODC</h2>
             <h3>United Nations Office for Drugs and Crime</h3>
             <p>Addressing transnational crime, drug trafficking, and international terrorism.</p>
         </div>
 
-        <div class="committee-card">
+        <div class="committee-card" onclick="openModal('hcc')">
             <img src="hcc.png" alt="HCC Icon" class="committee-icon">
             <h2>HCC (Stranger Things)</h2>
             <h3>Hawkins Crisis Council</h3>
             <p>A fast-paced crisis committee set in the world of <strong>Stranger Things</strong>, where delegates must tackle supernatural threats, government secrecy, and community chaos in real time.</p>
         </div>
-        <div class="committee-card">
+        <div class="committee-card" onclick="openModal('ecosoc')">
             <img src="ecosoc.png" alt="ECOSOC Icon" class="committee-icon">
             <h2>ECOSOC</h2>
             <h3>Economic and Social Council</h3>
             <p>Promoting international cooperation on economic, social, and environmental issues, shaping global policies, and advancing sustainable development through dialogue among member states and stakeholders.</p>
         </div>
-        <div class="committee-card">
+        <div class="committee-card" onclick="openModal('uncsw')">
             <img src="uncsw.png" alt="UNCSW Icon" class="committee-icon">
             <h2>UNCSW</h2>
             <h3>United Nations Commission on the Status of Women</h3>
@@ -402,6 +658,37 @@
         </div>
     </div>
 
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            
+            <div class="modal-image-container" id="modalImageContainer">
+                <img id="modalImage" class="modal-poster" src="" alt="">
+            </div>
+            
+            <div class="modal-info-container" id="modalInfoContainer" style="display: none;">
+                <div class="modal-header">
+                    <img id="modalIcon" class="modal-icon" src="" alt="">
+                    <div class="modal-title">
+                        <h2 id="modalTitle"></h2>
+                        <h3 id="modalSubtitle"></h3>
+                    </div>
+                </div>
+                <div class="modal-description" id="modalDescription"></div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>Background Guide</h4>
+                <div class="background-guide">
+                    <p>Access the comprehensive background guide for detailed information and preparation materials.</p>
+                    <embed id="modalPDF" class="pdf-embed" src="" type="application/pdf">
+                    <br>
+                    <a id="modalDownload" class="download-btn" href="" download>Download Background Guide</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-content">
@@ -435,5 +722,121 @@
             <p><a href="terms.html">Terms & Conditions</a></p>
         </div>
     </footer>
+
+    <script>
+        // Committee data with agenda and background guide information
+        const committeeData = {
+            ip: {
+                showInfo: true,
+                title: "IP",
+                subtitle: "International Press",
+                description: "The International Press serves as the eyes and ears of the conference, documenting debates, conducting interviews, and providing comprehensive coverage of all committee proceedings.",
+                icon: "ip.png",
+                backgroundGuide: "ip-guide.pdf"
+            },
+            unhrc: {
+                image: "unhrc-poster.jpg",
+                backgroundGuide: "unhrc-guide.pdf"
+            },
+            disec: {
+                image: "disec-poster.jpg",
+                backgroundGuide: "disec-guide.pdf"
+            },
+            unoosa: {
+                image: "unoosa-poster.jpg",
+                backgroundGuide: "unoosa-guide.pdf"
+            },
+            loksabha: {
+                image: "loksabha-poster.jpg",
+                backgroundGuide: "loksabha-guide.pdf"
+            },
+            who: {
+                image: "who-poster.jpg",
+                backgroundGuide: "who-guide.pdf"
+            },
+            unodc: {
+                image: "unodc-poster.jpg",
+                backgroundGuide: "unodc-guide.pdf"
+            },
+            hcc: {
+                image: "hcc-poster.png",
+                backgroundGuide: "hcc-guide.pdf"
+            },
+            ecosoc: {
+                image: "ecosoc-poster.png",
+                backgroundGuide: "ecosoc-guide.pdf"
+            },
+            uncsw: {
+                image: "uncsw-poster.png",
+                backgroundGuide: "uncsw-guide.pdf"
+            }
+        };
+
+        function openModal(committeeId) {
+            const committee = committeeData[committeeId];
+            if (!committee) return;
+
+            const imageContainer = document.getElementById('modalImageContainer');
+            const infoContainer = document.getElementById('modalInfoContainer');
+
+            if (committee.showInfo) {
+                // Show info content for IP
+                imageContainer.style.display = 'none';
+                infoContainer.style.display = 'block';
+                
+                // Populate info content
+                document.getElementById('modalIcon').src = committee.icon;
+                document.getElementById('modalIcon').alt = committee.title + " Icon";
+                document.getElementById('modalTitle').textContent = committee.title;
+                document.getElementById('modalSubtitle').textContent = committee.subtitle;
+                document.getElementById('modalDescription').textContent = committee.description;
+            } else {
+                // Show poster image for other committees
+                imageContainer.style.display = 'flex';
+                infoContainer.style.display = 'none';
+                
+                // Set committee poster image
+                document.getElementById('modalImage').src = committee.image;
+                document.getElementById('modalImage').alt = committeeId.toUpperCase() + " Committee Poster";
+            }
+
+            // Set background guide
+            document.getElementById('modalPDF').src = committee.backgroundGuide;
+            document.getElementById('modalDownload').href = committee.backgroundGuide;
+
+            // Show modal
+            const modal = document.getElementById('modalOverlay');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+
+            // Prevent background scrolling
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modalOverlay');
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        // Close modal when clicking outside content
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
